@@ -40,7 +40,7 @@ def combine_images_and_pdfs(dir, output_file):
             cover_image = file
         elif file.endswith('ps.pdf'):
             ps_pdf = file
-        elif file.endswith('.pdf') and not file.endswith('ps.pdf'):
+        elif file.endswith('.pdf') and not file.endswith('ps.pdf') and not file.endswith('cover.pdf'):
             chapter_pdfs.append(file)
 
     if cover_image:
@@ -61,9 +61,15 @@ def combine_images_and_pdfs(dir, output_file):
         merger.append(file_path)
 
     #write to parent directory
-    merger.write( os.path.join(dir, output_file))
+    # subject_dir = dir.split('/')[:-1]
+    subject_dir = '\\'.join(dir.split('\\')[:-1])
+    # import pdb
+    # pdb.set_trace()
+    merger.write( os.path.join(subject_dir, output_file))
     # merger.write(output_file)
     merger.close()
+    #delete book folder
+    shutil.rmtree(dir)
 
 def download_pdf(url, path):
     try:
