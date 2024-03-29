@@ -61,7 +61,8 @@ def download_pdf(url, path):
 
 
 def create_directory(path):
-    os.makedirs(path, exist_ok=True)
+    print(path)
+    os.makedirs('./' + path, exist_ok=True)
     
         
 def main():
@@ -71,95 +72,32 @@ def main():
     driver.get(url)
 
     #let the page load
-    # time.sleep(5)
+    # time.sleep(2)
     
     class_select = driver.find_element(By.NAME, 'tclass')
-    for class_option in class_select.find_elements(By.TAG_NAME, 'option')[1:]:
+    for class_option in class_select.find_elements(By.TAG_NAME, 'option')[1:2]:
+      class_name = class_option.text
       class_option.click()
-      print(class_option.text)
+      class_dir = os.path.join('books', class_name)
+      create_directory(class_dir)
 
       subject_select = driver.find_element(By.NAME, 'tsubject')
-      for subject_option in subject_select.find_elements(By.TAG_NAME, 'option')[1:]:
+      for subject_option in subject_select.find_elements(By.TAG_NAME, 'option')[1:2]:
+        subject_name = subject_option.text
         subject_option.click()
-        print(subject_option.text)
+        subject_dir = os.path.join(class_dir, subject_name)
+        create_directory(subject_dir)
 
         book_select = driver.find_element(By.NAME, 'tbook')
-        for book_option in book_select.find_elements(By.TAG_NAME, 'option')[1:]:
+        for book_option in book_select.find_elements(By.TAG_NAME, 'option')[1:2]:
+          book_name = book_option.text
           book_option.click()
-          print(book_option.text)
-
-          # pdf_links = driver.find_elements(By.TAG_NAME, 'a')
-          # for i, pdf_link in enumerate(pdf_links):
-          #   if pdf_link.get_attribute('href').endswith('.pdf'):
-          #     pdf_name = f'{book_option.text}_{i+1}.pdf'
-          #     pdf_path = os.path.join('ncert', class_option.text, subject_option.text, pdf_name)
-          #     download_pdf(pdf_link.get_attribute('href'), pdf_path)
-          #     print(f'Downloaded {pdf_path}')
-    # soup = get_soup(url)
-    # classes = get_classes(soup)
-    # print(classes)
-    
-    # class_selector = soup.find('select', {'name': 'tclass'})
-    # subjects_selector = soup.find('select', {'name': 'tsubject'})
-    # books_selector = soup.find('select', {'name': 'tbook'})
-    
-    # for class_option in class_selector.find_all('option')[1:]:
-    #   class_name = class_option.text.strip()
-    #   print(class_option)
-    #   class_dir = os.path.join('ncert', class_name)
-    #   create_directory(class_dir)
-
-      #subject is a dynmaic dropdown, so we need to get the subject options for each class
-      #for each class, we get the subject options and then iterate over them to get the books
-      #we would need to create automation to select the subject and then get the books
-      #use selenium for this
-      #for now, we will just get the subject options and print them
-      
-      
-
-      # for subject_option in subjects_selector.find_all('option')[1:]:
-      #   subject_name = subject_option.text.strip()
-      #   print(subject_option)
-      #   subject_dir = os.path.join(class_dir, subject_name)
-      #   create_directory(subject_dir)
-
-        # for book_option in books_selector.find_all('option')[1:]:
-        #   book_name = book_option.text.strip()
-        #   print(book_option)
-        #   book_dir = os.path.join(subject_dir, book_name)
-        #   create_directory(book_dir)
-
-        #   book_url = f'http://ncert.nic.in/textbook.php?tclass={class_option.get("value")}&tsubject={subject_option.get("value")}&tbook={book_option.get("value")}'
-        #   book_soup = get_soup(book_url)
-        #   pdf_links = get_pdf_links(book_soup)
-        #   for i, pdf_link in enumerate(pdf_links):
-        #     pdf_name = f'{book_name}_{i+1}.pdf'
-        #     pdf_path = os.path.join(book_dir, pdf_name)
-        #     download_pdf(pdf_link, pdf_path)
-        #     print(f'Downloaded {pdf_path}')
-      
-    # for class_ in classes:
-    #     print(class_)
-    #     class_name = class_.find('h3').text
-    #     class_name = class_name.replace(' ', '_')
-    #     class_path = os.path.join('ncert', class_name)
-    #     os.makedirs(class_path, exist_ok=True)
-    #     subjects = get_subjects(class_)
-    #     for subject in subjects:
-    #         subject_name = subject.find('h4').text
-    #         subject_name = subject_name.replace(' ', '_')
-    #         subject_path = os.path.join(class_path, subject_name)
-    #         os.makedirs(subject_path, exist_ok=True)
-    #         books = get_books(subject)
-    #         for book in books:
-    #             book_name = book.find('h5').text
-    #             book_name = book_name.replace(' ', '_')
-    #             pdf_links = get_pdf_links(book)
-    #             for i, pdf_link in enumerate(pdf_links):
-    #                 pdf_name = f'{book_name}_{i+1}.pdf'
-    #                 pdf_path = os.path.join(subject_path, pdf_name)
-    #                 download_pdf(pdf_link, pdf_path)
-    #                 print(f'Downloaded {pdf_path}')
-                    
+          print(book_name)
+          time.sleep(4)
+          go_button = driver.find_element(By.XPATH, "//input[@name='button' and @value='Go']")
+          go_button.click()
+          time.sleep(20)
+          pdf_link = driver.find_element(By.TAG_NAME, "a").get_attribute("href")
+ 
 if __name__ == '__main__':
   main()
