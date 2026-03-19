@@ -76,7 +76,7 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
               <h2 className="sr-only">{shelf.classLabel}</h2>
 
               <div className="bookshelf-nook relative px-2 pb-0 pt-2 sm:px-4 lg:px-6">
-                <div className="no-scrollbar relative z-10 -mx-2 overflow-x-auto px-2 pb-[1.28rem] sm:-mx-4 sm:px-4 lg:-mx-6 lg:px-6">
+                <div className="no-scrollbar relative z-10 -mx-2 overflow-x-auto px-2 pb-[1.85rem] sm:-mx-4 sm:px-4 sm:pb-[1.95rem] lg:-mx-6 lg:px-6">
                   <div className="flex min-w-max items-end gap-4 sm:gap-5 lg:gap-6">
                     {shelf.books.map((book, bookIndex) => (
                       <NcertBookCover
@@ -91,15 +91,21 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
 
                 <div
                   aria-hidden="true"
-                  className="bookshelf-ledge-shadow pointer-events-none absolute inset-x-12 bottom-[-0.1rem] h-7 sm:inset-x-16 lg:inset-x-[5.5rem]"
+                  className="bookshelf-ledge-shadow pointer-events-none absolute inset-x-12 bottom-[-0.2rem] h-8 sm:inset-x-16 sm:h-9 lg:inset-x-[5.5rem]"
                 />
                 <div
                   aria-hidden="true"
-                  className="bookshelf-ledge-top pointer-events-none absolute inset-x-0 bottom-[0.82rem] z-0 h-[0.58rem] sm:h-[0.62rem]"
+                  className="bookshelf-ledge-top pointer-events-none absolute inset-x-0 bottom-[1.18rem] z-0 h-[0.66rem] sm:bottom-[1.26rem] sm:h-[0.7rem]"
                 />
                 <div
                   aria-hidden="true"
-                  className="bookshelf-ledge pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[0.84rem] sm:h-[0.9rem]"
+                  className="bookshelf-ledge-label pointer-events-none absolute inset-x-5 bottom-[0.18rem] z-[1] sm:bottom-[0.2rem] lg:inset-x-8"
+                >
+                  <span>{shelf.classLabel}</span>
+                </div>
+                <div
+                  aria-hidden="true"
+                  className="bookshelf-ledge pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[1.26rem] sm:h-[1.36rem]"
                 />
               </div>
             </section>
