@@ -24,8 +24,6 @@ export function NcertReaderOverlay({
   open,
   onOpenChange,
 }: NcertReaderOverlayProps) {
-  const sourceUrl = book ? `/api/books/${book.id}/download?inline=1` : "";
-
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent
@@ -43,7 +41,7 @@ export function NcertReaderOverlay({
                   {book.title}
                 </DialogTitle>
                 <DialogDescription className="sr-only">
-                  Read {book.title} in the browser or download the compiled PDF.
+                  Read {book.title} in the custom in-app reader or download the compiled PDF.
                 </DialogDescription>
               </div>
 
@@ -74,14 +72,7 @@ export function NcertReaderOverlay({
             </div>
 
             <div className="min-h-0 flex-1 p-3 sm:p-5">
-              <NcertBookReader
-                activeBook={book}
-                className="h-full min-h-0 rounded-[1.6rem] border-stone-300 bg-stone-100"
-                frameClassName="h-full min-h-0 rounded-[1.6rem] bg-white"
-                loading={false}
-                sourceUrl={sourceUrl}
-                title={book.title}
-              />
+              <NcertBookReader book={book} className="h-full min-h-0" key={book.id} />
             </div>
           </div>
         ) : null}

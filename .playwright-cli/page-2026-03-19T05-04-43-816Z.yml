@@ -1,0 +1,2077 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - group "Arrange shelves by" [ref=e5]:
+      - button "Subjects" [pressed] [ref=e6]
+      - button "Classes" [ref=e7]
+    - main [ref=e8]:
+      - region "Accountancy" [ref=e9]:
+        - heading "Accountancy" [level=2] [ref=e10]
+        - generic [ref=e12]:
+          - generic [ref=e14]:
+            - generic [ref=e15]:
+              - button "Open Class XI Accountancy Accountancy-II" [ref=e16]:
+                - generic [ref=e17]:
+                  - generic [ref=e20]:
+                    - paragraph [ref=e21]: Class XI
+                    - paragraph [ref=e22]: Accountancy-II
+                    - paragraph [ref=e23]: Accountancy
+                  - img [ref=e24]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Accountancy Accountancy-II PDF":
+                - /url: /api/books/keac2/download
+                - img
+                - text: Download
+            - generic [ref=e25]:
+              - button "Open Class XI Accountancy Financial Accounting-I" [ref=e26]:
+                - generic [ref=e27]:
+                  - generic [ref=e30]:
+                    - paragraph [ref=e31]: Class XI
+                    - paragraph [ref=e32]: Financial Accounting-I
+                    - paragraph [ref=e33]: Accountancy
+                  - img [ref=e34]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Accountancy Financial Accounting-I PDF":
+                - /url: /api/books/keac1/download
+                - img
+                - text: Download
+            - generic [ref=e35]:
+              - button "Open Class XII Accountancy Accountancy Part-II" [ref=e36]:
+                - generic [ref=e37]:
+                  - generic [ref=e40]:
+                    - paragraph [ref=e41]: Class XII
+                    - paragraph [ref=e42]: Accountancy Part-II
+                    - paragraph [ref=e43]: Accountancy
+                  - img [ref=e44]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Accountancy Accountancy Part-II PDF":
+                - /url: /api/books/leac2/download
+                - img
+                - text: Download
+            - generic [ref=e45]:
+              - button "Open Class XII Accountancy Accountancy-I" [ref=e46]:
+                - generic [ref=e47]:
+                  - generic [ref=e50]:
+                    - paragraph [ref=e51]: Class XII
+                    - paragraph [ref=e52]: Accountancy-I
+                    - paragraph [ref=e53]: Accountancy
+                  - img [ref=e54]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Accountancy Accountancy-I PDF":
+                - /url: /api/books/leac1/download
+                - img
+                - text: Download
+            - generic [ref=e55]:
+              - button "Open Class XII Accountancy Computerised Accounting System" [ref=e56]:
+                - generic [ref=e57]:
+                  - generic [ref=e60]:
+                    - paragraph [ref=e61]: Class XII
+                    - paragraph [ref=e62]: Computerised Accounting System
+                    - paragraph [ref=e63]: Accountancy
+                  - img [ref=e64]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Accountancy Computerised Accounting System PDF":
+                - /url: /api/books/leca1/download
+                - img
+                - text: Download
+          - generic [ref=e65]:
+            - button "Scroll Accountancy shelf left" [disabled]:
+              - img
+            - generic "Accountancy" [ref=e66]
+            - button "Scroll Accountancy shelf right" [disabled]:
+              - img
+      - region "Arts" [ref=e67]:
+        - heading "Arts" [level=2] [ref=e68]
+        - generic [ref=e70]:
+          - generic [ref=e72]:
+            - generic [ref=e73]:
+              - button "Open Class III Arts Bansuri - I" [ref=e74]:
+                - generic [ref=e75]:
+                  - generic [ref=e78]:
+                    - paragraph [ref=e79]: Class III
+                    - paragraph [ref=e80]: Bansuri - I
+                    - paragraph [ref=e81]: Arts
+                  - img [ref=e82]
+                - generic:
+                  - generic: Class III
+              - link "Download Class III Arts Bansuri - I PDF":
+                - /url: /api/books/cebu1/download
+                - img
+                - text: Download
+            - generic [ref=e83]:
+              - button "Open Class IV Arts Bansuri" [ref=e84]:
+                - generic [ref=e85]:
+                  - generic [ref=e88]:
+                    - paragraph [ref=e89]: Class IV
+                    - paragraph [ref=e91]: Bansuri
+                    - paragraph [ref=e92]: Arts
+                  - img [ref=e93]
+                - generic:
+                  - generic: Class IV
+              - link "Download Class IV Arts Bansuri PDF":
+                - /url: /api/books/debu1/download
+                - img
+                - text: Download
+            - generic [ref=e94]:
+              - button "Open Class V Arts Bansuri" [ref=e95]:
+                - generic [ref=e96]:
+                  - generic [ref=e99]:
+                    - paragraph [ref=e100]: Class V
+                    - paragraph [ref=e102]: Bansuri
+                    - paragraph [ref=e103]: Arts
+                  - img [ref=e104]
+                - generic:
+                  - generic: Class V
+              - link "Download Class V Arts Bansuri PDF":
+                - /url: /api/books/eebu1/download
+                - img
+                - text: Download
+            - generic [ref=e105]:
+              - button "Open Class VI Arts Kriti-I" [ref=e106]:
+                - generic [ref=e107]:
+                  - generic [ref=e110]:
+                    - paragraph [ref=e111]: Class VI
+                    - paragraph [ref=e113]: Kriti-I
+                    - paragraph [ref=e114]: Arts
+                  - img [ref=e115]
+                - generic:
+                  - generic: Class VI
+              - link "Download Class VI Arts Kriti-I PDF":
+                - /url: /api/books/fekr1/download
+                - img
+                - text: Download
+            - generic [ref=e116]:
+              - button "Open Class VII Arts Kriti" [ref=e117]:
+                - generic [ref=e118]:
+                  - generic [ref=e121]:
+                    - paragraph [ref=e122]: Class VII
+                    - paragraph [ref=e124]: Kriti
+                    - paragraph [ref=e125]: Arts
+                  - img [ref=e126]
+                - generic:
+                  - generic: Class VII
+              - link "Download Class VII Arts Kriti PDF":
+                - /url: /api/books/gekr1/download
+                - img
+                - text: Download
+            - generic [ref=e127]:
+              - button "Open Class VIII Arts Kriti" [ref=e128]:
+                - generic [ref=e129]:
+                  - generic [ref=e132]:
+                    - paragraph [ref=e133]: Class VIII
+                    - paragraph [ref=e135]: Kriti
+                    - paragraph [ref=e136]: Arts
+                  - img [ref=e137]
+                - generic:
+                  - generic: Class VIII
+              - link "Download Class VIII Arts Kriti PDF":
+                - /url: /api/books/hekr1/download
+                - img
+                - text: Download
+          - generic [ref=e138]:
+            - button "Scroll Arts shelf left" [disabled]:
+              - img
+            - generic "Arts" [ref=e139]
+            - button "Scroll Arts shelf right" [disabled]:
+              - img
+      - region "Biology" [ref=e140]:
+        - heading "Biology" [level=2] [ref=e141]
+        - generic [ref=e143]:
+          - generic [ref=e145]:
+            - generic [ref=e146]:
+              - button "Open Class XI Biology Biology" [ref=e147]:
+                - generic [ref=e148]:
+                  - generic [ref=e151]:
+                    - paragraph [ref=e152]: Class XI
+                    - paragraph [ref=e154]: Biology
+                    - paragraph [ref=e155]: Biology
+                  - img [ref=e156]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Biology Biology PDF":
+                - /url: /api/books/kebo1/download
+                - img
+                - text: Download
+            - generic [ref=e157]:
+              - button "Open Class XII Biology Biology" [ref=e158]:
+                - generic [ref=e159]:
+                  - generic [ref=e162]:
+                    - paragraph [ref=e163]: Class XII
+                    - paragraph [ref=e165]: Biology
+                    - paragraph [ref=e166]: Biology
+                  - img [ref=e167]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Biology Biology PDF":
+                - /url: /api/books/lebo1/download
+                - img
+                - text: Download
+          - generic [ref=e168]:
+            - button "Scroll Biology shelf left" [disabled]:
+              - img
+            - generic "Biology" [ref=e169]
+            - button "Scroll Biology shelf right" [disabled]:
+              - img
+      - region "Biotechnology" [ref=e170]:
+        - heading "Biotechnology" [level=2] [ref=e171]
+        - generic [ref=e173]:
+          - generic [ref=e175]:
+            - generic [ref=e176]:
+              - button "Open Class XI Biotechnology Biotechnology" [ref=e177]:
+                - generic [ref=e178]:
+                  - generic [ref=e181]:
+                    - paragraph [ref=e182]: Class XI
+                    - paragraph [ref=e184]: Biotechnology
+                    - paragraph [ref=e185]: Biotechnology
+                  - img [ref=e186]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Biotechnology Biotechnology PDF":
+                - /url: /api/books/kebt1/download
+                - img
+                - text: Download
+            - generic [ref=e187]:
+              - button "Open Class XII Biotechnology Biotechnology" [ref=e188]:
+                - generic [ref=e189]:
+                  - generic [ref=e192]:
+                    - paragraph [ref=e193]: Class XII
+                    - paragraph [ref=e195]: Biotechnology
+                    - paragraph [ref=e196]: Biotechnology
+                  - img [ref=e197]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Biotechnology Biotechnology PDF":
+                - /url: /api/books/lebt1/download
+                - img
+                - text: Download
+          - generic [ref=e198]:
+            - button "Scroll Biotechnology shelf left" [disabled]:
+              - img
+            - generic "Biotechnology" [ref=e199]
+            - button "Scroll Biotechnology shelf right" [disabled]:
+              - img
+      - region "Business Studies" [ref=e200]:
+        - heading "Business Studies" [level=2] [ref=e201]
+        - generic [ref=e203]:
+          - generic [ref=e205]:
+            - generic [ref=e206]:
+              - button "Open Class XI Business Studies Business Studies" [ref=e207]:
+                - generic [ref=e208]:
+                  - generic [ref=e211]:
+                    - paragraph [ref=e212]: Class XI
+                    - paragraph [ref=e213]: Business Studies
+                    - paragraph [ref=e214]: Business Studies
+                  - img [ref=e215]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Business Studies Business Studies PDF":
+                - /url: /api/books/kebs1/download
+                - img
+                - text: Download
+            - generic [ref=e216]:
+              - button "Open Class XII Business Studies Business Studies-I" [ref=e217]:
+                - generic [ref=e218]:
+                  - generic [ref=e221]:
+                    - paragraph [ref=e222]: Class XII
+                    - paragraph [ref=e223]: Business Studies-I
+                    - paragraph [ref=e224]: Business Studies
+                  - img [ref=e225]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Business Studies Business Studies-I PDF":
+                - /url: /api/books/lebs1/download
+                - img
+                - text: Download
+            - generic [ref=e226]:
+              - button "Open Class XII Business Studies Business Studies-II" [ref=e227]:
+                - generic [ref=e228]:
+                  - generic [ref=e231]:
+                    - paragraph [ref=e232]: Class XII
+                    - paragraph [ref=e233]: Business Studies-II
+                    - paragraph [ref=e234]: Business Studies
+                  - img [ref=e235]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Business Studies Business Studies-II PDF":
+                - /url: /api/books/lebs2/download
+                - img
+                - text: Download
+          - generic [ref=e236]:
+            - button "Scroll Business Studies shelf left" [disabled]:
+              - img
+            - generic "Business Studies" [ref=e237]
+            - button "Scroll Business Studies shelf right" [disabled]:
+              - img
+      - region "Chemistry" [ref=e238]:
+        - heading "Chemistry" [level=2] [ref=e239]
+        - generic [ref=e241]:
+          - generic [ref=e243]:
+            - generic [ref=e244]:
+              - button "Open Class XI Chemistry Chemistry Part II" [ref=e245]:
+                - generic [ref=e246]:
+                  - generic [ref=e249]:
+                    - paragraph [ref=e250]: Class XI
+                    - paragraph [ref=e251]: Chemistry Part II
+                    - paragraph [ref=e252]: Chemistry
+                  - img [ref=e253]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Chemistry Chemistry Part II PDF":
+                - /url: /api/books/kech2/download
+                - img
+                - text: Download
+            - generic [ref=e254]:
+              - button "Open Class XI Chemistry Chemistry Part-I" [ref=e255]:
+                - generic [ref=e256]:
+                  - generic [ref=e259]:
+                    - paragraph [ref=e260]: Class XI
+                    - paragraph [ref=e261]: Chemistry Part-I
+                    - paragraph [ref=e262]: Chemistry
+                  - img [ref=e263]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Chemistry Chemistry Part-I PDF":
+                - /url: /api/books/kech1/download
+                - img
+                - text: Download
+            - generic [ref=e264]:
+              - button "Open Class XII Chemistry Chemistry-I" [ref=e265]:
+                - generic [ref=e266]:
+                  - generic [ref=e269]:
+                    - paragraph [ref=e270]: Class XII
+                    - paragraph [ref=e271]: Chemistry-I
+                    - paragraph [ref=e272]: Chemistry
+                  - img [ref=e273]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Chemistry Chemistry-I PDF":
+                - /url: /api/books/lech1/download
+                - img
+                - text: Download
+            - generic [ref=e274]:
+              - button "Open Class XII Chemistry Chemistry-II" [ref=e275]:
+                - generic [ref=e276]:
+                  - generic [ref=e279]:
+                    - paragraph [ref=e280]: Class XII
+                    - paragraph [ref=e281]: Chemistry-II
+                    - paragraph [ref=e282]: Chemistry
+                  - img [ref=e283]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Chemistry Chemistry-II PDF":
+                - /url: /api/books/lech2/download
+                - img
+                - text: Download
+          - generic [ref=e284]:
+            - button "Scroll Chemistry shelf left" [disabled]:
+              - img
+            - generic "Chemistry" [ref=e285]
+            - button "Scroll Chemistry shelf right" [disabled]:
+              - img
+      - region "Computer Science" [ref=e286]:
+        - heading "Computer Science" [level=2] [ref=e287]
+        - generic [ref=e289]:
+          - generic [ref=e291]:
+            - generic [ref=e292]:
+              - button "Open Class XI Computer Science Computer Science" [ref=e293]:
+                - generic [ref=e294]:
+                  - generic [ref=e297]:
+                    - paragraph [ref=e298]: Class XI
+                    - paragraph [ref=e299]: Computer Science
+                    - paragraph [ref=e300]: Computer Science
+                  - img [ref=e301]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Computer Science Computer Science PDF":
+                - /url: /api/books/kecs1/download
+                - img
+                - text: Download
+            - generic [ref=e302]:
+              - button "Open Class XII Computer Science Computer Science" [ref=e303]:
+                - generic [ref=e304]:
+                  - generic [ref=e307]:
+                    - paragraph [ref=e308]: Class XII
+                    - paragraph [ref=e309]: Computer Science
+                    - paragraph [ref=e310]: Computer Science
+                  - img [ref=e311]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Computer Science Computer Science PDF":
+                - /url: /api/books/lecs1/download
+                - img
+                - text: Download
+          - generic [ref=e312]:
+            - button "Scroll Computer Science shelf left" [disabled]:
+              - img
+            - generic "Computer Science" [ref=e313]
+            - button "Scroll Computer Science shelf right" [disabled]:
+              - img
+      - region "Economics" [ref=e314]:
+        - heading "Economics" [level=2] [ref=e315]
+        - generic [ref=e317]:
+          - generic [ref=e319]:
+            - generic [ref=e320]:
+              - button "Open Class XI Economics Indian Economic Development" [ref=e321]:
+                - generic [ref=e322]:
+                  - generic [ref=e325]:
+                    - paragraph [ref=e326]: Class XI
+                    - paragraph [ref=e327]: Indian Economic Development
+                    - paragraph [ref=e328]: Economics
+                  - img [ref=e329]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Economics Indian Economic Development PDF":
+                - /url: /api/books/keec1/download
+                - img
+                - text: Download
+            - generic [ref=e330]:
+              - button "Open Class XI Economics Statistics for Economics" [ref=e331]:
+                - generic [ref=e332]:
+                  - generic [ref=e335]:
+                    - paragraph [ref=e336]: Class XI
+                    - paragraph [ref=e337]: Statistics for Economics
+                    - paragraph [ref=e338]: Economics
+                  - img [ref=e339]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Economics Statistics for Economics PDF":
+                - /url: /api/books/kest1/download
+                - img
+                - text: Download
+            - generic [ref=e340]:
+              - button "Open Class XII Economics Introductory Macroeconomics" [ref=e341]:
+                - generic [ref=e342]:
+                  - generic [ref=e345]:
+                    - paragraph [ref=e346]: Class XII
+                    - paragraph [ref=e347]: Introductory Macroeconomics
+                    - paragraph [ref=e348]: Economics
+                  - img [ref=e349]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Economics Introductory Macroeconomics PDF":
+                - /url: /api/books/leec1/download
+                - img
+                - text: Download
+            - generic [ref=e350]:
+              - button "Open Class XII Economics Introductory Microeconomics" [ref=e351]:
+                - generic [ref=e352]:
+                  - generic [ref=e355]:
+                    - paragraph [ref=e356]: Class XII
+                    - paragraph [ref=e357]: Introductory Microeconomics
+                    - paragraph [ref=e358]: Economics
+                  - img [ref=e359]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Economics Introductory Microeconomics PDF":
+                - /url: /api/books/leec2/download
+                - img
+                - text: Download
+          - generic [ref=e360]:
+            - button "Scroll Economics shelf left" [disabled]:
+              - img
+            - generic "Economics" [ref=e361]
+            - button "Scroll Economics shelf right" [disabled]:
+              - img
+      - region "English" [ref=e362]:
+        - heading "English" [level=2] [ref=e363]
+        - generic [ref=e365]:
+          - generic [ref=e367]:
+            - generic [ref=e368]:
+              - button "Open Class I English Mridang" [ref=e369]:
+                - generic [ref=e370]:
+                  - generic [ref=e373]:
+                    - paragraph [ref=e374]: Class I
+                    - paragraph [ref=e376]: Mridang
+                    - paragraph [ref=e377]: English
+                  - img [ref=e378]
+                - generic:
+                  - generic: Class I
+              - link "Download Class I English Mridang PDF":
+                - /url: /api/books/aemr1/download
+                - img
+                - text: Download
+            - generic [ref=e379]:
+              - button "Open Class II English Mridang" [ref=e380]:
+                - generic [ref=e381]:
+                  - generic [ref=e384]:
+                    - paragraph [ref=e385]: Class II
+                    - paragraph [ref=e387]: Mridang
+                    - paragraph [ref=e388]: English
+                  - img [ref=e389]
+                - generic:
+                  - generic: Class II
+              - link "Download Class II English Mridang PDF":
+                - /url: /api/books/bemr1/download
+                - img
+                - text: Download
+            - generic [ref=e390]:
+              - button "Open Class III English Santoor" [ref=e391]:
+                - generic [ref=e392]:
+                  - generic [ref=e395]:
+                    - paragraph [ref=e396]: Class III
+                    - paragraph [ref=e398]: Santoor
+                    - paragraph [ref=e399]: English
+                  - img [ref=e400]
+                - generic:
+                  - generic: Class III
+              - link "Download Class III English Santoor PDF":
+                - /url: /api/books/cesa1/download
+                - img
+                - text: Download
+            - generic [ref=e401]:
+              - button "Open Class IV English Santoor" [ref=e402]:
+                - generic [ref=e403]:
+                  - generic [ref=e406]:
+                    - paragraph [ref=e407]: Class IV
+                    - paragraph [ref=e409]: Santoor
+                    - paragraph [ref=e410]: English
+                  - img [ref=e411]
+                - generic:
+                  - generic: Class IV
+              - link "Download Class IV English Santoor PDF":
+                - /url: /api/books/desa1/download
+                - img
+                - text: Download
+            - generic [ref=e412]:
+              - button "Open Class V English Santoor" [ref=e413]:
+                - generic [ref=e414]:
+                  - generic [ref=e417]:
+                    - paragraph [ref=e418]: Class V
+                    - paragraph [ref=e420]: Santoor
+                    - paragraph [ref=e421]: English
+                  - img [ref=e422]
+                - generic:
+                  - generic: Class V
+              - link "Download Class V English Santoor PDF":
+                - /url: /api/books/eesa1/download
+                - img
+                - text: Download
+            - generic [ref=e423]:
+              - button "Open Class VI English Poorvi" [ref=e424]:
+                - generic [ref=e425]:
+                  - generic [ref=e428]:
+                    - paragraph [ref=e429]: Class VI
+                    - paragraph [ref=e431]: Poorvi
+                    - paragraph [ref=e432]: English
+                  - img [ref=e433]
+                - generic:
+                  - generic: Class VI
+              - link "Download Class VI English Poorvi PDF":
+                - /url: /api/books/fepr1/download
+                - img
+                - text: Download
+            - generic [ref=e434]:
+              - button "Open Class VII English Poorvi" [ref=e435]:
+                - generic [ref=e436]:
+                  - generic [ref=e439]:
+                    - paragraph [ref=e440]: Class VII
+                    - paragraph [ref=e442]: Poorvi
+                    - paragraph [ref=e443]: English
+                  - img [ref=e444]
+                - generic:
+                  - generic: Class VII
+              - link "Download Class VII English Poorvi PDF":
+                - /url: /api/books/gepr1/download
+                - img
+                - text: Download
+            - generic [ref=e445]:
+              - button "Open Class VIII English Poorvi" [ref=e446]:
+                - generic [ref=e447]:
+                  - generic [ref=e450]:
+                    - paragraph [ref=e451]: Class VIII
+                    - paragraph [ref=e453]: Poorvi
+                    - paragraph [ref=e454]: English
+                  - img [ref=e455]
+                - generic:
+                  - generic: Class VIII
+              - link "Download Class VIII English Poorvi PDF":
+                - /url: /api/books/hepr1/download
+                - img
+                - text: Download
+            - generic [ref=e456]:
+              - button "Open Class IX English Beehive" [ref=e457]:
+                - generic [ref=e458]:
+                  - generic [ref=e461]:
+                    - paragraph [ref=e462]: Class IX
+                    - paragraph [ref=e464]: Beehive
+                    - paragraph [ref=e465]: English
+                  - img [ref=e466]
+                - generic:
+                  - generic: Class IX
+              - link "Download Class IX English Beehive PDF":
+                - /url: /api/books/iebe1/download
+                - img
+                - text: Download
+            - generic [ref=e467]:
+              - button "Open Class IX English Moments Supplementary Reader" [ref=e468]:
+                - generic [ref=e469]:
+                  - generic [ref=e472]:
+                    - paragraph [ref=e473]: Class IX
+                    - paragraph [ref=e474]: Moments Supplementary Reader
+                    - paragraph [ref=e475]: English
+                  - img [ref=e476]
+                - generic:
+                  - generic: Class IX
+              - link "Download Class IX English Moments Supplementary Reader PDF":
+                - /url: /api/books/iemo1/download
+                - img
+                - text: Download
+            - generic [ref=e477]:
+              - button "Open Class IX English Words and Expressions 1" [ref=e478]:
+                - generic [ref=e479]:
+                  - generic [ref=e482]:
+                    - paragraph [ref=e483]: Class IX
+                    - paragraph [ref=e484]: Words and Expressions 1
+                    - paragraph [ref=e485]: English
+                  - img [ref=e486]
+                - generic:
+                  - generic: Class IX
+              - link "Download Class IX English Words and Expressions 1 PDF":
+                - /url: /api/books/iewe1/download
+                - img
+                - text: Download
+            - generic [ref=e487]:
+              - button "Open Class X English First Flight" [ref=e488]:
+                - generic [ref=e489]:
+                  - generic [ref=e492]:
+                    - paragraph [ref=e493]: Class X
+                    - paragraph [ref=e494]: First Flight
+                    - paragraph [ref=e495]: English
+                  - img [ref=e496]
+                - generic:
+                  - generic: Class X
+              - link "Download Class X English First Flight PDF":
+                - /url: /api/books/jeff1/download
+                - img
+                - text: Download
+            - generic [ref=e497]:
+              - button "Open Class X English Foot Prints Without feet Supp. Reader" [ref=e498]:
+                - generic [ref=e499]:
+                  - generic [ref=e502]:
+                    - paragraph [ref=e503]: Class X
+                    - paragraph [ref=e504]: Foot Prints Without feet Supp. Reader
+                    - paragraph [ref=e505]: English
+                  - img [ref=e506]
+                - generic:
+                  - generic: Class X
+              - link "Download Class X English Foot Prints Without feet Supp. Reader PDF":
+                - /url: /api/books/jefp1/download
+                - img
+                - text: Download
+            - generic [ref=e507]:
+              - button "Open Class X English Words and Expressions 2" [ref=e508]:
+                - generic [ref=e509]:
+                  - generic [ref=e512]:
+                    - paragraph [ref=e513]: Class X
+                    - paragraph [ref=e514]: Words and Expressions 2
+                    - paragraph [ref=e515]: English
+                  - img [ref=e516]
+                - generic:
+                  - generic: Class X
+              - link "Download Class X English Words and Expressions 2 PDF":
+                - /url: /api/books/jewe2/download
+                - img
+                - text: Download
+            - generic [ref=e517]:
+              - button "Open Class XI English Hornbill" [ref=e518]:
+                - generic [ref=e519]:
+                  - generic [ref=e522]:
+                    - paragraph [ref=e523]: Class XI
+                    - paragraph [ref=e525]: Hornbill
+                    - paragraph [ref=e526]: English
+                  - img [ref=e527]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI English Hornbill PDF":
+                - /url: /api/books/kehb1/download
+                - img
+                - text: Download
+            - generic [ref=e528]:
+              - button "Open Class XI English Snapshots Suppl.Reader English" [ref=e529]:
+                - generic [ref=e530]:
+                  - generic [ref=e533]:
+                    - paragraph [ref=e534]: Class XI
+                    - paragraph [ref=e535]: Snapshots Suppl.Reader English
+                    - paragraph [ref=e536]: English
+                  - img [ref=e537]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI English Snapshots Suppl.Reader English PDF":
+                - /url: /api/books/kesp1/download
+                - img
+                - text: Download
+            - generic [ref=e538]:
+              - button "Open Class XI English Woven Words" [ref=e539]:
+                - generic [ref=e540]:
+                  - generic [ref=e543]:
+                    - paragraph [ref=e544]: Class XI
+                    - paragraph [ref=e545]: Woven Words
+                    - paragraph [ref=e546]: English
+                  - img [ref=e547]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI English Woven Words PDF":
+                - /url: /api/books/keww1/download
+                - img
+                - text: Download
+            - generic [ref=e548]:
+              - button "Open Class XII English Flamingo" [ref=e549]:
+                - generic [ref=e550]:
+                  - generic [ref=e553]:
+                    - paragraph [ref=e554]: Class XII
+                    - paragraph [ref=e556]: Flamingo
+                    - paragraph [ref=e557]: English
+                  - img [ref=e558]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII English Flamingo PDF":
+                - /url: /api/books/lefl1/download
+                - img
+                - text: Download
+            - generic [ref=e559]:
+              - button "Open Class XII English Kaliedoscope" [ref=e560]:
+                - generic [ref=e561]:
+                  - generic [ref=e564]:
+                    - paragraph [ref=e565]: Class XII
+                    - paragraph [ref=e567]: Kaliedoscope
+                    - paragraph [ref=e568]: English
+                  - img [ref=e569]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII English Kaliedoscope PDF":
+                - /url: /api/books/lekl1/download
+                - img
+                - text: Download
+            - generic [ref=e570]:
+              - button "Open Class XII English Vistas" [ref=e571]:
+                - generic [ref=e572]:
+                  - generic [ref=e575]:
+                    - paragraph [ref=e576]: Class XII
+                    - paragraph [ref=e578]: Vistas
+                    - paragraph [ref=e579]: English
+                  - img [ref=e580]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII English Vistas PDF":
+                - /url: /api/books/levt1/download
+                - img
+                - text: Download
+          - generic [ref=e581]:
+            - button "Scroll English shelf left" [disabled]:
+              - img
+            - generic "English" [ref=e582]
+            - button "Scroll English shelf right" [disabled]:
+              - img
+      - region "Environmental Studies" [ref=e583]:
+        - heading "Environmental Studies" [level=2] [ref=e584]
+        - generic [ref=e586]:
+          - generic [ref=e588]:
+            - generic [ref=e589]:
+              - button "Open Class III The World Around Us Our Wondrous World" [ref=e590]:
+                - generic [ref=e591]:
+                  - generic [ref=e594]:
+                    - paragraph [ref=e595]: Class III
+                    - paragraph [ref=e596]: Our Wondrous World
+                    - paragraph [ref=e597]: The World Around Us
+                  - img [ref=e598]
+                - generic:
+                  - generic: Class III
+              - link "Download Class III The World Around Us Our Wondrous World PDF":
+                - /url: /api/books/ceev1/download
+                - img
+                - text: Download
+            - generic [ref=e599]:
+              - button "Open Class IV The World Around Us Our Wonderous World" [ref=e600]:
+                - generic [ref=e601]:
+                  - generic [ref=e604]:
+                    - paragraph [ref=e605]: Class IV
+                    - paragraph [ref=e606]: Our Wonderous World
+                    - paragraph [ref=e607]: The World Around Us
+                  - img [ref=e608]
+                - generic:
+                  - generic: Class IV
+              - link "Download Class IV The World Around Us Our Wonderous World PDF":
+                - /url: /api/books/deev1/download
+                - img
+                - text: Download
+            - generic [ref=e609]:
+              - button "Open Class V The World Around Us Our Wonderous World" [ref=e610]:
+                - generic [ref=e611]:
+                  - generic [ref=e614]:
+                    - paragraph [ref=e615]: Class V
+                    - paragraph [ref=e616]: Our Wonderous World
+                    - paragraph [ref=e617]: The World Around Us
+                  - img [ref=e618]
+                - generic:
+                  - generic: Class V
+              - link "Download Class V The World Around Us Our Wonderous World PDF":
+                - /url: /api/books/eeev1/download
+                - img
+                - text: Download
+          - generic [ref=e619]:
+            - button "Scroll Environmental Studies shelf left" [disabled]:
+              - img
+            - generic "Environmental Studies" [ref=e620]
+            - button "Scroll Environmental Studies shelf right" [disabled]:
+              - img
+      - region "Fine Art" [ref=e621]:
+        - heading "Fine Art" [level=2] [ref=e622]
+        - generic [ref=e624]:
+          - generic [ref=e626]:
+            - generic [ref=e627]:
+              - button "Open Class XI Fine Art An Introduction to Indian Art Part-I" [ref=e628]:
+                - generic [ref=e629]:
+                  - generic [ref=e632]:
+                    - paragraph [ref=e633]: Class XI
+                    - paragraph [ref=e634]: An Introduction to Indian Art Part-I
+                    - paragraph [ref=e635]: Fine Art
+                  - img [ref=e636]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Fine Art An Introduction to Indian Art Part-I PDF":
+                - /url: /api/books/kefa1/download
+                - img
+                - text: Download
+            - generic [ref=e637]:
+              - button "Open Class XII Fine Art An Introduction to Indian Art Part-II" [ref=e638]:
+                - generic [ref=e639]:
+                  - generic [ref=e642]:
+                    - paragraph [ref=e643]: Class XII
+                    - paragraph [ref=e644]: An Introduction to Indian Art Part-II
+                    - paragraph [ref=e645]: Fine Art
+                  - img [ref=e646]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Fine Art An Introduction to Indian Art Part-II PDF":
+                - /url: /api/books/lefa1/download
+                - img
+                - text: Download
+          - generic [ref=e647]:
+            - button "Scroll Fine Art shelf left" [disabled]:
+              - img
+            - generic "Fine Art" [ref=e648]
+            - button "Scroll Fine Art shelf right" [disabled]:
+              - img
+      - region "Geography" [ref=e649]:
+        - heading "Geography" [level=2] [ref=e650]
+        - generic [ref=e652]:
+          - generic [ref=e654]:
+            - generic [ref=e655]:
+              - button "Open Class XI Geography Fundamental of Physical Geography" [ref=e656]:
+                - generic [ref=e657]:
+                  - generic [ref=e660]:
+                    - paragraph [ref=e661]: Class XI
+                    - paragraph [ref=e662]: Fundamental of Physical Geography
+                    - paragraph [ref=e663]: Geography
+                  - img [ref=e664]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Geography Fundamental of Physical Geography PDF":
+                - /url: /api/books/kegy2/download
+                - img
+                - text: Download
+            - generic [ref=e665]:
+              - button "Open Class XI Geography India Physical Environment" [ref=e666]:
+                - generic [ref=e667]:
+                  - generic [ref=e670]:
+                    - paragraph [ref=e671]: Class XI
+                    - paragraph [ref=e672]: India Physical Environment
+                    - paragraph [ref=e673]: Geography
+                  - img [ref=e674]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Geography India Physical Environment PDF":
+                - /url: /api/books/kegy1/download
+                - img
+                - text: Download
+            - generic [ref=e675]:
+              - button "Open Class XI Geography Pratical Work in Geography" [ref=e676]:
+                - generic [ref=e677]:
+                  - generic [ref=e680]:
+                    - paragraph [ref=e681]: Class XI
+                    - paragraph [ref=e682]: Pratical Work in Geography
+                    - paragraph [ref=e683]: Geography
+                  - img [ref=e684]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Geography Pratical Work in Geography PDF":
+                - /url: /api/books/kegy3/download
+                - img
+                - text: Download
+            - generic [ref=e685]:
+              - button "Open Class XII Geography Fundamentals of Human Geography" [ref=e686]:
+                - generic [ref=e687]:
+                  - generic [ref=e690]:
+                    - paragraph [ref=e691]: Class XII
+                    - paragraph [ref=e692]: Fundamentals of Human Geography
+                    - paragraph [ref=e693]: Geography
+                  - img [ref=e694]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Geography Fundamentals of Human Geography PDF":
+                - /url: /api/books/legy1/download
+                - img
+                - text: Download
+            - generic [ref=e695]:
+              - button "Open Class XII Geography India -People And Economy" [ref=e696]:
+                - generic [ref=e697]:
+                  - generic [ref=e700]:
+                    - paragraph [ref=e701]: Class XII
+                    - paragraph [ref=e702]: India -People And Economy
+                    - paragraph [ref=e703]: Geography
+                  - img [ref=e704]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Geography India -People And Economy PDF":
+                - /url: /api/books/legy2/download
+                - img
+                - text: Download
+            - generic [ref=e705]:
+              - button "Open Class XII Geography Practical Work in Geography Part II" [ref=e706]:
+                - generic [ref=e707]:
+                  - generic [ref=e710]:
+                    - paragraph [ref=e711]: Class XII
+                    - paragraph [ref=e712]: Practical Work in Geography Part II
+                    - paragraph [ref=e713]: Geography
+                  - img [ref=e714]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Geography Practical Work in Geography Part II PDF":
+                - /url: /api/books/legy3/download
+                - img
+                - text: Download
+          - generic [ref=e715]:
+            - button "Scroll Geography shelf left" [disabled]:
+              - img
+            - generic "Geography" [ref=e716]
+            - button "Scroll Geography shelf right" [disabled]:
+              - img
+      - region "Health and Physical Education" [ref=e717]:
+        - heading "Health and Physical Education" [level=2] [ref=e718]
+        - generic [ref=e720]:
+          - generic [ref=e722]:
+            - generic [ref=e723]:
+              - button "Open Class III Physical Education and Well Being Khel Yoga" [ref=e724]:
+                - generic [ref=e725]:
+                  - generic [ref=e728]:
+                    - paragraph [ref=e729]: Class III
+                    - paragraph [ref=e730]: Khel Yoga
+                    - paragraph [ref=e731]: Physical Education and Well Being
+                  - img [ref=e732]
+                - generic:
+                  - generic: Class III
+              - link "Download Class III Physical Education and Well Being Khel Yoga PDF":
+                - /url: /api/books/ceky1/download
+                - img
+                - text: Download
+            - generic [ref=e733]:
+              - button "Open Class IV Physical Education and Well Being Khel Yoga" [ref=e734]:
+                - generic [ref=e735]:
+                  - generic [ref=e738]:
+                    - paragraph [ref=e739]: Class IV
+                    - paragraph [ref=e740]: Khel Yoga
+                    - paragraph [ref=e741]: Physical Education and Well Being
+                  - img [ref=e742]
+                - generic:
+                  - generic: Class IV
+              - link "Download Class IV Physical Education and Well Being Khel Yoga PDF":
+                - /url: /api/books/deky1/download
+                - img
+                - text: Download
+            - generic [ref=e743]:
+              - button "Open Class V Physical Education and Well Being Khel Yoga" [ref=e744]:
+                - generic [ref=e745]:
+                  - generic [ref=e748]:
+                    - paragraph [ref=e749]: Class V
+                    - paragraph [ref=e750]: Khel Yoga
+                    - paragraph [ref=e751]: Physical Education and Well Being
+                  - img [ref=e752]
+                - generic:
+                  - generic: Class V
+              - link "Download Class V Physical Education and Well Being Khel Yoga PDF":
+                - /url: /api/books/eeky1/download
+                - img
+                - text: Download
+            - generic [ref=e753]:
+              - button "Open Class VI Physical Education and Well Being Khel Yatra" [ref=e754]:
+                - generic [ref=e755]:
+                  - generic [ref=e758]:
+                    - paragraph [ref=e759]: Class VI
+                    - paragraph [ref=e760]: Khel Yatra
+                    - paragraph [ref=e761]: Physical Education and Well Being
+                  - img [ref=e762]
+                - generic:
+                  - generic: Class VI
+              - link "Download Class VI Physical Education and Well Being Khel Yatra PDF":
+                - /url: /api/books/feky1/download
+                - img
+                - text: Download
+            - generic [ref=e763]:
+              - button "Open Class VII Physical Education and Well Being Khel Yatra" [ref=e764]:
+                - generic [ref=e765]:
+                  - generic [ref=e768]:
+                    - paragraph [ref=e769]: Class VII
+                    - paragraph [ref=e770]: Khel Yatra
+                    - paragraph [ref=e771]: Physical Education and Well Being
+                  - img [ref=e772]
+                - generic:
+                  - generic: Class VII
+              - link "Download Class VII Physical Education and Well Being Khel Yatra PDF":
+                - /url: /api/books/geky1/download
+                - img
+                - text: Download
+            - generic [ref=e773]:
+              - button "Open Class VIII Physical Education and Well Being Khel Yatra" [ref=e774]:
+                - generic [ref=e775]:
+                  - generic [ref=e778]:
+                    - paragraph [ref=e779]: Class VIII
+                    - paragraph [ref=e780]: Khel Yatra
+                    - paragraph [ref=e781]: Physical Education and Well Being
+                  - img [ref=e782]
+                - generic:
+                  - generic: Class VIII
+              - link "Download Class VIII Physical Education and Well Being Khel Yatra PDF":
+                - /url: /api/books/heky1/download
+                - img
+                - text: Download
+            - generic [ref=e783]:
+              - button "Open Class IX Health and Physical Education Health and Physical Education" [ref=e784]:
+                - generic [ref=e785]:
+                  - generic [ref=e788]:
+                    - paragraph [ref=e789]: Class IX
+                    - paragraph [ref=e790]: Health and Physical Education
+                    - paragraph [ref=e791]: Health and Physical Education
+                  - img [ref=e792]
+                - generic:
+                  - generic: Class IX
+              - link "Download Class IX Health and Physical Education Health and Physical Education PDF":
+                - /url: /api/books/iehp1/download
+                - img
+                - text: Download
+            - generic [ref=e793]:
+              - button "Open Class X Health and Physical Education Health and Physical Education" [ref=e794]:
+                - generic [ref=e795]:
+                  - generic [ref=e798]:
+                    - paragraph [ref=e799]: Class X
+                    - paragraph [ref=e800]: Health and Physical Education
+                    - paragraph [ref=e801]: Health and Physical Education
+                  - img [ref=e802]
+                - generic:
+                  - generic: Class X
+              - link "Download Class X Health and Physical Education Health and Physical Education PDF":
+                - /url: /api/books/jehp1/download
+                - img
+                - text: Download
+            - generic [ref=e803]:
+              - button "Open Class XI Health and Physical Education Health and Physical Education" [ref=e804]:
+                - generic [ref=e805]:
+                  - generic [ref=e808]:
+                    - paragraph [ref=e809]: Class XI
+                    - paragraph [ref=e810]: Health and Physical Education
+                    - paragraph [ref=e811]: Health and Physical Education
+                  - img [ref=e812]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Health and Physical Education Health and Physical Education PDF":
+                - /url: /api/books/kehp1/download
+                - img
+                - text: Download
+          - generic [ref=e813]:
+            - button "Scroll Health and Physical Education shelf left" [disabled]:
+              - img
+            - generic "Health and Physical Education" [ref=e814]
+            - button "Scroll Health and Physical Education shelf right" [disabled]:
+              - img
+      - region "History" [ref=e815]:
+        - heading "History" [level=2] [ref=e816]
+        - generic [ref=e818]:
+          - generic [ref=e820]:
+            - generic [ref=e821]:
+              - button "Open Class XI History Themes in World History" [ref=e822]:
+                - generic [ref=e823]:
+                  - generic [ref=e826]:
+                    - paragraph [ref=e827]: Class XI
+                    - paragraph [ref=e828]: Themes in World History
+                    - paragraph [ref=e829]: History
+                  - img [ref=e830]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI History Themes in World History PDF":
+                - /url: /api/books/kehs1/download
+                - img
+                - text: Download
+            - generic [ref=e831]:
+              - button "Open Class XII History Themes in Indian History-I" [ref=e832]:
+                - generic [ref=e833]:
+                  - generic [ref=e836]:
+                    - paragraph [ref=e837]: Class XII
+                    - paragraph [ref=e838]: Themes in Indian History-I
+                    - paragraph [ref=e839]: History
+                  - img [ref=e840]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII History Themes in Indian History-I PDF":
+                - /url: /api/books/lehs1/download
+                - img
+                - text: Download
+            - generic [ref=e841]:
+              - button "Open Class XII History Themes in Indian History-II" [ref=e842]:
+                - generic [ref=e843]:
+                  - generic [ref=e846]:
+                    - paragraph [ref=e847]: Class XII
+                    - paragraph [ref=e848]: Themes in Indian History-II
+                    - paragraph [ref=e849]: History
+                  - img [ref=e850]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII History Themes in Indian History-II PDF":
+                - /url: /api/books/lehs2/download
+                - img
+                - text: Download
+            - generic [ref=e851]:
+              - button "Open Class XII History Themes in Indian History-III" [ref=e852]:
+                - generic [ref=e853]:
+                  - generic [ref=e856]:
+                    - paragraph [ref=e857]: Class XII
+                    - paragraph [ref=e858]: Themes in Indian History-III
+                    - paragraph [ref=e859]: History
+                  - img [ref=e860]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII History Themes in Indian History-III PDF":
+                - /url: /api/books/lehs3/download
+                - img
+                - text: Download
+          - generic [ref=e861]:
+            - button "Scroll History shelf left" [disabled]:
+              - img
+            - generic "History" [ref=e862]
+            - button "Scroll History shelf right" [disabled]:
+              - img
+      - region "Home Science" [ref=e863]:
+        - heading "Home Science" [level=2] [ref=e864]
+        - generic [ref=e866]:
+          - generic [ref=e868]:
+            - generic [ref=e869]:
+              - button "Open Class XI Home Science Human Ecology and Family Sciences Part I" [ref=e870]:
+                - generic [ref=e871]:
+                  - generic [ref=e874]:
+                    - paragraph [ref=e875]: Class XI
+                    - paragraph [ref=e876]: Human Ecology and Family Sciences Part I
+                    - paragraph [ref=e877]: Home Science
+                  - img [ref=e878]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Home Science Human Ecology and Family Sciences Part I PDF":
+                - /url: /api/books/kehe1/download
+                - img
+                - text: Download
+            - generic [ref=e879]:
+              - button "Open Class XI Home Science Human Ecology and Family Sciences Part II" [ref=e880]:
+                - generic [ref=e881]:
+                  - generic [ref=e884]:
+                    - paragraph [ref=e885]: Class XI
+                    - paragraph [ref=e886]: Human Ecology and Family Sciences Part II
+                    - paragraph [ref=e887]: Home Science
+                  - img [ref=e888]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Home Science Human Ecology and Family Sciences Part II PDF":
+                - /url: /api/books/kehe2/download
+                - img
+                - text: Download
+            - generic [ref=e889]:
+              - button "Open Class XII Home Science Human Ecology and Family Sciences Part I" [ref=e890]:
+                - generic [ref=e891]:
+                  - generic [ref=e894]:
+                    - paragraph [ref=e895]: Class XII
+                    - paragraph [ref=e896]: Human Ecology and Family Sciences Part I
+                    - paragraph [ref=e897]: Home Science
+                  - img [ref=e898]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Home Science Human Ecology and Family Sciences Part I PDF":
+                - /url: /api/books/lehe1/download
+                - img
+                - text: Download
+            - generic [ref=e899]:
+              - button "Open Class XII Home Science Human Ecology and Family Sciences Part II" [ref=e900]:
+                - generic [ref=e901]:
+                  - generic [ref=e904]:
+                    - paragraph [ref=e905]: Class XII
+                    - paragraph [ref=e906]: Human Ecology and Family Sciences Part II
+                    - paragraph [ref=e907]: Home Science
+                  - img [ref=e908]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Home Science Human Ecology and Family Sciences Part II PDF":
+                - /url: /api/books/lehe2/download
+                - img
+                - text: Download
+            - generic [ref=e909]:
+              - button "Open Class XII Home Science Manav Paristhitik avam Parivar Vigyan Bhag 1" [ref=e910]:
+                - generic [ref=e911]:
+                  - generic [ref=e914]:
+                    - paragraph [ref=e915]: Class XII
+                    - paragraph [ref=e916]: Manav Paristhitik avam Parivar Vigyan Bhag 1
+                    - paragraph [ref=e917]: Home Science
+                  - img [ref=e918]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Home Science Manav Paristhitik avam Parivar Vigyan Bhag 1 PDF":
+                - /url: /api/books/lehh1/download
+                - img
+                - text: Download
+            - generic [ref=e919]:
+              - button "Open Class XII Home Science Manav Paristhitiki avam Parivar Vigyan Bhag 2" [ref=e920]:
+                - generic [ref=e921]:
+                  - generic [ref=e924]:
+                    - paragraph [ref=e925]: Class XII
+                    - paragraph [ref=e926]: Manav Paristhitiki avam Parivar Vigyan Bhag 2
+                    - paragraph [ref=e927]: Home Science
+                  - img [ref=e928]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Home Science Manav Paristhitiki avam Parivar Vigyan Bhag 2 PDF":
+                - /url: /api/books/lehh2/download
+                - img
+                - text: Download
+          - generic [ref=e929]:
+            - button "Scroll Home Science shelf left" [disabled]:
+              - img
+            - generic "Home Science" [ref=e930]
+            - button "Scroll Home Science shelf right" [disabled]:
+              - img
+      - region "Informatics Practices" [ref=e931]:
+        - heading "Informatics Practices" [level=2] [ref=e932]
+        - generic [ref=e934]:
+          - generic [ref=e936]:
+            - generic [ref=e937]:
+              - button "Open Class XI Informatics Practices Informatics Practices" [ref=e938]:
+                - generic [ref=e939]:
+                  - generic [ref=e942]:
+                    - paragraph [ref=e943]: Class XI
+                    - paragraph [ref=e944]: Informatics Practices
+                    - paragraph [ref=e945]: Informatics Practices
+                  - img [ref=e946]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Informatics Practices Informatics Practices PDF":
+                - /url: /api/books/keip1/download
+                - img
+                - text: Download
+            - generic [ref=e947]:
+              - button "Open Class XII Informatics Practices Informatics Practices" [ref=e948]:
+                - generic [ref=e949]:
+                  - generic [ref=e952]:
+                    - paragraph [ref=e953]: Class XII
+                    - paragraph [ref=e954]: Informatics Practices
+                    - paragraph [ref=e955]: Informatics Practices
+                  - img [ref=e956]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Informatics Practices Informatics Practices PDF":
+                - /url: /api/books/leip1/download
+                - img
+                - text: Download
+          - generic [ref=e957]:
+            - button "Scroll Informatics Practices shelf left" [disabled]:
+              - img
+            - generic "Informatics Practices" [ref=e958]
+            - button "Scroll Informatics Practices shelf right" [disabled]:
+              - img
+      - region "Knowledge Traditions Practices of India" [ref=e959]:
+        - heading "Knowledge Traditions Practices of India" [level=2] [ref=e960]
+        - generic [ref=e962]:
+          - generic [ref=e965]:
+            - button "Open Class XI Knowledge Traditions Practices of India Knowledge Traditions Practices of India" [ref=e966]:
+              - generic [ref=e967]:
+                - generic [ref=e970]:
+                  - paragraph [ref=e971]: Class XI
+                  - paragraph [ref=e972]: Knowledge Traditions Practices of India
+                  - paragraph [ref=e973]: Knowledge Traditions Practices of India
+                - img [ref=e974]
+              - generic:
+                - generic: Class XI
+            - link "Download Class XI Knowledge Traditions Practices of India Knowledge Traditions Practices of India PDF":
+              - /url: /api/books/keks1/download
+              - img
+              - text: Download
+          - generic [ref=e975]:
+            - button "Scroll Knowledge Traditions Practices of India shelf left" [disabled]:
+              - img
+            - generic "Knowledge Traditions Practices of India" [ref=e976]
+            - button "Scroll Knowledge Traditions Practices of India shelf right" [disabled]:
+              - img
+      - region "Mathematics" [ref=e977]:
+        - heading "Mathematics" [level=2] [ref=e978]
+        - generic [ref=e980]:
+          - generic [ref=e982]:
+            - generic [ref=e983]:
+              - button "Open Class I Mathematics Joyful-Mathematics (English)" [ref=e984]:
+                - generic [ref=e985]:
+                  - generic [ref=e988]:
+                    - paragraph [ref=e989]: Class I
+                    - paragraph [ref=e990]: Joyful-Mathematics (English)
+                    - paragraph [ref=e991]: Mathematics
+                  - img [ref=e992]
+                - generic:
+                  - generic: Class I
+              - link "Download Class I Mathematics Joyful-Mathematics (English) PDF":
+                - /url: /api/books/aejm1/download
+                - img
+                - text: Download
+            - generic [ref=e993]:
+              - button "Open Class II Mathematics Joyful-Mathematics (English)" [ref=e994]:
+                - generic [ref=e995]:
+                  - generic [ref=e998]:
+                    - paragraph [ref=e999]: Class II
+                    - paragraph [ref=e1000]: Joyful-Mathematics (English)
+                    - paragraph [ref=e1001]: Mathematics
+                  - img [ref=e1002]
+                - generic:
+                  - generic: Class II
+              - link "Download Class II Mathematics Joyful-Mathematics (English) PDF":
+                - /url: /api/books/bejm1/download
+                - img
+                - text: Download
+            - generic [ref=e1003]:
+              - button "Open Class III Mathematics Maths Mela" [ref=e1004]:
+                - generic [ref=e1005]:
+                  - generic [ref=e1008]:
+                    - paragraph [ref=e1009]: Class III
+                    - paragraph [ref=e1010]: Maths Mela
+                    - paragraph [ref=e1011]: Mathematics
+                  - img [ref=e1012]
+                - generic:
+                  - generic: Class III
+              - link "Download Class III Mathematics Maths Mela PDF":
+                - /url: /api/books/cemm1/download
+                - img
+                - text: Download
+            - generic [ref=e1013]:
+              - button "Open Class IV Mathematics Math-Mela" [ref=e1014]:
+                - generic [ref=e1015]:
+                  - generic [ref=e1018]:
+                    - paragraph [ref=e1019]: Class IV
+                    - paragraph [ref=e1020]: Math-Mela
+                    - paragraph [ref=e1021]: Mathematics
+                  - img [ref=e1022]
+                - generic:
+                  - generic: Class IV
+              - link "Download Class IV Mathematics Math-Mela PDF":
+                - /url: /api/books/demm1/download
+                - img
+                - text: Download
+            - generic [ref=e1023]:
+              - button "Open Class V Mathematics Math-Mela" [ref=e1024]:
+                - generic [ref=e1025]:
+                  - generic [ref=e1028]:
+                    - paragraph [ref=e1029]: Class V
+                    - paragraph [ref=e1030]: Math-Mela
+                    - paragraph [ref=e1031]: Mathematics
+                  - img [ref=e1032]
+                - generic:
+                  - generic: Class V
+              - link "Download Class V Mathematics Math-Mela PDF":
+                - /url: /api/books/eemm1/download
+                - img
+                - text: Download
+            - generic [ref=e1033]:
+              - button "Open Class VI Mathematics Ganita Prakash" [ref=e1034]:
+                - generic [ref=e1035]:
+                  - generic [ref=e1038]:
+                    - paragraph [ref=e1039]: Class VI
+                    - paragraph [ref=e1040]: Ganita Prakash
+                    - paragraph [ref=e1041]: Mathematics
+                  - img [ref=e1042]
+                - generic:
+                  - generic: Class VI
+              - link "Download Class VI Mathematics Ganita Prakash PDF":
+                - /url: /api/books/fegp1/download
+                - img
+                - text: Download
+            - generic [ref=e1043]:
+              - button "Open Class VII Mathematics Ganita Prakash" [ref=e1044]:
+                - generic [ref=e1045]:
+                  - generic [ref=e1048]:
+                    - paragraph [ref=e1049]: Class VII
+                    - paragraph [ref=e1050]: Ganita Prakash
+                    - paragraph [ref=e1051]: Mathematics
+                  - img [ref=e1052]
+                - generic:
+                  - generic: Class VII
+              - link "Download Class VII Mathematics Ganita Prakash PDF":
+                - /url: /api/books/gegp1/download
+                - img
+                - text: Download
+            - generic [ref=e1053]:
+              - button "Open Class VII Mathematics Ganita Prakash-II" [ref=e1054]:
+                - generic [ref=e1055]:
+                  - generic [ref=e1058]:
+                    - paragraph [ref=e1059]: Class VII
+                    - paragraph [ref=e1060]: Ganita Prakash-II
+                    - paragraph [ref=e1061]: Mathematics
+                  - img [ref=e1062]
+                - generic:
+                  - generic: Class VII
+              - link "Download Class VII Mathematics Ganita Prakash-II PDF":
+                - /url: /api/books/gegp2/download
+                - img
+                - text: Download
+            - generic [ref=e1063]:
+              - button "Open Class VIII Mathematics Ganita Prakash Part-I" [ref=e1064]:
+                - generic [ref=e1065]:
+                  - generic [ref=e1068]:
+                    - paragraph [ref=e1069]: Class VIII
+                    - paragraph [ref=e1070]: Ganita Prakash Part-I
+                    - paragraph [ref=e1071]: Mathematics
+                  - img [ref=e1072]
+                - generic:
+                  - generic: Class VIII
+              - link "Download Class VIII Mathematics Ganita Prakash Part-I PDF":
+                - /url: /api/books/hegp1/download
+                - img
+                - text: Download
+            - generic [ref=e1073]:
+              - button "Open Class VIII Mathematics Ganita Prakash Part-II" [ref=e1074]:
+                - generic [ref=e1075]:
+                  - generic [ref=e1078]:
+                    - paragraph [ref=e1079]: Class VIII
+                    - paragraph [ref=e1080]: Ganita Prakash Part-II
+                    - paragraph [ref=e1081]: Mathematics
+                  - img [ref=e1082]
+                - generic:
+                  - generic: Class VIII
+              - link "Download Class VIII Mathematics Ganita Prakash Part-II PDF":
+                - /url: /api/books/hegp2/download
+                - img
+                - text: Download
+            - generic [ref=e1083]:
+              - button "Open Class IX Mathematics Mathematics" [ref=e1084]:
+                - generic [ref=e1085]:
+                  - generic [ref=e1088]:
+                    - paragraph [ref=e1089]: Class IX
+                    - paragraph [ref=e1091]: Mathematics
+                    - paragraph [ref=e1092]: Mathematics
+                  - img [ref=e1093]
+                - generic:
+                  - generic: Class IX
+              - link "Download Class IX Mathematics Mathematics PDF":
+                - /url: /api/books/iemh1/download
+                - img
+                - text: Download
+            - generic [ref=e1094]:
+              - button "Open Class X Mathematics Mathematics" [ref=e1095]:
+                - generic [ref=e1096]:
+                  - generic [ref=e1099]:
+                    - paragraph [ref=e1100]: Class X
+                    - paragraph [ref=e1102]: Mathematics
+                    - paragraph [ref=e1103]: Mathematics
+                  - img [ref=e1104]
+                - generic:
+                  - generic: Class X
+              - link "Download Class X Mathematics Mathematics PDF":
+                - /url: /api/books/jemh1/download
+                - img
+                - text: Download
+            - generic [ref=e1105]:
+              - button "Open Class XI Mathematics Mathematics" [ref=e1106]:
+                - generic [ref=e1107]:
+                  - generic [ref=e1110]:
+                    - paragraph [ref=e1111]: Class XI
+                    - paragraph [ref=e1113]: Mathematics
+                    - paragraph [ref=e1114]: Mathematics
+                  - img [ref=e1115]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Mathematics Mathematics PDF":
+                - /url: /api/books/kemh1/download
+                - img
+                - text: Download
+            - generic [ref=e1116]:
+              - button "Open Class XII Mathematics Mathematics Part-I" [ref=e1117]:
+                - generic [ref=e1118]:
+                  - generic [ref=e1121]:
+                    - paragraph [ref=e1122]: Class XII
+                    - paragraph [ref=e1123]: Mathematics Part-I
+                    - paragraph [ref=e1124]: Mathematics
+                  - img [ref=e1125]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Mathematics Mathematics Part-I PDF":
+                - /url: /api/books/lemh1/download
+                - img
+                - text: Download
+            - generic [ref=e1126]:
+              - button "Open Class XII Mathematics Mathematics Part-II" [ref=e1127]:
+                - generic [ref=e1128]:
+                  - generic [ref=e1131]:
+                    - paragraph [ref=e1132]: Class XII
+                    - paragraph [ref=e1133]: Mathematics Part-II
+                    - paragraph [ref=e1134]: Mathematics
+                  - img [ref=e1135]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Mathematics Mathematics Part-II PDF":
+                - /url: /api/books/lemh2/download
+                - img
+                - text: Download
+          - generic [ref=e1136]:
+            - button "Scroll Mathematics shelf left" [disabled]:
+              - img
+            - generic "Mathematics" [ref=e1137]
+            - button "Scroll Mathematics shelf right" [disabled]:
+              - img
+      - region "Physics" [ref=e1138]:
+        - heading "Physics" [level=2] [ref=e1139]
+        - generic [ref=e1141]:
+          - generic [ref=e1143]:
+            - generic [ref=e1144]:
+              - button "Open Class XI Physics Physics Part-I" [ref=e1145]:
+                - generic [ref=e1146]:
+                  - generic [ref=e1149]:
+                    - paragraph [ref=e1150]: Class XI
+                    - paragraph [ref=e1151]: Physics Part-I
+                    - paragraph [ref=e1152]: Physics
+                  - img [ref=e1153]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Physics Physics Part-I PDF":
+                - /url: /api/books/keph1/download
+                - img
+                - text: Download
+            - generic [ref=e1154]:
+              - button "Open Class XI Physics Physics Part-II" [ref=e1155]:
+                - generic [ref=e1156]:
+                  - generic [ref=e1159]:
+                    - paragraph [ref=e1160]: Class XI
+                    - paragraph [ref=e1161]: Physics Part-II
+                    - paragraph [ref=e1162]: Physics
+                  - img [ref=e1163]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Physics Physics Part-II PDF":
+                - /url: /api/books/keph2/download
+                - img
+                - text: Download
+            - generic [ref=e1164]:
+              - button "Open Class XII Physics Physics Part-I" [ref=e1165]:
+                - generic [ref=e1166]:
+                  - generic [ref=e1169]:
+                    - paragraph [ref=e1170]: Class XII
+                    - paragraph [ref=e1171]: Physics Part-I
+                    - paragraph [ref=e1172]: Physics
+                  - img [ref=e1173]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Physics Physics Part-I PDF":
+                - /url: /api/books/leph1/download
+                - img
+                - text: Download
+            - generic [ref=e1174]:
+              - button "Open Class XII Physics Physics Part-II" [ref=e1175]:
+                - generic [ref=e1176]:
+                  - generic [ref=e1179]:
+                    - paragraph [ref=e1180]: Class XII
+                    - paragraph [ref=e1181]: Physics Part-II
+                    - paragraph [ref=e1182]: Physics
+                  - img [ref=e1183]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Physics Physics Part-II PDF":
+                - /url: /api/books/leph2/download
+                - img
+                - text: Download
+          - generic [ref=e1184]:
+            - button "Scroll Physics shelf left" [disabled]:
+              - img
+            - generic "Physics" [ref=e1185]
+            - button "Scroll Physics shelf right" [disabled]:
+              - img
+      - region "Political Science" [ref=e1186]:
+        - heading "Political Science" [level=2] [ref=e1187]
+        - generic [ref=e1189]:
+          - generic [ref=e1191]:
+            - generic [ref=e1192]:
+              - button "Open Class XI Political Science India Constitution at Work" [ref=e1193]:
+                - generic [ref=e1194]:
+                  - generic [ref=e1197]:
+                    - paragraph [ref=e1198]: Class XI
+                    - paragraph [ref=e1199]: India Constitution at Work
+                    - paragraph [ref=e1200]: Political Science
+                  - img [ref=e1201]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Political Science India Constitution at Work PDF":
+                - /url: /api/books/keps2/download
+                - img
+                - text: Download
+            - generic [ref=e1202]:
+              - button "Open Class XI Political Science Political Theory" [ref=e1203]:
+                - generic [ref=e1204]:
+                  - generic [ref=e1207]:
+                    - paragraph [ref=e1208]: Class XI
+                    - paragraph [ref=e1209]: Political Theory
+                    - paragraph [ref=e1210]: Political Science
+                  - img [ref=e1211]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Political Science Political Theory PDF":
+                - /url: /api/books/keps1/download
+                - img
+                - text: Download
+            - generic [ref=e1212]:
+              - button "Open Class XII Political Science Contemporary World Politics" [ref=e1213]:
+                - generic [ref=e1214]:
+                  - generic [ref=e1217]:
+                    - paragraph [ref=e1218]: Class XII
+                    - paragraph [ref=e1219]: Contemporary World Politics
+                    - paragraph [ref=e1220]: Political Science
+                  - img [ref=e1221]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Political Science Contemporary World Politics PDF":
+                - /url: /api/books/leps1/download
+                - img
+                - text: Download
+            - generic [ref=e1222]:
+              - button "Open Class XII Political Science Politics in India Since Independence" [ref=e1223]:
+                - generic [ref=e1224]:
+                  - generic [ref=e1227]:
+                    - paragraph [ref=e1228]: Class XII
+                    - paragraph [ref=e1229]: Politics in India Since Independence
+                    - paragraph [ref=e1230]: Political Science
+                  - img [ref=e1231]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Political Science Politics in India Since Independence PDF":
+                - /url: /api/books/leps2/download
+                - img
+                - text: Download
+          - generic [ref=e1232]:
+            - button "Scroll Political Science shelf left" [disabled]:
+              - img
+            - generic "Political Science" [ref=e1233]
+            - button "Scroll Political Science shelf right" [disabled]:
+              - img
+      - region "Psychology" [ref=e1234]:
+        - heading "Psychology" [level=2] [ref=e1235]
+        - generic [ref=e1237]:
+          - generic [ref=e1239]:
+            - generic [ref=e1240]:
+              - button "Open Class XI Psychology Introduction to Psychology" [ref=e1241]:
+                - generic [ref=e1242]:
+                  - generic [ref=e1245]:
+                    - paragraph [ref=e1246]: Class XI
+                    - paragraph [ref=e1247]: Introduction to Psychology
+                    - paragraph [ref=e1248]: Psychology
+                  - img [ref=e1249]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Psychology Introduction to Psychology PDF":
+                - /url: /api/books/kepy1/download
+                - img
+                - text: Download
+            - generic [ref=e1250]:
+              - button "Open Class XII Psychology Psychology" [ref=e1251]:
+                - generic [ref=e1252]:
+                  - generic [ref=e1255]:
+                    - paragraph [ref=e1256]: Class XII
+                    - paragraph [ref=e1258]: Psychology
+                    - paragraph [ref=e1259]: Psychology
+                  - img [ref=e1260]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Psychology Psychology PDF":
+                - /url: /api/books/lepy1/download
+                - img
+                - text: Download
+          - generic [ref=e1261]:
+            - button "Scroll Psychology shelf left" [disabled]:
+              - img
+            - generic "Psychology" [ref=e1262]
+            - button "Scroll Psychology shelf right" [disabled]:
+              - img
+      - region "Science" [ref=e1263]:
+        - heading "Science" [level=2] [ref=e1264]
+        - generic [ref=e1266]:
+          - generic [ref=e1268]:
+            - generic [ref=e1269]:
+              - button "Open Class VI Science Curiosity" [ref=e1270]:
+                - generic [ref=e1271]:
+                  - generic [ref=e1274]:
+                    - paragraph [ref=e1275]: Class VI
+                    - paragraph [ref=e1277]: Curiosity
+                    - paragraph [ref=e1278]: Science
+                  - img [ref=e1279]
+                - generic:
+                  - generic: Class VI
+              - link "Download Class VI Science Curiosity PDF":
+                - /url: /api/books/fecu1/download
+                - img
+                - text: Download
+            - generic [ref=e1280]:
+              - button "Open Class VII Science Curiosity" [ref=e1281]:
+                - generic [ref=e1282]:
+                  - generic [ref=e1285]:
+                    - paragraph [ref=e1286]: Class VII
+                    - paragraph [ref=e1288]: Curiosity
+                    - paragraph [ref=e1289]: Science
+                  - img [ref=e1290]
+                - generic:
+                  - generic: Class VII
+              - link "Download Class VII Science Curiosity PDF":
+                - /url: /api/books/gecu1/download
+                - img
+                - text: Download
+            - generic [ref=e1291]:
+              - button "Open Class VIII Science Curiosity" [ref=e1292]:
+                - generic [ref=e1293]:
+                  - generic [ref=e1296]:
+                    - paragraph [ref=e1297]: Class VIII
+                    - paragraph [ref=e1299]: Curiosity
+                    - paragraph [ref=e1300]: Science
+                  - img [ref=e1301]
+                - generic:
+                  - generic: Class VIII
+              - link "Download Class VIII Science Curiosity PDF":
+                - /url: /api/books/hecu1/download
+                - img
+                - text: Download
+            - generic [ref=e1302]:
+              - button "Open Class IX Science Science" [ref=e1303]:
+                - generic [ref=e1304]:
+                  - generic [ref=e1307]:
+                    - paragraph [ref=e1308]: Class IX
+                    - paragraph [ref=e1310]: Science
+                    - paragraph [ref=e1311]: Science
+                  - img [ref=e1312]
+                - generic:
+                  - generic: Class IX
+              - link "Download Class IX Science Science PDF":
+                - /url: /api/books/iesc1/download
+                - img
+                - text: Download
+            - generic [ref=e1313]:
+              - button "Open Class X Science Science" [ref=e1314]:
+                - generic [ref=e1315]:
+                  - generic [ref=e1318]:
+                    - paragraph [ref=e1319]: Class X
+                    - paragraph [ref=e1321]: Science
+                    - paragraph [ref=e1322]: Science
+                  - img [ref=e1323]
+                - generic:
+                  - generic: Class X
+              - link "Download Class X Science Science PDF":
+                - /url: /api/books/jesc1/download
+                - img
+                - text: Download
+          - generic [ref=e1324]:
+            - button "Scroll Science shelf left" [disabled]:
+              - img
+            - generic "Science" [ref=e1325]
+            - button "Scroll Science shelf right" [disabled]:
+              - img
+      - region "Social Science" [ref=e1326]:
+        - heading "Social Science" [level=2] [ref=e1327]
+        - generic [ref=e1329]:
+          - generic [ref=e1331]:
+            - generic [ref=e1332]:
+              - button "Open Class VI Social Science Exploring Society India and Beyond" [ref=e1333]:
+                - generic [ref=e1334]:
+                  - generic [ref=e1337]:
+                    - paragraph [ref=e1338]: Class VI
+                    - paragraph [ref=e1339]: Exploring Society India and Beyond
+                    - paragraph [ref=e1340]: Social Science
+                  - img [ref=e1341]
+                - generic:
+                  - generic: Class VI
+              - link "Download Class VI Social Science Exploring Society India and Beyond PDF":
+                - /url: /api/books/fees1/download
+                - img
+                - text: Download
+            - generic [ref=e1342]:
+              - button "Open Class VII Social Science Exploring Society India and Beyond Part-I" [ref=e1343]:
+                - generic [ref=e1344]:
+                  - generic [ref=e1347]:
+                    - paragraph [ref=e1348]: Class VII
+                    - paragraph [ref=e1349]: Exploring Society India and Beyond Part-I
+                    - paragraph [ref=e1350]: Social Science
+                  - img [ref=e1351]
+                - generic:
+                  - generic: Class VII
+              - link "Download Class VII Social Science Exploring Society India and Beyond Part-I PDF":
+                - /url: /api/books/gees1/download
+                - img
+                - text: Download
+            - generic [ref=e1352]:
+              - button "Open Class VII Social Science Exploring Society India and Beyond Part-II" [ref=e1353]:
+                - generic [ref=e1354]:
+                  - generic [ref=e1357]:
+                    - paragraph [ref=e1358]: Class VII
+                    - paragraph [ref=e1359]: Exploring Society India and Beyond Part-II
+                    - paragraph [ref=e1360]: Social Science
+                  - img [ref=e1361]
+                - generic:
+                  - generic: Class VII
+              - link "Download Class VII Social Science Exploring Society India and Beyond Part-II PDF":
+                - /url: /api/books/gees2/download
+                - img
+                - text: Download
+            - generic [ref=e1362]:
+              - button "Open Class VIII Social Science Exploring Society India and Beyond Part-I" [ref=e1363]:
+                - generic [ref=e1364]:
+                  - generic [ref=e1367]:
+                    - paragraph [ref=e1368]: Class VIII
+                    - paragraph [ref=e1369]: Exploring Society India and Beyond Part-I
+                    - paragraph [ref=e1370]: Social Science
+                  - img [ref=e1371]
+                - generic:
+                  - generic: Class VIII
+              - link "Download Class VIII Social Science Exploring Society India and Beyond Part-I PDF":
+                - /url: /api/books/hees1/download
+                - img
+                - text: Download
+            - generic [ref=e1372]:
+              - button "Open Class IX Social Science Contemporary India-I" [ref=e1373]:
+                - generic [ref=e1374]:
+                  - generic [ref=e1377]:
+                    - paragraph [ref=e1378]: Class IX
+                    - paragraph [ref=e1379]: Contemporary India-I
+                    - paragraph [ref=e1380]: Social Science
+                  - img [ref=e1381]
+                - generic:
+                  - generic: Class IX
+              - link "Download Class IX Social Science Contemporary India-I PDF":
+                - /url: /api/books/iess1/download
+                - img
+                - text: Download
+            - generic [ref=e1382]:
+              - button "Open Class IX Social Science Democratic Politics-I" [ref=e1383]:
+                - generic [ref=e1384]:
+                  - generic [ref=e1387]:
+                    - paragraph [ref=e1388]: Class IX
+                    - paragraph [ref=e1389]: Democratic Politics-I
+                    - paragraph [ref=e1390]: Social Science
+                  - img [ref=e1391]
+                - generic:
+                  - generic: Class IX
+              - link "Download Class IX Social Science Democratic Politics-I PDF":
+                - /url: /api/books/iess4/download
+                - img
+                - text: Download
+            - generic [ref=e1392]:
+              - button "Open Class IX Social Science Economics" [ref=e1393]:
+                - generic [ref=e1394]:
+                  - generic [ref=e1397]:
+                    - paragraph [ref=e1398]: Class IX
+                    - paragraph [ref=e1399]: Economics
+                    - paragraph [ref=e1400]: Social Science
+                  - img [ref=e1401]
+                - generic:
+                  - generic: Class IX
+              - link "Download Class IX Social Science Economics PDF":
+                - /url: /api/books/iess2/download
+                - img
+                - text: Download
+            - generic [ref=e1402]:
+              - button "Open Class IX Social Science India and the Contemporary World-I" [ref=e1403]:
+                - generic [ref=e1404]:
+                  - generic [ref=e1407]:
+                    - paragraph [ref=e1408]: Class IX
+                    - paragraph [ref=e1409]: India and the Contemporary World-I
+                    - paragraph [ref=e1410]: Social Science
+                  - img [ref=e1411]
+                - generic:
+                  - generic: Class IX
+              - link "Download Class IX Social Science India and the Contemporary World-I PDF":
+                - /url: /api/books/iess3/download
+                - img
+                - text: Download
+            - generic [ref=e1412]:
+              - button "Open Class X Social Science Contemporary India" [ref=e1413]:
+                - generic [ref=e1414]:
+                  - generic [ref=e1417]:
+                    - paragraph [ref=e1418]: Class X
+                    - paragraph [ref=e1419]: Contemporary India
+                    - paragraph [ref=e1420]: Social Science
+                  - img [ref=e1421]
+                - generic:
+                  - generic: Class X
+              - link "Download Class X Social Science Contemporary India PDF":
+                - /url: /api/books/jess1/download
+                - img
+                - text: Download
+            - generic [ref=e1422]:
+              - button "Open Class X Social Science Democratic Politics" [ref=e1423]:
+                - generic [ref=e1424]:
+                  - generic [ref=e1427]:
+                    - paragraph [ref=e1428]: Class X
+                    - paragraph [ref=e1429]: Democratic Politics
+                    - paragraph [ref=e1430]: Social Science
+                  - img [ref=e1431]
+                - generic:
+                  - generic: Class X
+              - link "Download Class X Social Science Democratic Politics PDF":
+                - /url: /api/books/jess4/download
+                - img
+                - text: Download
+            - generic [ref=e1432]:
+              - button "Open Class X Social Science India and the Contemporary World-II" [ref=e1433]:
+                - generic [ref=e1434]:
+                  - generic [ref=e1437]:
+                    - paragraph [ref=e1438]: Class X
+                    - paragraph [ref=e1439]: India and the Contemporary World-II
+                    - paragraph [ref=e1440]: Social Science
+                  - img [ref=e1441]
+                - generic:
+                  - generic: Class X
+              - link "Download Class X Social Science India and the Contemporary World-II PDF":
+                - /url: /api/books/jess3/download
+                - img
+                - text: Download
+            - generic [ref=e1442]:
+              - button "Open Class X Social Science Understanding Economic Development" [ref=e1443]:
+                - generic [ref=e1444]:
+                  - generic [ref=e1447]:
+                    - paragraph [ref=e1448]: Class X
+                    - paragraph [ref=e1449]: Understanding Economic Development
+                    - paragraph [ref=e1450]: Social Science
+                  - img [ref=e1451]
+                - generic:
+                  - generic: Class X
+              - link "Download Class X Social Science Understanding Economic Development PDF":
+                - /url: /api/books/jess2/download
+                - img
+                - text: Download
+          - generic [ref=e1452]:
+            - button "Scroll Social Science shelf left" [disabled]:
+              - img
+            - generic "Social Science" [ref=e1453]
+            - button "Scroll Social Science shelf right" [disabled]:
+              - img
+      - region "Sociology" [ref=e1454]:
+        - heading "Sociology" [level=2] [ref=e1455]
+        - generic [ref=e1457]:
+          - generic [ref=e1459]:
+            - generic [ref=e1460]:
+              - button "Open Class XI Sociology Introducing Sociology" [ref=e1461]:
+                - generic [ref=e1462]:
+                  - generic [ref=e1465]:
+                    - paragraph [ref=e1466]: Class XI
+                    - paragraph [ref=e1467]: Introducing Sociology
+                    - paragraph [ref=e1468]: Sociology
+                  - img [ref=e1469]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Sociology Introducing Sociology PDF":
+                - /url: /api/books/kesy1/download
+                - img
+                - text: Download
+            - generic [ref=e1470]:
+              - button "Open Class XI Sociology Understanding Society" [ref=e1471]:
+                - generic [ref=e1472]:
+                  - generic [ref=e1475]:
+                    - paragraph [ref=e1476]: Class XI
+                    - paragraph [ref=e1477]: Understanding Society
+                    - paragraph [ref=e1478]: Sociology
+                  - img [ref=e1479]
+                - generic:
+                  - generic: Class XI
+              - link "Download Class XI Sociology Understanding Society PDF":
+                - /url: /api/books/kesy2/download
+                - img
+                - text: Download
+            - generic [ref=e1480]:
+              - button "Open Class XII Sociology Indian Society" [ref=e1481]:
+                - generic [ref=e1482]:
+                  - generic [ref=e1485]:
+                    - paragraph [ref=e1486]: Class XII
+                    - paragraph [ref=e1487]: Indian Society
+                    - paragraph [ref=e1488]: Sociology
+                  - img [ref=e1489]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Sociology Indian Society PDF":
+                - /url: /api/books/lesy1/download
+                - img
+                - text: Download
+            - generic [ref=e1490]:
+              - button "Open Class XII Sociology Social Change and Development in India" [ref=e1491]:
+                - generic [ref=e1492]:
+                  - generic [ref=e1495]:
+                    - paragraph [ref=e1496]: Class XII
+                    - paragraph [ref=e1497]: Social Change and Development in India
+                    - paragraph [ref=e1498]: Sociology
+                  - img [ref=e1499]
+                - generic:
+                  - generic: Class XII
+              - link "Download Class XII Sociology Social Change and Development in India PDF":
+                - /url: /api/books/lesy2/download
+                - img
+                - text: Download
+          - generic [ref=e1500]:
+            - button "Scroll Sociology shelf left" [disabled]:
+              - img
+            - generic "Sociology" [ref=e1501]
+            - button "Scroll Sociology shelf right" [disabled]:
+              - img
+      - region "Vocational Education" [ref=e1502]:
+        - heading "Vocational Education" [level=2] [ref=e1503]
+        - generic [ref=e1505]:
+          - generic [ref=e1507]:
+            - generic [ref=e1508]:
+              - button "Open Class VI Vocational Education Kaushal Bodh" [ref=e1509]:
+                - generic [ref=e1510]:
+                  - generic [ref=e1513]:
+                    - paragraph [ref=e1514]: Class VI
+                    - paragraph [ref=e1515]: Kaushal Bodh
+                    - paragraph [ref=e1516]: Vocational Education
+                  - img [ref=e1517]
+                - generic:
+                  - generic: Class VI
+              - link "Download Class VI Vocational Education Kaushal Bodh PDF":
+                - /url: /api/books/fekb1/download
+                - img
+                - text: Download
+            - generic [ref=e1518]:
+              - button "Open Class VII Vocational Education Kaushal Bodh" [ref=e1519]:
+                - generic [ref=e1520]:
+                  - generic [ref=e1523]:
+                    - paragraph [ref=e1524]: Class VII
+                    - paragraph [ref=e1525]: Kaushal Bodh
+                    - paragraph [ref=e1526]: Vocational Education
+                  - img [ref=e1527]
+                - generic:
+                  - generic: Class VII
+              - link "Download Class VII Vocational Education Kaushal Bodh PDF":
+                - /url: /api/books/gekb1/download
+                - img
+                - text: Download
+            - generic [ref=e1528]:
+              - button "Open Class VIII Vocational Education Kaushal Bodh" [ref=e1529]:
+                - generic [ref=e1530]:
+                  - generic [ref=e1533]:
+                    - paragraph [ref=e1534]: Class VIII
+                    - paragraph [ref=e1535]: Kaushal Bodh
+                    - paragraph [ref=e1536]: Vocational Education
+                  - img [ref=e1537]
+                - generic:
+                  - generic: Class VIII
+              - link "Download Class VIII Vocational Education Kaushal Bodh PDF":
+                - /url: /api/books/hekb1/download
+                - img
+                - text: Download
+          - generic [ref=e1538]:
+            - button "Scroll Vocational Education shelf left" [disabled]:
+              - img
+            - generic "Vocational Education" [ref=e1539]
+            - button "Scroll Vocational Education shelf right" [disabled]:
+              - img
+  - button "Open Next.js Dev Tools" [ref=e1545] [cursor=pointer]:
+    - img [ref=e1546]
