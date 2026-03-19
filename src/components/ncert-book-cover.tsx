@@ -1,10 +1,9 @@
 "use client";
 
-import { Download, ExternalLink } from "lucide-react";
+import { Download } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { NcertCatalogBook } from "@/lib/ncert/types";
 
@@ -12,6 +11,7 @@ type NcertBookCoverProps = {
   book: NcertCatalogBook;
   onOpen: () => void;
   priority?: boolean;
+  hoverBadgeLabel?: string;
 };
 
 const FALLBACK_COVER_STYLES = [
@@ -51,7 +51,12 @@ function getBookHash(book: NcertCatalogBook) {
   return [...book.id].reduce((total, value) => total + value.charCodeAt(0), 0);
 }
 
-export function NcertBookCover({ book, onOpen, priority = false }: NcertBookCoverProps) {
+export function NcertBookCover({
+  book,
+  onOpen,
+  priority = false,
+  hoverBadgeLabel,
+}: NcertBookCoverProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -60,14 +65,14 @@ export function NcertBookCover({ book, onOpen, priority = false }: NcertBookCove
   const label = `${book.classLabel} ${book.subject} ${book.title}`;
 
   return (
-    <div className="relative w-[108px] shrink-0 snap-start sm:w-[118px] lg:w-[128px]">
+    <div className="group relative w-[108px] shrink-0 snap-start sm:w-[118px] lg:w-[128px]">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-[18%] -bottom-[0.12rem] z-0 h-[0.6rem] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(48,31,21,0.22)_0%,rgba(48,31,21,0.1)_50%,rgba(48,31,21,0)_82%)] blur-[3px]"
       />
       <button
         aria-label={`Open ${label}`}
-        className="group relative z-10 block aspect-[7/10] w-full translate-y-px overflow-visible text-left transition duration-300 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/65"
+        className="relative z-10 block aspect-[7/10] w-full translate-y-px overflow-visible text-left transition duration-300 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/65"
         onClick={onOpen}
         type="button"
       >
@@ -133,26 +138,23 @@ export function NcertBookCover({ book, onOpen, priority = false }: NcertBookCove
           <div className="pointer-events-none absolute inset-x-0 top-0 h-7 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),transparent)]" />
         </div>
 
-        <span className="pointer-events-none absolute bottom-2.5 left-2.5 inline-flex items-center gap-1 rounded-[999px] bg-black/42 px-2 py-1 text-[0.6rem] uppercase tracking-[0.24em] text-white/90 opacity-0 transition duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-          <ExternalLink className="size-3" />
-          Open
-        </span>
+        {hoverBadgeLabel ? (
+          <div className="pointer-events-none absolute inset-x-2 top-2 z-20 flex justify-end opacity-0 transition duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+            <span className="rounded-full border border-white/16 bg-black/56 px-2 py-1 text-[0.56rem] font-semibold uppercase tracking-[0.2em] text-white/95 shadow-[0_10px_20px_-16px_rgba(17,12,8,0.9)] backdrop-blur-sm">
+              {hoverBadgeLabel}
+            </span>
+          </div>
+        ) : null}
       </button>
 
-      <Button
-        asChild
-        className="absolute right-1.5 top-1.5 z-20 border border-[#e6ceb0] bg-[#fff4e5]/96 text-[#73492a] shadow-[0_8px_12px_-10px_rgba(34,24,19,0.5)] hover:bg-[#ffeed8]"
-        size="icon-xs"
-        variant="outline"
+      <a
+        aria-label={`Download ${label} PDF`}
+        className="absolute bottom-2.5 left-2.5 z-20 inline-flex items-center gap-1 rounded-[999px] border border-white/12 bg-black/42 px-2 py-1 text-[0.6rem] uppercase tracking-[0.24em] text-white/90 opacity-0 shadow-[0_8px_18px_-14px_rgba(17,12,8,0.8)] transition duration-300 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 hover:bg-black/56 focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200/80"
+        href={`/api/books/${book.id}/download`}
       >
-        <a
-          aria-label={`Download ${label} PDF`}
-          href={`/api/books/${book.id}/download`}
-          onClick={(event) => event.stopPropagation()}
-        >
-          <Download className="size-3.5" />
-        </a>
-      </Button>
+        <Download className="size-3" />
+        Download
+      </a>
     </div>
   );
 }
