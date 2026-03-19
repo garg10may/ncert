@@ -48,6 +48,32 @@ const SECTION_LABELS: Record<string, string> = {
   wc: "Worksheet",
 };
 
+const SECTION_ORDER_WEIGHTS: Record<string, number> = {
+  cc: 0,
+  ps: 10,
+  bt: 200,
+  ex: 210,
+  pp: 215,
+  pr: 220,
+  ax: 225,
+  ix: 230,
+  rf: 235,
+  qa: 240,
+  lp: 245,
+  er: 250,
+  mg: 255,
+  sm: 260,
+  tn: 265,
+  wc: 270,
+  gl: 275,
+  gs: 276,
+  in: 277,
+  sk: 278,
+  an: 290,
+  a1: 291,
+  a2: 292,
+};
+
 function getBookOrThrow(bookId: string): NcertCatalogBook {
   const book = getNcertCatalogBook(bookId);
   if (!book) {
@@ -110,6 +136,30 @@ function getSectionLabel(book: NcertCatalogBook, entryName: string): string {
   }
 
   return SECTION_LABELS[suffix] ?? `Section ${suffix.toUpperCase()}`;
+}
+
+function compareArchiveEntries(
+  book: NcertCatalogBook,
+  leftName: string,
+  rightName: string,
+): number {
+  const leftSuffix = getEntrySuffix(book, leftName);
+  const rightSuffix = getEntrySuffix(book, rightName);
+  const leftChapterNumber = /^\d{2}$/.test(leftSuffix) ? Number(leftSuffix) : null;
+  const rightChapterNumber = /^\d{2}$/.test(rightSuffix) ? Number(rightSuffix) : null;
+
+  const leftWeight = leftChapterNumber === null ? (SECTION_ORDER_WEIGHTS[leftSuffix] ?? 280) : 20;
+  const rightWeight = rightChapterNumber === null ? (SECTION_ORDER_WEIGHTS[rightSuffix] ?? 280) : 20;
+
+  if (leftWeight !== rightWeight) {
+    return leftWeight - rightWeight;
+  }
+
+  if (leftChapterNumber !== null && rightChapterNumber !== null && leftChapterNumber !== rightChapterNumber) {
+    return leftChapterNumber - rightChapterNumber;
+  }
+
+  return leftName.localeCompare(rightName, undefined, { numeric: true });
 }
 
 type SectionAssetTarget = Pick<NcertManifestSection, "href" | "sourceType">;
@@ -201,7 +251,9 @@ async function getAssetPageCount(asset: NcertAssetPayload): Promise<number> {
 async function buildBookManifest(bookId: string): Promise<NcertBookManifest> {
   const book = getBookOrThrow(bookId);
   const archive = await getBookArchive(bookId);
-  const archiveEntries = Object.values(archive.files).filter((entry) => !entry.dir);
+  const archiveEntries = Object.values(archive.files)
+    .filter((entry) => !entry.dir)
+    .sort((left, right) => compareArchiveEntries(book, left.name, right.name));
   const archiveHasCover = archiveEntries.some((entry) => getEntrySuffix(book, entry.name) === "cc");
   const cover = archiveHasCover ? undefined : await getCoverAsset(bookId);
   const warnings: string[] = [];
