@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type PointerEvent as ReactPointerEvent, useEffect, useMemo, useRef, useState } from "react";
 
 import { NcertBookCover } from "@/components/ncert-book-cover";
 import { NcertReaderOverlay } from "@/components/ncert-reader-overlay";
@@ -25,8 +25,13 @@ type ShelfScrollerProps = {
   shelfIndex: number;
 };
 
+const AUTO_SCROLL_SPEED = 520;
+
 function ShelfScroller({ books, classLabel, onOpenBook, shelfIndex }: ShelfScrollerProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const autoScrollFrameRef = useRef<number | null>(null);
+  const autoScrollDirectionRef = useRef<"left" | "right" | null>(null);
+  const lastAutoScrollTimeRef = useRef<number | null>(null);
   const [scrollState, setScrollState] = useState({
     canScrollLeft: false,
     canScrollRight: false,
@@ -71,6 +76,14 @@ function ShelfScroller({ books, classLabel, onOpenBook, shelfIndex }: ShelfScrol
     };
   }, [books.length]);
 
+  useEffect(() => {
+    return () => {
+      if (autoScrollFrameRef.current !== null) {
+        cancelAnimationFrame(autoScrollFrameRef.current);
+      }
+    };
+  }, []);
+
   const scrollShelf = (direction: "left" | "right") => {
     const node = scrollRef.current;
 
@@ -85,10 +98,101 @@ function ShelfScroller({ books, classLabel, onOpenBook, shelfIndex }: ShelfScrol
     });
   };
 
+  const stopAutoScroll = () => {
+    autoScrollDirectionRef.current = null;
+    lastAutoScrollTimeRef.current = null;
+
+    if (autoScrollFrameRef.current !== null) {
+      cancelAnimationFrame(autoScrollFrameRef.current);
+      autoScrollFrameRef.current = null;
+    }
+  };
+
+  const stepAutoScroll = (timestamp: number) => {
+    const node = scrollRef.current;
+    const direction = autoScrollDirectionRef.current;
+
+    if (!node || !direction) {
+      autoScrollFrameRef.current = null;
+      lastAutoScrollTimeRef.current = null;
+      return;
+    }
+
+    const maxScrollLeft = node.scrollWidth - node.clientWidth;
+    const remainingScroll =
+      direction === "left" ? node.scrollLeft : maxScrollLeft - node.scrollLeft;
+
+    if (remainingScroll <= 1) {
+      stopAutoScroll();
+      return;
+    }
+
+    const previousTimestamp = lastAutoScrollTimeRef.current ?? timestamp;
+    const elapsed = timestamp - previousTimestamp;
+    const distance = Math.min((AUTO_SCROLL_SPEED * elapsed) / 1000, remainingScroll);
+
+    lastAutoScrollTimeRef.current = timestamp;
+    node.scrollLeft += direction === "left" ? -distance : distance;
+    autoScrollFrameRef.current = requestAnimationFrame(stepAutoScroll);
+  };
+
+  const startAutoScroll = (direction: "left" | "right") => {
+    if (
+      autoScrollDirectionRef.current === direction &&
+      autoScrollFrameRef.current !== null
+    ) {
+      return;
+    }
+
+    autoScrollDirectionRef.current = direction;
+    lastAutoScrollTimeRef.current = null;
+
+    if (autoScrollFrameRef.current === null) {
+      autoScrollFrameRef.current = requestAnimationFrame(stepAutoScroll);
+    }
+  };
+
+  const updateAutoScrollFromPointer = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse") {
+      stopAutoScroll();
+      return;
+    }
+
+    const node = scrollRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    const bounds = node.getBoundingClientRect();
+    const edgeThreshold = Math.min(Math.max(bounds.width * 0.16, 56), 112);
+    const maxScrollLeft = node.scrollWidth - node.clientWidth;
+
+    if (event.clientX <= bounds.left + edgeThreshold && node.scrollLeft > 6) {
+      startAutoScroll("left");
+      return;
+    }
+
+    if (
+      event.clientX >= bounds.right - edgeThreshold &&
+      maxScrollLeft - node.scrollLeft > 6
+    ) {
+      startAutoScroll("right");
+      return;
+    }
+
+    stopAutoScroll();
+  };
+
   return (
     <div className="relative">
       <div
         className="no-scrollbar relative z-10 -mx-2 overflow-x-auto px-2 pb-[1.85rem] sm:-mx-4 sm:px-4 sm:pb-[1.95rem] lg:-mx-6 lg:px-6"
+        onPointerCancel={stopAutoScroll}
+        onPointerDown={stopAutoScroll}
+        onPointerEnter={updateAutoScrollFromPointer}
+        onPointerLeave={stopAutoScroll}
+        onPointerMove={updateAutoScrollFromPointer}
         ref={scrollRef}
       >
         <div className="flex min-w-max items-end gap-4 sm:gap-5 lg:gap-6">
@@ -103,34 +207,49 @@ function ShelfScroller({ books, classLabel, onOpenBook, shelfIndex }: ShelfScrol
         </div>
       </div>
 
+      <div
+        aria-hidden="true"
+        className={cn(
+          "pointer-events-none absolute inset-y-0 left-0 z-20 w-14 bg-gradient-to-r from-white/28 to-transparent transition-opacity sm:w-20",
+          scrollState.canScrollLeft ? "opacity-100" : "opacity-0",
+        )}
+      />
+      <div
+        aria-hidden="true"
+        className={cn(
+          "pointer-events-none absolute inset-y-0 right-0 z-20 w-14 bg-gradient-to-l from-white/28 to-transparent transition-opacity sm:w-20",
+          scrollState.canScrollRight ? "opacity-100" : "opacity-0",
+        )}
+      />
+
       <div className="bookshelf-ledge-label absolute bottom-[0.18rem] left-1/2 z-20 -translate-x-1/2 sm:bottom-[0.2rem]">
-          <button
-            aria-label={`Scroll ${classLabel} shelf left`}
-            className={cn(
-              "bookshelf-ledge-control-button",
-              scrollState.hasOverflow ? "opacity-100" : "opacity-0 pointer-events-none",
-            )}
-            disabled={!scrollState.canScrollLeft}
-            onClick={() => scrollShelf("left")}
-            type="button"
-          >
-            <ChevronLeft className="size-3" />
-          </button>
+        <button
+          aria-label={`Scroll ${classLabel} shelf left`}
+          className={cn(
+            "bookshelf-ledge-control-button",
+            scrollState.hasOverflow ? "opacity-100" : "opacity-0 pointer-events-none",
+          )}
+          disabled={!scrollState.canScrollLeft}
+          onClick={() => scrollShelf("left")}
+          type="button"
+        >
+          <ChevronLeft className="size-3" />
+        </button>
 
-          <span className="bookshelf-ledge-control-text">{classLabel}</span>
+        <span className="bookshelf-ledge-control-text">{classLabel}</span>
 
-          <button
-            aria-label={`Scroll ${classLabel} shelf right`}
-            className={cn(
-              "bookshelf-ledge-control-button",
-              scrollState.hasOverflow ? "opacity-100" : "opacity-0 pointer-events-none",
-            )}
-            disabled={!scrollState.canScrollRight}
-            onClick={() => scrollShelf("right")}
-            type="button"
-          >
-            <ChevronRight className="size-3" />
-          </button>
+        <button
+          aria-label={`Scroll ${classLabel} shelf right`}
+          className={cn(
+            "bookshelf-ledge-control-button",
+            scrollState.hasOverflow ? "opacity-100" : "opacity-0 pointer-events-none",
+          )}
+          disabled={!scrollState.canScrollRight}
+          onClick={() => scrollShelf("right")}
+          type="button"
+        >
+          <ChevronRight className="size-3" />
+        </button>
       </div>
     </div>
   );
