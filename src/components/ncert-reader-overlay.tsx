@@ -48,13 +48,16 @@ export function NcertReaderOverlay({
               <div className="flex items-center gap-2">
                 <Button
                   asChild
-                  className="rounded-full bg-stone-950 text-stone-50 hover:bg-stone-800"
-                  size="sm"
+                  className="rounded-full border-stone-300/80 bg-white/72 text-stone-700 hover:bg-white"
+                  size="icon-sm"
+                  variant="outline"
                 >
-                  <a href={`/api/books/${book.id}/download`}>
+                  <a
+                    aria-label={`Download ${book.title} PDF`}
+                    href={`/api/books/${book.id}/download`}
+                    title="Download PDF"
+                  >
                     <Download className="size-4" />
-                    <span className="hidden sm:inline">Download</span>
-                    <span className="sr-only sm:not-sr-only"> PDF</span>
                   </a>
                 </Button>
 

@@ -3,12 +3,10 @@
 import Image from "next/image";
 import { startTransition, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  BookOpenText,
-  ChevronLeft,
-  ChevronRight,
   CircleAlert,
   LoaderCircle,
   Minus,
+  PanelLeft,
   Plus,
 } from "lucide-react";
 import type {
@@ -62,17 +60,6 @@ function loadPdfJs() {
 
 function getPreferredSectionId(manifest: NcertBookManifest): string | null {
   return manifest.sections.find((section) => section.kind === "content")?.id ?? manifest.sections[0]?.id ?? null;
-}
-
-function getSectionKindLabel(kind: NcertManifestSection["kind"]) {
-  switch (kind) {
-    case "cover":
-      return "Cover";
-    case "supplement":
-      return "Extra";
-    default:
-      return "Section";
-  }
 }
 
 function getSectionFormat(section: NcertManifestSection | null): ReaderSectionFormat {
@@ -298,11 +285,7 @@ function PdfPageCanvas({
   }, [canvas, pageNumber, pdfDocument, renderToken, viewerWidth, zoom]);
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <span className={cn(CONTROL_PILL_CLASSNAME, "px-2.5 py-0.5 text-[0.62rem] tracking-[0.16em]")}>
-        Page {pageNumber}
-      </span>
-
+    <div className="flex flex-col items-center">
       <div className="relative rounded-[1.4rem] border border-stone-300/80 bg-[#fcfbf7] p-3 shadow-[0_20px_44px_-30px_rgba(58,38,18,0.45)] sm:p-4">
         <canvas
           className="block max-w-full rounded-[1rem] shadow-[0_16px_36px_-24px_rgba(58,38,18,0.45)]"
@@ -333,6 +316,7 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
   const [manifestError, setManifestError] = useState<string | null>(null);
   const [manifestState, setManifestState] = useState<ReaderLoadState>(book ? "loading" : "idle");
   const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
+  const [indexOpen, setIndexOpen] = useState(true);
   const [pdfDocument, setPdfDocument] = useState<PDFDocumentProxy | null>(null);
   const [pdfError, setPdfError] = useState<string | null>(null);
   const [pdfState, setPdfState] = useState<ReaderLoadState>("idle");
@@ -411,22 +395,12 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
     sections[0] ??
     null;
   const resolvedActiveSectionId = activeSection?.id ?? null;
-  const activeSectionIndex = activeSection ? sections.findIndex((section) => section.id === activeSection.id) : -1;
   const sectionFormat = getSectionFormat(activeSection);
   const sectionUrl = bookId && resolvedActiveSectionId ? `/api/books/${bookId}/section/${resolvedActiveSectionId}` : "";
   const pageCount = sectionFormat === "image" ? 1 : pdfDocument?.numPages ?? 0;
   const pdfPageNumbers = useMemo(() => {
     return Array.from({ length: pageCount }, (_, index) => index + 1);
   }, [pageCount]);
-  const currentSectionLabel = activeSection?.label ?? "Choose a section";
-  const currentSectionKindLabel = activeSection ? getSectionKindLabel(activeSection.kind) : "Section";
-  const progressLabel = useMemo(() => {
-    if (!activeSection || activeSectionIndex < 0) {
-      return null;
-    }
-
-    return `${activeSectionIndex + 1} of ${sections.length}`;
-  }, [activeSection, activeSectionIndex, sections.length]);
 
   useEffect(() => {
     if (!bookId || !resolvedActiveSectionId || sectionFormat !== "pdf") {
@@ -502,26 +476,10 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
     });
   };
 
-  const goToRelativeSection = (direction: -1 | 1) => {
-    if (activeSectionIndex < 0) {
-      return;
-    }
-
-    const nextSection = sections[activeSectionIndex + direction];
-    if (!nextSection) {
-      return;
-    }
-
-    selectSection(nextSection);
-  };
-
   const zoomLabel = `${Math.round(zoom * 100)}%`;
   const canZoomOut = sectionFormat === "pdf" && zoom > MIN_ZOOM;
   const canZoomIn = sectionFormat === "pdf" && zoom < MAX_ZOOM;
-  const hasWarnings = Boolean(manifest?.warnings.length);
   const pdfFlowLoading = sectionFormat === "pdf" && pdfState === "loading";
-  const pageCountLabel =
-    sectionFormat === "pdf" ? (pageCount > 0 ? `${pageCount} pages` : "Loading pages") : "Image section";
 
   if (!book) {
     return (
@@ -567,138 +525,88 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
         className,
       )}
     >
-      <div className="flex flex-wrap items-start justify-between gap-3 rounded-[1.35rem] border border-stone-300/80 bg-white/78 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className={CONTROL_PILL_CLASSNAME}>In-App Reader</span>
-            {progressLabel ? <span className={CONTROL_PILL_CLASSNAME}>Contents {progressLabel}</span> : null}
-            {hasWarnings ? (
-              <span className={cn(CONTROL_PILL_CLASSNAME, "gap-1.5 text-amber-800")}>
-                <CircleAlert className="size-3.5" />
-                Note
-              </span>
-            ) : null}
-          </div>
+      <div
+        className={cn(
+          "grid min-h-0 flex-1 gap-4",
+          indexOpen ? "grid-cols-1 lg:grid-cols-[14.75rem_minmax(0,1fr)]" : "grid-cols-1",
+        )}
+      >
+        {indexOpen ? (
+          <aside className="flex min-h-0 flex-col overflow-hidden rounded-[1.4rem] border border-stone-300/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.78),rgba(247,240,229,0.94))] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
+            <div className="overflow-x-auto p-3 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:overflow-x-hidden">
+              <div className="flex gap-2 lg:flex-col">
+                {sections.map((section, index) => {
+                  const isActive = section.id === activeSection.id;
 
-          <div className="mt-3">
-            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-stone-500">
-              {currentSectionKindLabel}
-            </p>
-            <p className="mt-1 font-serif text-2xl leading-tight text-stone-950">{currentSectionLabel}</p>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          <Button
-            className="rounded-full border-stone-300/80 bg-white/80 text-stone-700 hover:bg-white"
-            disabled={activeSectionIndex <= 0}
-            onClick={() => goToRelativeSection(-1)}
-            size="sm"
-            variant="outline"
-          >
-            <ChevronLeft className="size-4" />
-            <span>Previous section</span>
-          </Button>
-
-          <Button
-            className="rounded-full border-stone-300/80 bg-white/80 text-stone-700 hover:bg-white"
-            disabled={activeSectionIndex < 0 || activeSectionIndex >= sections.length - 1}
-            onClick={() => goToRelativeSection(1)}
-            size="sm"
-            variant="outline"
-          >
-            <span>Next section</span>
-            <ChevronRight className="size-4" />
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-[17rem_minmax(0,1fr)]">
-        <aside className="flex min-h-0 flex-col overflow-hidden rounded-[1.4rem] border border-stone-300/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.78),rgba(247,240,229,0.94))] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
-          <div className="border-b border-stone-300/80 px-4 py-3">
-            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-stone-500">
-              Reader Contents
-            </p>
-            <p className="mt-1 text-sm text-stone-600">
-              Jump by section instead of opening the browser PDF chrome.
-            </p>
-          </div>
-
-          <div className="overflow-x-auto px-3 py-3 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:overflow-x-hidden">
-            <div className="flex gap-2 lg:flex-col">
-              {sections.map((section, index) => {
-                const isActive = section.id === activeSection.id;
-
-                return (
-                  <button
-                    aria-pressed={isActive}
-                    className={cn(
-                      "group min-w-[12rem] flex-1 rounded-[1.15rem] border px-3.5 py-3 text-left transition-all duration-200 lg:min-w-0",
-                      isActive
-                        ? "border-amber-400/80 bg-[linear-gradient(180deg,rgba(255,251,240,0.98),rgba(252,241,214,0.92))] shadow-[0_16px_28px_-24px_rgba(126,82,26,0.65)]"
-                        : "border-stone-300/75 bg-white/74 hover:border-amber-300/80 hover:bg-white",
-                    )}
-                    key={section.id}
-                    onClick={() => selectSection(section)}
-                    type="button"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-stone-500">
-                        {getSectionKindLabel(section.kind)}
+                  return (
+                    <button
+                      aria-pressed={isActive}
+                      className={cn(
+                        "group flex min-w-[12rem] items-center justify-between gap-3 rounded-[1.1rem] border px-3.5 py-3 text-left transition-all duration-200 lg:min-w-0",
+                        isActive
+                          ? "border-amber-400/80 bg-[linear-gradient(180deg,rgba(255,251,240,0.98),rgba(252,241,214,0.92))] shadow-[0_16px_28px_-24px_rgba(126,82,26,0.65)]"
+                          : "border-stone-300/75 bg-white/74 hover:border-amber-300/80 hover:bg-white",
+                      )}
+                      key={section.id}
+                      onClick={() => selectSection(section)}
+                      type="button"
+                    >
+                      <span className="line-clamp-2 text-sm leading-5 font-medium text-stone-900">
+                        {section.label}
                       </span>
-                      <span className="text-xs font-semibold text-stone-500">{index + 1}</span>
-                    </div>
-                    <p className="mt-2 line-clamp-2 text-sm leading-5 font-medium text-stone-900">
-                      {section.label}
-                    </p>
-                  </button>
-                );
-              })}
+                      <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-stone-300/80 bg-white/85 px-1.5 text-[0.68rem] font-semibold text-stone-500">
+                        {index + 1}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-
-          {hasWarnings ? (
-            <div className="border-t border-stone-300/80 bg-white/55 px-4 py-3 text-xs leading-5 text-stone-600">
-              {manifest?.warnings[0]}
-            </div>
-          ) : null}
-        </aside>
+          </aside>
+        ) : null}
 
         <section className="flex min-h-0 flex-col overflow-hidden rounded-[1.4rem] border border-stone-300/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.78),rgba(247,240,229,0.96))] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-300/80 px-4 py-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className={CONTROL_PILL_CLASSNAME}>{pageCountLabel}</span>
-              {sectionFormat === "pdf" ? (
-                <span className={CONTROL_PILL_CLASSNAME}>Continuous flow</span>
-              ) : null}
-              <span className={CONTROL_PILL_CLASSNAME}>
-                {sectionFormat === "pdf" && pdfFlowLoading ? "Loading PDF" : zoomLabel}
-              </span>
-            </div>
+          <div className="flex items-center justify-between gap-3 border-b border-stone-300/80 px-3 py-3 sm:px-4">
+            <Button
+              aria-expanded={indexOpen}
+              aria-label={indexOpen ? "Hide index" : "Show index"}
+              className="rounded-full border-stone-300/80 bg-white/78 text-stone-700 hover:bg-white"
+              onClick={() => setIndexOpen((currentState) => !currentState)}
+              size="sm"
+              title={indexOpen ? "Hide index" : "Show index"}
+              variant="outline"
+            >
+              <PanelLeft className="size-4" />
+              <span className="hidden sm:inline">Index</span>
+            </Button>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <Button
-                className="rounded-full border-stone-300/80 bg-white/80 text-stone-700 hover:bg-white"
-                disabled={!canZoomOut || pdfFlowLoading}
-                onClick={() => setZoom((currentZoom) => clampZoom(currentZoom - ZOOM_STEP))}
-                size="icon-sm"
-                variant="outline"
-              >
-                <Minus className="size-4" />
-                <span className="sr-only">Zoom out</span>
-              </Button>
+            {sectionFormat === "pdf" ? (
+              <div className="flex items-center gap-2">
+                <span className={CONTROL_PILL_CLASSNAME}>{zoomLabel}</span>
 
-              <Button
-                className="rounded-full border-stone-300/80 bg-white/80 text-stone-700 hover:bg-white"
-                disabled={!canZoomIn || pdfFlowLoading}
-                onClick={() => setZoom((currentZoom) => clampZoom(currentZoom + ZOOM_STEP))}
-                size="icon-sm"
-                variant="outline"
-              >
-                <Plus className="size-4" />
-                <span className="sr-only">Zoom in</span>
-              </Button>
-            </div>
+                <Button
+                  className="rounded-full border-stone-300/80 bg-white/80 text-stone-700 hover:bg-white"
+                  disabled={!canZoomOut || pdfFlowLoading}
+                  onClick={() => setZoom((currentZoom) => clampZoom(currentZoom - ZOOM_STEP))}
+                  size="icon-sm"
+                  variant="outline"
+                >
+                  <Minus className="size-4" />
+                  <span className="sr-only">Zoom out</span>
+                </Button>
+
+                <Button
+                  className="rounded-full border-stone-300/80 bg-white/80 text-stone-700 hover:bg-white"
+                  disabled={!canZoomIn || pdfFlowLoading}
+                  onClick={() => setZoom((currentZoom) => clampZoom(currentZoom + ZOOM_STEP))}
+                  size="icon-sm"
+                  variant="outline"
+                >
+                  <Plus className="size-4" />
+                  <span className="sr-only">Zoom in</span>
+                </Button>
+              </div>
+            ) : null}
           </div>
 
           <div className="min-h-0 flex-1 overflow-auto px-3 py-4 sm:px-5" ref={viewerRef}>
@@ -721,13 +629,13 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
                   <div className="flex min-h-[16rem] w-full max-w-3xl items-center justify-center rounded-[1.4rem] border border-stone-300/80 bg-[#fcfbf7] p-6 shadow-[0_20px_44px_-30px_rgba(58,38,18,0.45)]">
                     <div className="flex items-center gap-3 rounded-full border border-stone-300/80 bg-white/90 px-4 py-2 text-sm text-stone-700 shadow-[0_12px_24px_-20px_rgba(58,38,18,0.45)]">
                       <LoaderCircle className="size-4 animate-spin" />
-                      <span>Loading section in continuous flow...</span>
+                      <span>Loading pages...</span>
                     </div>
                   </div>
                 ) : null}
 
                 {sectionFormat === "pdf" && pdfDocument ? (
-                  <div className="flex w-full flex-col items-center gap-6">
+                  <div className="flex w-full flex-col items-center gap-4 sm:gap-5">
                     {pdfPageNumbers.map((pdfPageNumber) => (
                       <PdfPageCanvas
                         key={`${resolvedActiveSectionId}-${pdfPageNumber}`}
@@ -748,16 +656,6 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
                 {pdfError}
               </div>
             ) : null}
-          </div>
-
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-stone-300/80 bg-white/52 px-4 py-3 text-sm text-stone-600">
-            <div className="flex items-center gap-2">
-              <BookOpenText className="size-4 text-stone-500" />
-              <span>Designed to keep the book in a continuous reading flow without handing off to the browser PDF viewer.</span>
-            </div>
-            <span className="text-xs uppercase tracking-[0.2em] text-stone-500">
-              {sectionFormat === "pdf" ? "Scroll to read, download for print" : "Cover-ready preview"}
-            </span>
           </div>
         </section>
       </div>
