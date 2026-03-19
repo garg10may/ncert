@@ -19,37 +19,31 @@ const FALLBACK_COVER_STYLES = [
     face: "from-stone-950 via-stone-900 to-stone-700",
     ink: "text-stone-50",
     foil: "text-amber-200/75",
-    trim: "border-stone-200/20",
   },
   {
     face: "from-emerald-950 via-emerald-900 to-emerald-700",
     ink: "text-emerald-50",
     foil: "text-emerald-200/80",
-    trim: "border-emerald-200/20",
   },
   {
     face: "from-sky-950 via-blue-900 to-sky-700",
     ink: "text-sky-50",
     foil: "text-sky-200/80",
-    trim: "border-sky-200/20",
   },
   {
     face: "from-rose-950 via-red-900 to-orange-700",
     ink: "text-orange-50",
     foil: "text-amber-100/80",
-    trim: "border-orange-100/20",
   },
   {
     face: "from-violet-950 via-fuchsia-900 to-purple-700",
     ink: "text-fuchsia-50",
     foil: "text-fuchsia-200/80",
-    trim: "border-fuchsia-200/20",
   },
   {
     face: "from-amber-950 via-amber-900 to-yellow-700",
     ink: "text-amber-50",
     foil: "text-yellow-100/80",
-    trim: "border-yellow-100/20",
   },
 ];
 
@@ -67,23 +61,41 @@ export function NcertBookCover({ book, onOpen, priority = false }: NcertBookCove
 
   return (
     <div className="relative w-[108px] shrink-0 snap-start sm:w-[118px] lg:w-[128px]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-[18%] -bottom-[0.12rem] z-0 h-[0.6rem] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(48,31,21,0.22)_0%,rgba(48,31,21,0.1)_50%,rgba(48,31,21,0)_82%)] blur-[3px]"
+      />
       <button
         aria-label={`Open ${label}`}
-        className="group relative block aspect-[7/10] w-full translate-y-px overflow-visible border border-stone-900/16 bg-white text-left shadow-[0_14px_18px_-12px_rgba(42,28,20,0.42),0_2px_6px_rgba(34,24,19,0.14)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_22px_-12px_rgba(42,28,20,0.46),0_4px_10px_rgba(34,24,19,0.16)] focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/70"
+        className="group relative z-10 block aspect-[7/10] w-full translate-y-px overflow-visible text-left transition duration-300 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/65"
         onClick={onOpen}
         type="button"
       >
         <div
           aria-hidden="true"
-          className="absolute inset-[2px] overflow-hidden border border-stone-900/7 bg-white"
+          className="pointer-events-none absolute inset-[0.45rem_-0.28rem_0.3rem_0.45rem] rounded-[2px] bg-[linear-gradient(180deg,rgba(44,29,20,0.22),rgba(24,16,12,0.42))] blur-[2px]"
+        />
+
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 overflow-hidden rounded-[2px] bg-white shadow-[4px_0_0_rgba(54,38,28,0.14),0_14px_18px_-14px_rgba(42,28,20,0.42),0_2px_5px_rgba(34,24,19,0.12)]"
         >
           <div
-            className={cn("absolute inset-0 bg-gradient-to-br", fallbackStyle.face)}
+            className={cn(
+              "absolute inset-0 bg-gradient-to-br transition duration-500",
+              fallbackStyle.face,
+              imageLoaded && !imageError ? "opacity-0" : "opacity-100",
+            )}
           >
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),transparent_20%,transparent_75%,rgba(17,12,8,0.18))]" />
           </div>
 
-          <div className="absolute inset-x-[0.9rem] top-[0.95rem] bottom-[0.95rem] flex flex-col border border-white/10 bg-black/10 p-3 backdrop-blur-[1px]">
+          <div
+            className={cn(
+              "absolute inset-x-[0.9rem] top-[0.95rem] bottom-[0.95rem] flex flex-col border border-white/10 bg-black/10 p-3 backdrop-blur-[1px] transition duration-500",
+              imageLoaded && !imageError ? "opacity-0" : "opacity-100",
+            )}
+          >
             <p className={cn("text-[0.58rem] uppercase tracking-[0.32em]", fallbackStyle.foil)}>
               {book.classLabel}
             </p>
@@ -100,8 +112,6 @@ export function NcertBookCover({ book, onOpen, priority = false }: NcertBookCove
               {book.subject}
             </p>
           </div>
-          <div className={cn("absolute inset-0 border", fallbackStyle.trim)} />
-
           {!imageError ? (
             <Image
               alt=""
@@ -119,10 +129,11 @@ export function NcertBookCover({ book, onOpen, priority = false }: NcertBookCove
               unoptimized
             />
           ) : null}
+
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-7 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),transparent)]" />
         </div>
 
-        <div className="pointer-events-none absolute inset-x-[2px] top-[2px] h-7 bg-[linear-gradient(180deg,rgba(255,255,255,0.16),transparent)]" />
-        <span className="pointer-events-none absolute bottom-2.5 left-2.5 inline-flex items-center gap-1 bg-black/40 px-2 py-1 text-[0.6rem] uppercase tracking-[0.24em] text-white/90 opacity-0 transition duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+        <span className="pointer-events-none absolute bottom-2.5 left-2.5 inline-flex items-center gap-1 rounded-[999px] bg-black/42 px-2 py-1 text-[0.6rem] uppercase tracking-[0.24em] text-white/90 opacity-0 transition duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
           <ExternalLink className="size-3" />
           Open
         </span>
@@ -130,7 +141,7 @@ export function NcertBookCover({ book, onOpen, priority = false }: NcertBookCove
 
       <Button
         asChild
-        className="absolute right-2 top-2 z-10 border border-white/45 bg-white/92 text-stone-900 shadow-[0_10px_18px_-12px_rgba(15,10,7,0.75)] hover:bg-white"
+        className="absolute right-1.5 top-1.5 z-20 border border-[#e6ceb0] bg-[#fff4e5]/96 text-[#73492a] shadow-[0_8px_12px_-10px_rgba(34,24,19,0.5)] hover:bg-[#ffeed8]"
         size="icon-xs"
         variant="outline"
       >

@@ -75,8 +75,8 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
             >
               <h2 className="sr-only">{shelf.classLabel}</h2>
 
-              <div className="bookshelf-nook relative px-2 pb-7 pt-1 sm:px-4 lg:px-6">
-                <div className="no-scrollbar relative z-10 -mx-2 overflow-x-auto px-2 pb-[2px] sm:-mx-4 sm:px-4 lg:-mx-6 lg:px-6">
+              <div className="bookshelf-nook relative px-2 pb-0 pt-2 sm:px-4 lg:px-6">
+                <div className="no-scrollbar relative z-10 -mx-2 overflow-x-auto px-2 pb-[1.28rem] sm:-mx-4 sm:px-4 lg:-mx-6 lg:px-6">
                   <div className="flex min-w-max items-end gap-4 sm:gap-5 lg:gap-6">
                     {shelf.books.map((book, bookIndex) => (
                       <NcertBookCover
@@ -91,11 +91,15 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
 
                 <div
                   aria-hidden="true"
-                  className="bookshelf-ledge-shadow pointer-events-none absolute inset-x-10 bottom-[-0.25rem] h-7 sm:inset-x-14 lg:inset-x-20"
+                  className="bookshelf-ledge-shadow pointer-events-none absolute inset-x-12 bottom-[-0.1rem] h-7 sm:inset-x-16 lg:inset-x-[5.5rem]"
                 />
                 <div
                   aria-hidden="true"
-                  className="bookshelf-ledge pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[1.5rem] sm:h-[1.6rem]"
+                  className="bookshelf-ledge-top pointer-events-none absolute inset-x-0 bottom-[0.82rem] z-0 h-[0.58rem] sm:h-[0.62rem]"
+                />
+                <div
+                  aria-hidden="true"
+                  className="bookshelf-ledge pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[0.84rem] sm:h-[0.9rem]"
                 />
               </div>
             </section>
