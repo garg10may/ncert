@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "NCERT Atlas",
-  description: "Find NCERT books, read them online, and download PDFs.",
+  description: "Open or download NCERT books from a cover-first bookshelf.",
 };
 
 export default function RootLayout({

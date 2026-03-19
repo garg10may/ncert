@@ -145,6 +145,16 @@ async function getCoverAsset(bookId: string): Promise<NcertAssetPayload | undefi
   return coverPromise;
 }
 
+export async function getImageCoverAsset(bookId: string): Promise<NcertAssetPayload> {
+  const cover = await getCoverAsset(bookId);
+
+  if (!cover || !cover.contentType.startsWith("image/")) {
+    throw new NcertServiceError(`No image cover available for ${bookId}`, 404);
+  }
+
+  return cover;
+}
+
 async function loadSectionAsset(
   bookId: string,
   section: NcertManifestSection,
