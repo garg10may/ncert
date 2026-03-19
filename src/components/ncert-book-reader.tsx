@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { startTransition, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import {
   CircleAlert,
   LoaderCircle,
@@ -30,12 +29,14 @@ type NcertBookReaderProps = {
 };
 
 type ReaderLoadState = "idle" | "loading" | "ready" | "error";
-type ReaderSectionFormat = "image" | "pdf";
 
 const CONTROL_PILL_CLASSNAME =
-  "inline-flex items-center rounded-full border border-stone-300/80 bg-white/78 px-3 py-1 text-[0.7rem] font-semibold tracking-[0.18em] text-stone-600 uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]";
+  "inline-flex items-center rounded-full bg-white/76 px-3 py-1 text-[0.7rem] font-semibold tracking-[0.18em] text-stone-600 uppercase shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]";
+const DEFAULT_PAGE_HEIGHT = 842;
+const DEFAULT_PAGE_WIDTH = 595;
 const MIN_ZOOM = 0.7;
 const MAX_ZOOM = 2.05;
+const PAGE_PRELOAD_ROOT_MARGIN = "100% 0px";
 const ZOOM_STEP = 0.15;
 
 type PdfJsModule = typeof import("pdfjs-dist/webpack.mjs");
@@ -58,35 +59,44 @@ function loadPdfJs() {
   return pdfJsModulePromise;
 }
 
-function getPreferredSectionId(manifest: NcertBookManifest): string | null {
-  return manifest.sections.find((section) => section.kind === "content")?.id ?? manifest.sections[0]?.id ?? null;
-}
-
-function getSectionFormat(section: NcertManifestSection | null): ReaderSectionFormat {
-  if (!section) {
-    return "pdf";
-  }
-
-  const normalizedPath = section.href.split("#")[0]?.split("?")[0]?.toLowerCase() ?? "";
-
-  if (normalizedPath.endsWith(".png") || normalizedPath.endsWith(".jpg") || normalizedPath.endsWith(".jpeg")) {
-    return "image";
-  }
-
-  return "pdf";
-}
-
 function clampZoom(value: number) {
   return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, Number(value.toFixed(2))));
 }
 
-function useElementWidth<T extends HTMLElement>() {
+function getFitScale(
+  pageWidth: number,
+  pageHeight: number,
+  viewerWidth: number,
+  viewerHeight: number,
+) {
+  const availableWidth = Math.max(220, viewerWidth - 12);
+  const availableHeight = Math.max(320, viewerHeight - 12);
+  return Math.min(availableWidth / pageWidth, availableHeight / pageHeight);
+}
+
+function getScaledPageSize(
+  pageWidth: number,
+  pageHeight: number,
+  viewerWidth: number,
+  viewerHeight: number,
+  zoom: number,
+) {
+  const scale = getFitScale(pageWidth, pageHeight, viewerWidth, viewerHeight) * zoom;
+
+  return {
+    height: pageHeight * scale,
+    scale,
+    width: pageWidth * scale,
+  };
+}
+
+function useElementMetrics<T extends HTMLElement>() {
   const [element, setElement] = useState<T | null>(null);
-  const [width, setWidth] = useState(0);
+  const [metrics, setMetrics] = useState({ height: 0, width: 0 });
   const elementRef = useCallback((node: T | null) => {
     setElement(node);
     if (!node) {
-      setWidth(0);
+      setMetrics({ height: 0, width: 0 });
     }
   }, []);
 
@@ -95,17 +105,20 @@ function useElementWidth<T extends HTMLElement>() {
       return;
     }
 
-    const updateWidth = () => {
-      setWidth(element.clientWidth);
+    const updateMetrics = () => {
+      setMetrics({
+        height: element.clientHeight,
+        width: element.clientWidth,
+      });
     };
 
-    updateWidth();
+    updateMetrics();
 
     if (typeof ResizeObserver === "undefined") {
-      window.addEventListener("resize", updateWidth);
+      window.addEventListener("resize", updateMetrics);
 
       return () => {
-        window.removeEventListener("resize", updateWidth);
+        window.removeEventListener("resize", updateMetrics);
       };
     }
 
@@ -115,7 +128,10 @@ function useElementWidth<T extends HTMLElement>() {
         return;
       }
 
-      setWidth(entry.contentRect.width);
+      setMetrics({
+        height: entry.contentRect.height,
+        width: entry.contentRect.width,
+      });
     });
 
     observer.observe(element);
@@ -125,18 +141,13 @@ function useElementWidth<T extends HTMLElement>() {
     };
   }, [element]);
 
-  return [elementRef, width] as const;
+  return [elementRef, element, metrics.width, metrics.height] as const;
 }
 
 function ReaderLoadingState({ className }: { className?: string }) {
   return (
-    <div
-      className={cn(
-        "flex h-full min-h-[620px] flex-col gap-4 rounded-[1.75rem] border border-stone-300 bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(245,238,227,0.94))] p-4 shadow-[0_18px_50px_-28px_rgba(58,38,18,0.38)]",
-        className,
-      )}
-    >
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-[1.3rem] border border-stone-300/70 bg-white/78 px-4 py-3">
+    <div className={cn("flex h-full min-h-[760px] flex-col gap-3", className)}>
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-[1.35rem] bg-white/58 px-4 py-3">
         <div className="space-y-2">
           <Skeleton className="h-3 w-20 rounded-full bg-stone-200/90" />
           <Skeleton className="h-6 w-52 rounded-full bg-stone-200/90" />
@@ -147,12 +158,12 @@ function ReaderLoadingState({ className }: { className?: string }) {
         </div>
       </div>
 
-      <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-[17rem_minmax(0,1fr)]">
-        <div className="rounded-[1.4rem] border border-stone-300/80 bg-white/72 p-3">
+      <div className="grid min-h-0 flex-1 gap-3 lg:grid-cols-[15rem_minmax(0,1fr)]">
+        <div className="rounded-[1.35rem] bg-white/52 p-3">
           <Skeleton className="h-full min-h-[160px] rounded-[1rem] bg-stone-200/90" />
         </div>
-        <div className="rounded-[1.4rem] border border-stone-300/80 bg-white/72 p-3">
-          <Skeleton className="h-full min-h-[420px] rounded-[1rem] bg-stone-200/90" />
+        <div className="rounded-[1.35rem] bg-white/52 p-3">
+          <Skeleton className="h-full min-h-[520px] rounded-[1rem] bg-stone-200/90" />
         </div>
       </div>
     </div>
@@ -171,12 +182,12 @@ function ReaderMessageState({
   return (
     <div
       className={cn(
-        "flex min-h-[620px] items-center justify-center rounded-[1.75rem] border border-stone-300 bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(245,238,227,0.94))] p-6 text-center shadow-[0_18px_50px_-28px_rgba(58,38,18,0.38)]",
+        "flex min-h-[760px] items-center justify-center rounded-[1.5rem] bg-white/52 p-6 text-center",
         className,
       )}
     >
       <div className="max-w-md space-y-3">
-        <div className="mx-auto flex size-12 items-center justify-center rounded-full border border-stone-300/80 bg-white/80 text-stone-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
+        <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-white/82 text-stone-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
           <CircleAlert className="size-5" />
         </div>
         <div>
@@ -189,34 +200,96 @@ function ReaderMessageState({
 }
 
 type PdfPageCanvasProps = {
+  displayZoom: number;
   pageNumber: number;
   pdfDocument: PDFDocumentProxy;
-  sectionId: string;
+  renderZoom: number;
+  scrollRoot: HTMLDivElement | null;
+  viewerHeight: number;
   viewerWidth: number;
-  zoom: number;
 };
 
-function PdfPageCanvas({
+const PdfPageCanvas = memo(function PdfPageCanvas({
+  displayZoom,
   pageNumber,
   pdfDocument,
-  sectionId,
+  renderZoom,
+  scrollRoot,
+  viewerHeight,
   viewerWidth,
-  zoom,
 }: PdfPageCanvasProps) {
   const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [completedRenderToken, setCompletedRenderToken] = useState<string | null>(null);
+  const [isNearViewport, setIsNearViewport] = useState(pageNumber <= 2);
+  const [pageHeight, setPageHeight] = useState(DEFAULT_PAGE_HEIGHT);
+  const [pageWidth, setPageWidth] = useState(DEFAULT_PAGE_WIDTH);
   const [renderFailure, setRenderFailure] = useState<{
     message: string;
     token: string;
   } | null>(null);
+  const [shouldRender, setShouldRender] = useState(pageNumber <= 2);
   const renderTaskRef = useRef<RenderTask | null>(null);
   const renderToken =
-    viewerWidth >= 180 ? `${sectionId}:${pageNumber}:${zoom}:${Math.round(viewerWidth)}` : null;
+    shouldRender && isNearViewport && viewerWidth >= 180 && viewerHeight >= 220
+      ? `${pageNumber}:${renderZoom}:${Math.round(viewerWidth)}:${Math.round(viewerHeight)}`
+      : null;
   const renderError =
     renderToken && renderFailure?.token === renderToken ? renderFailure.message : null;
   const rendering = Boolean(
     renderToken && completedRenderToken !== renderToken && !renderError,
   );
+  const scaledPageSize = getScaledPageSize(
+    pageWidth,
+    pageHeight,
+    viewerWidth,
+    viewerHeight,
+    displayZoom,
+  );
+
+  useEffect(() => {
+    if (!container) {
+      return;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      const frame = window.requestAnimationFrame(() => {
+        setShouldRender(true);
+        setIsNearViewport(true);
+      });
+
+      return () => {
+        window.cancelAnimationFrame(frame);
+      };
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) {
+          return;
+        }
+
+        setIsNearViewport(entry.isIntersecting);
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        setShouldRender(true);
+      },
+      {
+        root: scrollRoot,
+        rootMargin: PAGE_PRELOAD_ROOT_MARGIN,
+        threshold: 0.01,
+      },
+    );
+
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [container, scrollRoot]);
 
   useEffect(() => {
     if (!canvas || !renderToken) {
@@ -239,9 +312,16 @@ function PdfPageCanvas({
         }
 
         const baseViewport = page.getViewport({ scale: 1 });
-        const availableWidth = Math.max(220, viewerWidth - 48);
-        const fitScale = availableWidth / baseViewport.width;
-        const viewport = page.getViewport({ scale: fitScale * zoom });
+        setPageWidth((currentWidth) => (currentWidth === baseViewport.width ? currentWidth : baseViewport.width));
+        setPageHeight((currentHeight) =>
+          currentHeight === baseViewport.height ? currentHeight : baseViewport.height,
+        );
+
+        const viewport = page.getViewport({
+          scale:
+            getFitScale(baseViewport.width, baseViewport.height, viewerWidth, viewerHeight) *
+            renderZoom,
+        });
         const outputScale = window.devicePixelRatio || 1;
 
         canvas.width = Math.floor(viewport.width * outputScale);
@@ -260,14 +340,15 @@ function PdfPageCanvas({
         await renderTask.promise;
       })
       .then(() => {
-        if (cancelled) {
+        if (cancelled || !renderToken) {
           return;
         }
 
+        setRenderFailure(null);
         setCompletedRenderToken(renderToken);
       })
       .catch((error) => {
-        if (cancelled || isRenderCancelledError(error)) {
+        if (cancelled || isRenderCancelledError(error) || !renderToken) {
           return;
         }
 
@@ -282,19 +363,36 @@ function PdfPageCanvas({
       renderTaskRef.current?.cancel();
       renderTaskRef.current = null;
     };
-  }, [canvas, pageNumber, pdfDocument, renderToken, viewerWidth, zoom]);
+  }, [canvas, pageNumber, pdfDocument, renderToken, renderZoom, viewerHeight, viewerWidth]);
+
+  const showInitialLoader = rendering && completedRenderToken === null;
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative rounded-[1.4rem] border border-stone-300/80 bg-[#fcfbf7] p-3 shadow-[0_20px_44px_-30px_rgba(58,38,18,0.45)] sm:p-4">
-        <canvas
-          className="block max-w-full rounded-[1rem] shadow-[0_16px_36px_-24px_rgba(58,38,18,0.45)]"
-          ref={setCanvas}
-        />
+      <div className="relative" ref={setContainer}>
+        {shouldRender ? (
+          <canvas
+            className="block bg-white"
+            ref={setCanvas}
+            style={{
+              height: `${scaledPageSize.height}px`,
+              width: `${scaledPageSize.width}px`,
+            }}
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            className="bg-white/76"
+            style={{
+              height: `${scaledPageSize.height}px`,
+              width: `${scaledPageSize.width}px`,
+            }}
+          />
+        )}
 
-        {rendering ? (
-          <div className="absolute inset-0 flex items-center justify-center rounded-[1.4rem] bg-[#fcfbf7]/84 backdrop-blur-[1px]">
-            <div className="flex items-center gap-3 rounded-full border border-stone-300/80 bg-white/92 px-4 py-2 text-sm text-stone-700 shadow-[0_12px_24px_-20px_rgba(58,38,18,0.45)]">
+        {showInitialLoader ? (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/68 backdrop-blur-[1px]">
+            <div className="flex items-center gap-3 rounded-full bg-white/94 px-4 py-2 text-sm text-stone-700 shadow-[0_12px_24px_-20px_rgba(58,38,18,0.45)]">
               <LoaderCircle className="size-4 animate-spin" />
               <span>Rendering page {pageNumber}...</span>
             </div>
@@ -303,13 +401,13 @@ function PdfPageCanvas({
       </div>
 
       {renderError ? (
-        <div className="w-full max-w-2xl rounded-[1.2rem] border border-rose-200 bg-rose-50/80 px-4 py-3 text-sm leading-6 text-rose-900">
+        <div className="mt-2 w-full max-w-2xl rounded-[1rem] bg-rose-50/90 px-4 py-3 text-sm leading-6 text-rose-900">
           {renderError}
         </div>
       ) : null}
     </div>
   );
-}
+});
 
 export function NcertBookReader({ book, className }: NcertBookReaderProps) {
   const [manifest, setManifest] = useState<NcertBookManifest | null>(null);
@@ -319,10 +417,13 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
   const [indexOpen, setIndexOpen] = useState(true);
   const [pdfDocument, setPdfDocument] = useState<PDFDocumentProxy | null>(null);
   const [pdfError, setPdfError] = useState<string | null>(null);
-  const [pdfState, setPdfState] = useState<ReaderLoadState>("idle");
+  const [pdfState, setPdfState] = useState<ReaderLoadState>(book ? "loading" : "idle");
   const [zoom, setZoom] = useState(1);
-  const [viewerRef, viewerWidth] = useElementWidth<HTMLDivElement>();
+  const renderZoom = useDeferredValue(zoom);
+  const [viewerRef, viewerElement, viewerWidth, viewerHeight] = useElementMetrics<HTMLDivElement>();
   const pdfDocumentRef = useRef<PDFDocumentProxy | null>(null);
+  const pageRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+  const scrollFrameRef = useRef<number | null>(null);
   const bookId = book?.id ?? null;
 
   useEffect(() => {
@@ -350,20 +451,9 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
           return;
         }
 
-        const preferredSectionId = getPreferredSectionId(nextManifest);
-        const preferredSection =
-          nextManifest.sections.find((section) => section.id === preferredSectionId) ?? null;
-
         setManifest(nextManifest);
         setManifestState("ready");
-        if (!preferredSection) {
-          return;
-        }
-
-        setActiveSectionId(preferredSection.id);
-        setPdfDocument(null);
-        setPdfError(null);
-        setPdfState(getSectionFormat(preferredSection) === "pdf" ? "loading" : "ready");
+        setActiveSectionId(nextManifest.sections[0]?.id ?? null);
       })
       .catch((error) => {
         if (cancelled || abortController.signal.aborted) {
@@ -388,27 +478,28 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
     };
   }, []);
 
-  const sections = manifest?.sections ?? [];
-  const activeSection =
-    sections.find((section) => section.id === activeSectionId) ??
-    sections.find((section) => section.kind === "content") ??
-    sections[0] ??
-    null;
-  const resolvedActiveSectionId = activeSection?.id ?? null;
-  const sectionFormat = getSectionFormat(activeSection);
-  const sectionUrl = bookId && resolvedActiveSectionId ? `/api/books/${bookId}/section/${resolvedActiveSectionId}` : "";
-  const pageCount = sectionFormat === "image" ? 1 : pdfDocument?.numPages ?? 0;
+  const sections = useMemo(() => manifest?.sections ?? [], [manifest]);
+  const activeSection = sections.find((section) => section.id === activeSectionId) ?? sections[0] ?? null;
+  const readerPdfUrl = bookId ? `/api/books/${bookId}/download?inline=1` : "";
+  const pageCount = pdfDocument?.numPages ?? 0;
   const pdfPageNumbers = useMemo(() => {
     return Array.from({ length: pageCount }, (_, index) => index + 1);
   }, [pageCount]);
 
   useEffect(() => {
-    if (!bookId || !resolvedActiveSectionId || sectionFormat !== "pdf") {
+    if (!bookId) {
       return;
     }
 
     let cancelled = false;
     let loadingTask: PDFDocumentLoadingTask | null = null;
+
+    if (pdfDocumentRef.current) {
+      void pdfDocumentRef.current.destroy();
+      pdfDocumentRef.current = null;
+    }
+
+    pageRefs.current.clear();
 
     void loadPdfJs()
       .then(({ getDocument }) => {
@@ -417,7 +508,7 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
         }
 
         loadingTask = getDocument({
-          url: sectionUrl,
+          url: readerPdfUrl,
           withCredentials: false,
         });
 
@@ -431,10 +522,6 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
         if (cancelled) {
           void nextDocument.destroy();
           return;
-        }
-
-        if (pdfDocumentRef.current) {
-          void pdfDocumentRef.current.destroy();
         }
 
         pdfDocumentRef.current = nextDocument;
@@ -452,7 +539,7 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
         }
 
         setPdfDocument(null);
-        setPdfError(getErrorMessage(error, "Could not open this section."));
+        setPdfError(getErrorMessage(error, "Could not open this book."));
         setPdfState("error");
       });
 
@@ -460,32 +547,104 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
       cancelled = true;
       void loadingTask?.destroy();
     };
-  }, [bookId, resolvedActiveSectionId, sectionFormat, sectionUrl]);
+  }, [bookId, readerPdfUrl]);
 
-  const selectSection = (section: NcertManifestSection) => {
-    if (pdfDocumentRef.current) {
-      void pdfDocumentRef.current.destroy();
-      pdfDocumentRef.current = null;
+  useEffect(() => {
+    if (!viewerElement) {
+      return;
     }
 
-    startTransition(() => {
-      setActiveSectionId(section.id);
-      setPdfDocument(null);
-      setPdfError(null);
-      setPdfState(getSectionFormat(section) === "pdf" ? "loading" : "ready");
+    viewerElement.scrollTo({ top: 0 });
+  }, [bookId, viewerElement]);
+
+  const syncActiveSectionFromScroll = useCallback(() => {
+    if (!viewerElement || sections.length === 0) {
+      return;
+    }
+
+    const scrollAnchor = viewerElement.scrollTop + Math.max(96, viewerElement.clientHeight * 0.33);
+    let nextSectionId = sections[0]?.id ?? null;
+
+    for (const section of sections) {
+      const sectionStartPage = pageRefs.current.get(section.startPage);
+      if (!sectionStartPage) {
+        continue;
+      }
+
+      if (sectionStartPage.offsetTop <= scrollAnchor) {
+        nextSectionId = section.id;
+        continue;
+      }
+
+      break;
+    }
+
+    if (nextSectionId && nextSectionId !== activeSectionId) {
+      setActiveSectionId(nextSectionId);
+    }
+  }, [activeSectionId, sections, viewerElement]);
+
+  useEffect(() => {
+    return () => {
+      if (scrollFrameRef.current !== null) {
+        window.cancelAnimationFrame(scrollFrameRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (pdfState !== "ready" || !viewerElement || sections.length === 0) {
+      return;
+    }
+
+    const animationFrame = window.requestAnimationFrame(() => {
+      syncActiveSectionFromScroll();
     });
-  };
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, [pdfState, sections.length, syncActiveSectionFromScroll, viewerElement]);
+
+  const handleViewerScroll = useCallback(() => {
+    if (scrollFrameRef.current !== null) {
+      return;
+    }
+
+    scrollFrameRef.current = window.requestAnimationFrame(() => {
+      scrollFrameRef.current = null;
+      syncActiveSectionFromScroll();
+    });
+  }, [syncActiveSectionFromScroll]);
+
+  const jumpToSection = useCallback(
+    (section: NcertManifestSection) => {
+      setActiveSectionId(section.id);
+
+      const sectionStartPage = pageRefs.current.get(section.startPage);
+      if (!viewerElement || !sectionStartPage) {
+        return;
+      }
+
+      viewerElement.scrollTo({
+        behavior: "smooth",
+        top: Math.max(0, sectionStartPage.offsetTop - 12),
+      });
+    },
+    [viewerElement],
+  );
 
   const zoomLabel = `${Math.round(zoom * 100)}%`;
-  const canZoomOut = sectionFormat === "pdf" && zoom > MIN_ZOOM;
-  const canZoomIn = sectionFormat === "pdf" && zoom < MAX_ZOOM;
-  const pdfFlowLoading = sectionFormat === "pdf" && pdfState === "loading";
+  const canZoomOut = zoom > MIN_ZOOM;
+  const canZoomIn = zoom < MAX_ZOOM;
+  const pdfFlowLoading = pdfState === "loading";
+  const zoomRefreshing = renderZoom !== zoom;
 
   if (!book) {
     return (
       <div
         className={cn(
-          "rounded-[1.75rem] border border-dashed border-stone-300 bg-stone-50 p-6 text-sm leading-6 text-stone-600",
+          "rounded-[1.5rem] bg-white/52 p-6 text-sm leading-6 text-stone-600",
           className,
         )}
       >
@@ -508,7 +667,7 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
     );
   }
 
-  if (!activeSection) {
+  if (sections.length === 0) {
     return (
       <ReaderMessageState
         className={className}
@@ -519,43 +678,40 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
   }
 
   return (
-    <div
-      className={cn(
-        "flex h-full min-h-[620px] flex-col gap-4 rounded-[1.75rem] border border-stone-300 bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(245,238,227,0.94))] p-4 shadow-[0_18px_50px_-28px_rgba(58,38,18,0.38)]",
-        className,
-      )}
-    >
+    <div className={cn("flex h-full min-h-[760px] flex-col gap-3", className)}>
       <div
         className={cn(
-          "grid min-h-0 flex-1 gap-4",
-          indexOpen ? "grid-cols-1 lg:grid-cols-[14.75rem_minmax(0,1fr)]" : "grid-cols-1",
+          "grid min-h-0 flex-1 gap-3",
+          indexOpen ? "grid-cols-1 lg:grid-cols-[14.5rem_minmax(0,1fr)]" : "grid-cols-1",
         )}
       >
         {indexOpen ? (
-          <aside className="flex min-h-0 flex-col overflow-hidden rounded-[1.4rem] border border-stone-300/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.78),rgba(247,240,229,0.94))] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
-            <div className="overflow-x-auto p-3 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:overflow-x-hidden">
+          <aside className="flex min-h-0 flex-col overflow-hidden rounded-[1.35rem] bg-white/42">
+            <div className="overflow-x-auto p-2 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:overflow-x-hidden">
               <div className="flex gap-2 lg:flex-col">
-                {sections.map((section, index) => {
-                  const isActive = section.id === activeSection.id;
+                {sections.map((section) => {
+                  const isActive = section.id === activeSection?.id;
 
                   return (
                     <button
                       aria-pressed={isActive}
                       className={cn(
-                        "group flex min-w-[12rem] items-center justify-between gap-3 rounded-[1.1rem] border px-3.5 py-3 text-left transition-all duration-200 lg:min-w-0",
+                        "group flex min-w-[12rem] items-center gap-3 rounded-[1rem] px-3.5 py-3 text-left transition-all duration-200 lg:min-w-0",
                         isActive
-                          ? "border-amber-400/80 bg-[linear-gradient(180deg,rgba(255,251,240,0.98),rgba(252,241,214,0.92))] shadow-[0_16px_28px_-24px_rgba(126,82,26,0.65)]"
-                          : "border-stone-300/75 bg-white/74 hover:border-amber-300/80 hover:bg-white",
+                          ? "bg-[linear-gradient(180deg,rgba(255,251,240,0.98),rgba(252,241,214,0.92))] shadow-[0_16px_28px_-24px_rgba(126,82,26,0.65)]"
+                          : "bg-white/62 hover:bg-white/84",
                       )}
                       key={section.id}
-                      onClick={() => selectSection(section)}
+                      onClick={() => jumpToSection(section)}
                       type="button"
                     >
-                      <span className="line-clamp-2 text-sm leading-5 font-medium text-stone-900">
-                        {section.label}
-                      </span>
-                      <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-stone-300/80 bg-white/85 px-1.5 text-[0.68rem] font-semibold text-stone-500">
-                        {index + 1}
+                      <span className="min-w-0 flex-1">
+                        <span className="line-clamp-2 block text-sm leading-5 font-medium text-stone-900">
+                          {section.label}
+                        </span>
+                        <span className="mt-1 block text-[0.68rem] uppercase tracking-[0.18em] text-stone-500">
+                          Page {section.startPage}
+                        </span>
                       </span>
                     </button>
                   );
@@ -565,94 +721,102 @@ export function NcertBookReader({ book, className }: NcertBookReaderProps) {
           </aside>
         ) : null}
 
-        <section className="flex min-h-0 flex-col overflow-hidden rounded-[1.4rem] border border-stone-300/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.78),rgba(247,240,229,0.96))] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
-          <div className="flex items-center justify-between gap-3 border-b border-stone-300/80 px-3 py-3 sm:px-4">
-            <Button
-              aria-expanded={indexOpen}
-              aria-label={indexOpen ? "Hide index" : "Show index"}
-              className="rounded-full border-stone-300/80 bg-white/78 text-stone-700 hover:bg-white"
-              onClick={() => setIndexOpen((currentState) => !currentState)}
-              size="sm"
-              title={indexOpen ? "Hide index" : "Show index"}
-              variant="outline"
-            >
-              <PanelLeft className="size-4" />
-              <span className="hidden sm:inline">Index</span>
-            </Button>
+        <section className="flex min-h-0 flex-col overflow-hidden rounded-[1.45rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.7),rgba(247,240,229,0.9))]">
+          <div className="flex flex-wrap items-center justify-between gap-3 px-2 py-2.5 sm:px-3">
+            <div className="flex items-center gap-2">
+              <Button
+                aria-expanded={indexOpen}
+                aria-label={indexOpen ? "Hide index" : "Show index"}
+                className="rounded-full border-transparent bg-white/72 text-stone-700 hover:bg-white"
+                onClick={() => setIndexOpen((currentState) => !currentState)}
+                size="sm"
+                title={indexOpen ? "Hide index" : "Show index"}
+                variant="outline"
+              >
+                <PanelLeft className="size-4" />
+                <span className="hidden sm:inline">Index</span>
+              </Button>
 
-            {sectionFormat === "pdf" ? (
-              <div className="flex items-center gap-2">
-                <span className={CONTROL_PILL_CLASSNAME}>{zoomLabel}</span>
-
-                <Button
-                  className="rounded-full border-stone-300/80 bg-white/80 text-stone-700 hover:bg-white"
-                  disabled={!canZoomOut || pdfFlowLoading}
-                  onClick={() => setZoom((currentZoom) => clampZoom(currentZoom - ZOOM_STEP))}
-                  size="icon-sm"
-                  variant="outline"
-                >
-                  <Minus className="size-4" />
-                  <span className="sr-only">Zoom out</span>
-                </Button>
-
-                <Button
-                  className="rounded-full border-stone-300/80 bg-white/80 text-stone-700 hover:bg-white"
-                  disabled={!canZoomIn || pdfFlowLoading}
-                  onClick={() => setZoom((currentZoom) => clampZoom(currentZoom + ZOOM_STEP))}
-                  size="icon-sm"
-                  variant="outline"
-                >
-                  <Plus className="size-4" />
-                  <span className="sr-only">Zoom in</span>
-                </Button>
-              </div>
-            ) : null}
-          </div>
-
-          <div className="min-h-0 flex-1 overflow-auto px-3 py-4 sm:px-5" ref={viewerRef}>
-            <div className="mx-auto flex min-h-full w-full items-start justify-center">
-              <div className="flex w-full flex-col items-center gap-6">
-                {sectionFormat === "image" ? (
-                  <div className="relative rounded-[1.4rem] border border-stone-300/80 bg-[#fcfbf7] p-3 shadow-[0_20px_44px_-30px_rgba(58,38,18,0.45)] sm:p-4">
-                    <Image
-                      alt={`${book.title} ${activeSection.label}`}
-                      className="block h-auto max-w-full rounded-[1rem] shadow-[0_16px_36px_-24px_rgba(58,38,18,0.45)]"
-                      src={sectionUrl}
-                      unoptimized
-                      height={1600}
-                      width={1200}
-                    />
-                  </div>
-                ) : null}
-
-                {sectionFormat === "pdf" && pdfFlowLoading ? (
-                  <div className="flex min-h-[16rem] w-full max-w-3xl items-center justify-center rounded-[1.4rem] border border-stone-300/80 bg-[#fcfbf7] p-6 shadow-[0_20px_44px_-30px_rgba(58,38,18,0.45)]">
-                    <div className="flex items-center gap-3 rounded-full border border-stone-300/80 bg-white/90 px-4 py-2 text-sm text-stone-700 shadow-[0_12px_24px_-20px_rgba(58,38,18,0.45)]">
-                      <LoaderCircle className="size-4 animate-spin" />
-                      <span>Loading pages...</span>
-                    </div>
-                  </div>
-                ) : null}
-
-                {sectionFormat === "pdf" && pdfDocument ? (
-                  <div className="flex w-full flex-col items-center gap-4 sm:gap-5">
-                    {pdfPageNumbers.map((pdfPageNumber) => (
-                      <PdfPageCanvas
-                        key={`${resolvedActiveSectionId}-${pdfPageNumber}`}
-                        pageNumber={pdfPageNumber}
-                        pdfDocument={pdfDocument}
-                        sectionId={resolvedActiveSectionId ?? "section"}
-                        viewerWidth={viewerWidth}
-                        zoom={zoom}
-                      />
-                    ))}
-                  </div>
-                ) : null}
-              </div>
+              {activeSection ? <span className={CONTROL_PILL_CLASSNAME}>{activeSection.label}</span> : null}
             </div>
 
-            {sectionFormat === "pdf" && pdfState === "error" ? (
-              <div className="mx-auto mt-4 max-w-2xl rounded-[1.2rem] border border-rose-200 bg-rose-50/80 px-4 py-3 text-sm leading-6 text-rose-900">
+            <div className="flex items-center gap-2">
+              <span className={CONTROL_PILL_CLASSNAME}>{zoomLabel}</span>
+              {zoomRefreshing ? (
+                <span className="hidden rounded-full bg-white/68 px-3 py-1 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-stone-500 sm:inline-flex">
+                  Sharpening
+                </span>
+              ) : null}
+
+              <Button
+                className="rounded-full border-transparent bg-white/76 text-stone-700 hover:bg-white"
+                disabled={!canZoomOut || pdfFlowLoading}
+                onClick={() => setZoom((currentZoom) => clampZoom(currentZoom - ZOOM_STEP))}
+                size="icon-sm"
+                variant="outline"
+              >
+                <Minus className="size-4" />
+                <span className="sr-only">Zoom out</span>
+              </Button>
+
+              <Button
+                className="rounded-full border-transparent bg-white/76 text-stone-700 hover:bg-white"
+                disabled={!canZoomIn || pdfFlowLoading}
+                onClick={() => setZoom((currentZoom) => clampZoom(currentZoom + ZOOM_STEP))}
+                size="icon-sm"
+                variant="outline"
+              >
+                <Plus className="size-4" />
+                <span className="sr-only">Zoom in</span>
+              </Button>
+            </div>
+          </div>
+
+          <div
+            className="min-h-0 flex-1 overflow-auto px-1 pb-2 pt-1 sm:px-2 sm:pb-3"
+            onScroll={handleViewerScroll}
+            ref={viewerRef}
+          >
+            {pdfFlowLoading ? (
+              <div className="flex min-h-[18rem] w-full items-center justify-center">
+                <div className="flex items-center gap-3 rounded-full bg-white/92 px-4 py-2 text-sm text-stone-700 shadow-[0_12px_24px_-20px_rgba(58,38,18,0.45)]">
+                  <LoaderCircle className="size-4 animate-spin" />
+                  <span>Loading the full book...</span>
+                </div>
+              </div>
+            ) : null}
+
+            {pdfDocument ? (
+              <div className="mx-auto flex w-full flex-col items-center gap-1 sm:gap-2">
+                {pdfPageNumbers.map((pdfPageNumber) => (
+                  <div
+                    className="w-full"
+                    key={`${book.id}-${pdfPageNumber}`}
+                    ref={(node) => {
+                      if (node) {
+                        pageRefs.current.set(pdfPageNumber, node);
+                        return;
+                      }
+
+                      pageRefs.current.delete(pdfPageNumber);
+                    }}
+                  >
+                    <PdfPageCanvas
+                      displayZoom={zoom}
+                      pageNumber={pdfPageNumber}
+                      pdfDocument={pdfDocument}
+                      renderZoom={renderZoom}
+                      scrollRoot={viewerElement}
+                      viewerHeight={viewerHeight}
+                      viewerWidth={viewerWidth}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : null}
+
+            {pdfState === "error" ? (
+              <div className="mx-auto mt-4 max-w-2xl rounded-[1rem] bg-rose-50/90 px-4 py-3 text-sm leading-6 text-rose-900">
                 {pdfError}
               </div>
             ) : null}

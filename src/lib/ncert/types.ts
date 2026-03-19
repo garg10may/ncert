@@ -44,6 +44,8 @@ export type NcertManifestSection = {
   sourceType: "asset" | "zip-entry";
   includeInFullBook: boolean;
   kind: "cover" | "content" | "supplement";
+  pageCount: number;
+  startPage: number;
 };
 
 export type NcertBookManifest = {

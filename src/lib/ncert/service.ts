@@ -112,6 +112,9 @@ function getSectionLabel(book: NcertCatalogBook, entryName: string): string {
   return SECTION_LABELS[suffix] ?? `Section ${suffix.toUpperCase()}`;
 }
 
+type SectionAssetTarget = Pick<NcertManifestSection, "href" | "sourceType">;
+type SectionDraft = Omit<NcertManifestSection, "pageCount" | "startPage">;
+
 async function getBookArchive(bookId: string): Promise<JSZip> {
   const cacheKey = getSourceCacheKey(bookId);
   const cached = archiveCache.get(cacheKey);
@@ -163,7 +166,7 @@ export async function getImageCoverAsset(bookId: string): Promise<NcertAssetPayl
 
 async function loadSectionAsset(
   bookId: string,
-  section: NcertManifestSection,
+  section: SectionAssetTarget,
 ): Promise<NcertAssetPayload> {
   if (section.sourceType === "asset") {
     const cover = await getCoverAsset(bookId);
@@ -186,6 +189,15 @@ async function loadSectionAsset(
   };
 }
 
+async function getAssetPageCount(asset: NcertAssetPayload): Promise<number> {
+  if (asset.contentType === "application/pdf") {
+    const sourcePdf = await PDFDocument.load(asset.bytes);
+    return sourcePdf.getPageCount();
+  }
+
+  return 1;
+}
+
 async function buildBookManifest(bookId: string): Promise<NcertBookManifest> {
   const book = getBookOrThrow(bookId);
   const archive = await getBookArchive(bookId);
@@ -193,7 +205,7 @@ async function buildBookManifest(bookId: string): Promise<NcertBookManifest> {
   const archiveHasCover = archiveEntries.some((entry) => getEntrySuffix(book, entry.name) === "cc");
   const cover = archiveHasCover ? undefined : await getCoverAsset(bookId);
   const warnings: string[] = [];
-  const sections: NcertManifestSection[] = [];
+  const sectionDrafts: SectionDraft[] = [];
   const coverSource: NcertBookManifest["sourceSummary"]["coverSource"] = archiveHasCover
     ? "zip-entry"
     : cover
@@ -201,7 +213,7 @@ async function buildBookManifest(bookId: string): Promise<NcertBookManifest> {
       : "none";
 
   if (cover) {
-    sections.push({
+    sectionDrafts.push({
       id: "00-cover",
       label: "Cover",
       href: cover.url,
@@ -211,7 +223,7 @@ async function buildBookManifest(bookId: string): Promise<NcertBookManifest> {
     });
   }
 
-  sections.push(
+  sectionDrafts.push(
     ...archiveEntries.map((entry, index) => {
       const suffix = getEntrySuffix(book, entry.name);
       if (!SECTION_LABELS[suffix] && !/^\d{2}$/.test(suffix) && suffix !== "cc") {
@@ -228,6 +240,22 @@ async function buildBookManifest(bookId: string): Promise<NcertBookManifest> {
       };
     }),
   );
+
+  const sections: NcertManifestSection[] = [];
+  let nextStartPage = 1;
+
+  for (const section of sectionDrafts) {
+    const asset = await loadSectionAsset(bookId, section);
+    const pageCount = await getAssetPageCount(asset);
+
+    sections.push({
+      ...section,
+      pageCount,
+      startPage: nextStartPage,
+    });
+
+    nextStartPage += pageCount;
+  }
 
   if (coverSource === "none") {
     warnings.push("This book does not expose a separate cover asset, so preview starts with the first archive section.");
