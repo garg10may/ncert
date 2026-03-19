@@ -1,12 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { NcertBookCover } from "@/components/ncert-book-cover";
 import { NcertReaderOverlay } from "@/components/ncert-reader-overlay";
 import { Button } from "@/components/ui/button";
 import { NCERT_CLASS_OPTIONS } from "@/lib/ncert/catalog";
 import type { NcertCatalogBook } from "@/lib/ncert/types";
+import { cn } from "@/lib/utils";
 
 type DownloaderProps = {
   catalog: NcertCatalogBook[];
@@ -14,6 +16,124 @@ type DownloaderProps = {
 
 function getShelfId(classValue: number) {
   return `class-${classValue}`;
+}
+
+type ShelfScrollerProps = {
+  books: NcertCatalogBook[];
+  classLabel: string;
+  onOpenBook: (bookId: string) => void;
+  shelfIndex: number;
+};
+
+function ShelfScroller({ books, classLabel, onOpenBook, shelfIndex }: ShelfScrollerProps) {
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [scrollState, setScrollState] = useState({
+    canScrollLeft: false,
+    canScrollRight: false,
+    hasOverflow: false,
+  });
+
+  useEffect(() => {
+    const node = scrollRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    const updateScrollState = () => {
+      const maxScrollLeft = node.scrollWidth - node.clientWidth;
+
+      setScrollState({
+        canScrollLeft: node.scrollLeft > 6,
+        canScrollRight: maxScrollLeft - node.scrollLeft > 6,
+        hasOverflow: maxScrollLeft > 6,
+      });
+    };
+
+    updateScrollState();
+
+    node.addEventListener("scroll", updateScrollState, { passive: true });
+
+    const resizeObserver = new ResizeObserver(updateScrollState);
+    resizeObserver.observe(node);
+
+    const content = node.firstElementChild;
+    if (content instanceof HTMLElement) {
+      resizeObserver.observe(content);
+    }
+
+    window.addEventListener("resize", updateScrollState);
+
+    return () => {
+      node.removeEventListener("scroll", updateScrollState);
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, [books.length]);
+
+  const scrollShelf = (direction: "left" | "right") => {
+    const node = scrollRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    const distance = Math.max(node.clientWidth * 0.72, 220);
+    node.scrollBy({
+      left: direction === "left" ? -distance : distance,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <div className="relative">
+      <div
+        className="no-scrollbar relative z-10 -mx-2 overflow-x-auto px-2 pb-[1.85rem] sm:-mx-4 sm:px-4 sm:pb-[1.95rem] lg:-mx-6 lg:px-6"
+        ref={scrollRef}
+      >
+        <div className="flex min-w-max items-end gap-4 sm:gap-5 lg:gap-6">
+          {books.map((book, bookIndex) => (
+            <NcertBookCover
+              book={book}
+              key={book.id}
+              onOpen={() => onOpenBook(book.id)}
+              priority={shelfIndex < 2 && bookIndex < 2}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="bookshelf-ledge-label absolute bottom-[0.18rem] left-1/2 z-20 -translate-x-1/2 sm:bottom-[0.2rem]">
+          <button
+            aria-label={`Scroll ${classLabel} shelf left`}
+            className={cn(
+              "bookshelf-ledge-control-button",
+              scrollState.hasOverflow ? "opacity-100" : "opacity-0 pointer-events-none",
+            )}
+            disabled={!scrollState.canScrollLeft}
+            onClick={() => scrollShelf("left")}
+            type="button"
+          >
+            <ChevronLeft className="size-3" />
+          </button>
+
+          <span className="bookshelf-ledge-control-text">{classLabel}</span>
+
+          <button
+            aria-label={`Scroll ${classLabel} shelf right`}
+            className={cn(
+              "bookshelf-ledge-control-button",
+              scrollState.hasOverflow ? "opacity-100" : "opacity-0 pointer-events-none",
+            )}
+            disabled={!scrollState.canScrollRight}
+            onClick={() => scrollShelf("right")}
+            type="button"
+          >
+            <ChevronRight className="size-3" />
+          </button>
+      </div>
+    </div>
+  );
 }
 
 export function NcertDownloaderApp({ catalog }: DownloaderProps) {
@@ -76,18 +196,12 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
               <h2 className="sr-only">{shelf.classLabel}</h2>
 
               <div className="bookshelf-nook relative px-2 pb-0 pt-2 sm:px-4 lg:px-6">
-                <div className="no-scrollbar relative z-10 -mx-2 overflow-x-auto px-2 pb-[1.85rem] sm:-mx-4 sm:px-4 sm:pb-[1.95rem] lg:-mx-6 lg:px-6">
-                  <div className="flex min-w-max items-end gap-4 sm:gap-5 lg:gap-6">
-                    {shelf.books.map((book, bookIndex) => (
-                      <NcertBookCover
-                        book={book}
-                        key={book.id}
-                        onOpen={() => setActiveBookId(book.id)}
-                        priority={shelfIndex < 2 && bookIndex < 2}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <ShelfScroller
+                  books={shelf.books}
+                  classLabel={shelf.classLabel}
+                  onOpenBook={setActiveBookId}
+                  shelfIndex={shelfIndex}
+                />
 
                 <div
                   aria-hidden="true"
@@ -97,12 +211,6 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
                   aria-hidden="true"
                   className="bookshelf-ledge-top pointer-events-none absolute inset-x-0 bottom-[1.18rem] z-0 h-[0.66rem] sm:bottom-[1.26rem] sm:h-[0.7rem]"
                 />
-                <div
-                  aria-hidden="true"
-                  className="bookshelf-ledge-label pointer-events-none absolute inset-x-5 bottom-[0.18rem] z-[1] sm:bottom-[0.2rem] lg:inset-x-8"
-                >
-                  <span>{shelf.classLabel}</span>
-                </div>
                 <div
                   aria-hidden="true"
                   className="bookshelf-ledge pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[1.26rem] sm:h-[1.36rem]"

@@ -163,28 +163,27 @@
     background: rgba(255, 255, 255, 0.18);
   }
 
-  .bookshelf-ledge-label {
+  .bookshelf-ledge-label-wrap {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .bookshelf-ledge-label span {
+  .bookshelf-ledge-control-button,
+  .bookshelf-ledge-control-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .bookshelf-ledge-label {
     position: relative;
     display: inline-flex;
-    min-width: min(16rem, 100%);
+    align-items: center;
+    gap: 0.28rem;
+    width: min(16rem, calc(100% - 1.5rem));
     justify-content: center;
-    padding: 0.12rem 1rem 0.22rem;
+    padding: 0.1rem 0.44rem 0.18rem;
     border-radius: 999px;
-    color: rgba(255, 250, 240, 0.94);
-    font-size: clamp(0.56rem, 0.5rem + 0.22vw, 0.72rem);
-    font-weight: 700;
-    letter-spacing: 0.28em;
-    line-height: 1;
-    text-transform: uppercase;
-    text-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.24),
-      0 -1px 0 rgba(92, 51, 19, 0.48);
     background: linear-gradient(
       180deg,
       rgba(124, 70, 29, 0.16) 0%,
@@ -197,7 +196,7 @@
     filter: saturate(0.88);
   }
 
-  .bookshelf-ledge-label span::before {
+  .bookshelf-ledge-label::before {
     content: "";
     position: absolute;
     inset: 1px;
@@ -212,6 +211,52 @@
     box-shadow:
       inset 0 1px 1px rgba(57, 30, 10, 0.22),
       inset 0 -1px 0 rgba(255, 245, 228, 0.04);
+  }
+
+  .bookshelf-ledge-control-text {
+    flex: 1;
+    color: rgba(255, 250, 240, 0.94);
+    font-size: clamp(0.56rem, 0.5rem + 0.22vw, 0.72rem);
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.24),
+      0 -1px 0 rgba(92, 51, 19, 0.48);
+  }
+
+  .bookshelf-ledge-control-button {
+    display: inline-flex;
+    height: 0.92rem;
+    width: 0.92rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(122, 74, 31, 0.32);
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(149, 94, 44, 0.34), rgba(111, 66, 28, 0.18));
+    color: rgba(255, 247, 231, 0.92);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 230, 189, 0.12),
+      inset 0 -1px 0 rgba(86, 49, 20, 0.28);
+    transition:
+      opacity 180ms ease,
+      background-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .bookshelf-ledge-control-button:not(:disabled):hover {
+    background: linear-gradient(180deg, rgba(157, 100, 47, 0.44), rgba(124, 73, 31, 0.24));
+  }
+
+  .bookshelf-ledge-control-button:not(:disabled):active {
+    transform: translateY(1px);
+  }
+
+  .bookshelf-ledge-control-button:disabled {
+    opacity: 0.34;
   }
 
   .bookshelf-ledge-shadow {
