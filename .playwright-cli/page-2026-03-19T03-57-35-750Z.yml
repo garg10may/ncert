@@ -1,0 +1,1994 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - generic:
+            - paragraph: NCERT Atlas
+          - navigation:
+            - generic:
+              - link:
+                - /url: "#class-1"
+                - text: Class I
+              - link:
+                - /url: "#class-2"
+                - text: Class II
+              - link:
+                - /url: "#class-3"
+                - text: Class III
+              - link:
+                - /url: "#class-4"
+                - text: Class IV
+              - link:
+                - /url: "#class-5"
+                - text: Class V
+              - link:
+                - /url: "#class-6"
+                - text: Class VI
+              - link:
+                - /url: "#class-7"
+                - text: Class VII
+              - link:
+                - /url: "#class-8"
+                - text: Class VIII
+              - link:
+                - /url: "#class-9"
+                - text: Class IX
+              - link:
+                - /url: "#class-10"
+                - text: Class X
+              - link:
+                - /url: "#class-11"
+                - text: Class XI
+              - link:
+                - /url: "#class-12"
+                - text: Class XII
+      - main:
+        - region:
+          - heading [level=2]: Class I
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class I
+                          - paragraph: Mridang
+                          - paragraph: English
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/aemr1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class I
+                          - paragraph: Joyful-Mathematics (English)
+                          - paragraph: Mathematics
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/aejm1/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class I
+                - button [disabled]:
+                  - img
+        - region:
+          - heading [level=2]: Class II
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class II
+                          - paragraph: Mridang
+                          - paragraph: English
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/bemr1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class II
+                          - paragraph: Joyful-Mathematics (English)
+                          - paragraph: Mathematics
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/bejm1/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class II
+                - button [disabled]:
+                  - img
+        - region:
+          - heading [level=2]: Class III
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class III
+                          - paragraph: Bansuri - I
+                          - paragraph: Arts
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/cebu1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class III
+                          - paragraph: Santoor
+                          - paragraph: English
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/cesa1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class III
+                          - paragraph: Maths Mela
+                          - paragraph: Mathematics
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/cemm1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class III
+                          - paragraph: Khel Yoga
+                          - paragraph: Physical Education and Well Being
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/ceky1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class III
+                          - paragraph: Our Wondrous World
+                          - paragraph: The World Around Us
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/ceev1/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class III
+                - button [disabled]:
+                  - img
+        - region:
+          - heading [level=2]: Class IV
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IV
+                          - paragraph: Bansuri
+                          - paragraph: Arts
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/debu1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IV
+                          - paragraph: Santoor
+                          - paragraph: English
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/desa1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IV
+                          - paragraph: Math-Mela
+                          - paragraph: Mathematics
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/demm1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IV
+                          - paragraph: Khel Yoga
+                          - paragraph: Physical Education and Well Being
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/deky1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IV
+                          - paragraph: Our Wonderous World
+                          - paragraph: The World Around Us
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/deev1/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class IV
+                - button [disabled]:
+                  - img
+        - region:
+          - heading [level=2]: Class V
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class V
+                          - paragraph: Bansuri
+                          - paragraph: Arts
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/eebu1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class V
+                          - paragraph: Santoor
+                          - paragraph: English
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/eesa1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class V
+                          - paragraph: Math-Mela
+                          - paragraph: Mathematics
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/eemm1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class V
+                          - paragraph: Khel Yoga
+                          - paragraph: Physical Education and Well Being
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/eeky1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class V
+                          - paragraph: Our Wonderous World
+                          - paragraph: The World Around Us
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/eeev1/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class V
+                - button [disabled]:
+                  - img
+        - region:
+          - heading [level=2]: Class VI
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VI
+                          - paragraph: Kriti-I
+                          - paragraph: Arts
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/fekr1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VI
+                          - paragraph: Poorvi
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/fepr1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VI
+                          - paragraph: Ganita Prakash
+                          - paragraph: Mathematics
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/fegp1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VI
+                          - paragraph: Khel Yatra
+                          - paragraph: Physical Education and Well Being
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/feky1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VI
+                          - paragraph: Curiosity
+                          - paragraph: Science
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/fecu1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VI
+                          - paragraph: Exploring Society India and Beyond
+                          - paragraph: Social Science
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/fees1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VI
+                          - paragraph: Kaushal Bodh
+                          - paragraph: Vocational Education
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/fekb1/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class VI
+                - button [disabled]:
+                  - img
+        - region:
+          - heading [level=2]: Class VII
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VII
+                          - paragraph: Kriti
+                          - paragraph: Arts
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/gekr1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VII
+                          - paragraph: Poorvi
+                          - paragraph: English
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/gepr1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VII
+                          - paragraph: Ganita Prakash
+                          - paragraph: Mathematics
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/gegp1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VII
+                          - paragraph: Ganita Prakash-II
+                          - paragraph: Mathematics
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/gegp2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VII
+                          - paragraph: Khel Yatra
+                          - paragraph: Physical Education and Well Being
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/geky1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VII
+                          - paragraph: Curiosity
+                          - paragraph: Science
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/gecu1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VII
+                          - paragraph: Exploring Society India and Beyond Part-I
+                          - paragraph: Social Science
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/gees1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VII
+                          - paragraph: Exploring Society India and Beyond Part-II
+                          - paragraph: Social Science
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/gees2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VII
+                          - paragraph: Kaushal Bodh
+                          - paragraph: Vocational Education
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/gekb1/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class VII
+                - button:
+                  - img
+        - region:
+          - heading [level=2]: Class VIII
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VIII
+                          - paragraph: Kriti
+                          - paragraph: Arts
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/hekr1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VIII
+                          - paragraph: Poorvi
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/hepr1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VIII
+                          - paragraph: Ganita Prakash Part-I
+                          - paragraph: Mathematics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/hegp1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VIII
+                          - paragraph: Ganita Prakash Part-II
+                          - paragraph: Mathematics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/hegp2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VIII
+                          - paragraph: Khel Yatra
+                          - paragraph: Physical Education and Well Being
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/heky1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VIII
+                          - paragraph: Curiosity
+                          - paragraph: Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/hecu1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VIII
+                          - paragraph: Exploring Society India and Beyond Part-I
+                          - paragraph: Social Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/hees1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class VIII
+                          - paragraph: Kaushal Bodh
+                          - paragraph: Vocational Education
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/hekb1/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class VIII
+                - button:
+                  - img
+        - region:
+          - heading [level=2]: Class IX
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IX
+                          - paragraph: Beehive
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/iebe1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IX
+                          - paragraph: Moments Supplementary Reader
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/iemo1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IX
+                          - paragraph: Words and Expressions 1
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/iewe1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IX
+                          - paragraph: Health and Physical Education
+                          - paragraph: Health and Physical Education
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/iehp1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IX
+                          - paragraph: Mathematics
+                          - paragraph: Mathematics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/iemh1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IX
+                          - paragraph: Science
+                          - paragraph: Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/iesc1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IX
+                          - paragraph: Contemporary India-I
+                          - paragraph: Social Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/iess1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IX
+                          - paragraph: Democratic Politics-I
+                          - paragraph: Social Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/iess4/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IX
+                          - paragraph: Economics
+                          - paragraph: Social Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/iess2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class IX
+                          - paragraph: India and the Contemporary World-I
+                          - paragraph: Social Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/iess3/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class IX
+                - button:
+                  - img
+        - region:
+          - heading [level=2]: Class X
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class X
+                          - paragraph: First Flight
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/jeff1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class X
+                          - paragraph: Foot Prints Without feet Supp. Reader
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/jefp1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class X
+                          - paragraph: Words and Expressions 2
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/jewe2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class X
+                          - paragraph: Health and Physical Education
+                          - paragraph: Health and Physical Education
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/jehp1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class X
+                          - paragraph: Mathematics
+                          - paragraph: Mathematics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/jemh1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class X
+                          - paragraph: Science
+                          - paragraph: Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/jesc1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class X
+                          - paragraph: Contemporary India
+                          - paragraph: Social Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/jess1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class X
+                          - paragraph: Democratic Politics
+                          - paragraph: Social Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/jess4/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class X
+                          - paragraph: India and the Contemporary World-II
+                          - paragraph: Social Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/jess3/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class X
+                          - paragraph: Understanding Economic Development
+                          - paragraph: Social Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/jess2/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class X
+                - button:
+                  - img
+        - region:
+          - heading [level=2]: Class XI
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Accountancy-II
+                          - paragraph: Accountancy
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/keac2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Financial Accounting-I
+                          - paragraph: Accountancy
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/keac1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Biology
+                          - paragraph: Biology
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kebo1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Biotechnology
+                          - paragraph: Biotechnology
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kebt1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Business Studies
+                          - paragraph: Business Studies
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kebs1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Chemistry Part II
+                          - paragraph: Chemistry
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kech2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Chemistry Part-I
+                          - paragraph: Chemistry
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kech1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Computer Science
+                          - paragraph: Computer Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kecs1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Indian Economic Development
+                          - paragraph: Economics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/keec1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Statistics for Economics
+                          - paragraph: Economics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kest1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Hornbill
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kehb1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Snapshots Suppl.Reader English
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kesp1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Woven Words
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/keww1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: An Introduction to Indian Art Part-I
+                          - paragraph: Fine Art
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kefa1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Fundamental of Physical Geography
+                          - paragraph: Geography
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kegy2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: India Physical Environment
+                          - paragraph: Geography
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kegy1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Pratical Work in Geography
+                          - paragraph: Geography
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kegy3/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Health and Physical Education
+                          - paragraph: Health and Physical Education
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kehp1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Themes in World History
+                          - paragraph: History
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kehs1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Human Ecology and Family Sciences Part I
+                          - paragraph: Home Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kehe1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Human Ecology and Family Sciences Part II
+                          - paragraph: Home Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kehe2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Informatics Practices
+                          - paragraph: Informatics Practices
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/keip1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Knowledge Traditions Practices of India
+                          - paragraph: Knowledge Traditions Practices of India
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/keks1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Mathematics
+                          - paragraph: Mathematics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kemh1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Physics Part-I
+                          - paragraph: Physics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/keph1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Physics Part-II
+                          - paragraph: Physics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/keph2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: India Constitution at Work
+                          - paragraph: Political Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/keps2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Political Theory
+                          - paragraph: Political Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/keps1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Introduction to Psychology
+                          - paragraph: Psychology
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kepy1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Introducing Sociology
+                          - paragraph: Sociology
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kesy1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XI
+                          - paragraph: Understanding Society
+                          - paragraph: Sociology
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/kesy2/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class XI
+                - button:
+                  - img
+        - region:
+          - heading [level=2]: Class XII
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Accountancy Part-II
+                          - paragraph: Accountancy
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/leac2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Accountancy-I
+                          - paragraph: Accountancy
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/leac1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Computerised Accounting System
+                          - paragraph: Accountancy
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/leca1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Biology
+                          - paragraph: Biology
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lebo1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Biotechnology
+                          - paragraph: Biotechnology
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lebt1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Business Studies-I
+                          - paragraph: Business Studies
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lebs1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Business Studies-II
+                          - paragraph: Business Studies
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lebs2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Chemistry-I
+                          - paragraph: Chemistry
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lech1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Chemistry-II
+                          - paragraph: Chemistry
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lech2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Computer Science
+                          - paragraph: Computer Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lecs1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Introductory Macroeconomics
+                          - paragraph: Economics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/leec1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Introductory Microeconomics
+                          - paragraph: Economics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/leec2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Flamingo
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lefl1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Kaliedoscope
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lekl1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Vistas
+                          - paragraph: English
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/levt1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: An Introduction to Indian Art Part-II
+                          - paragraph: Fine Art
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lefa1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Fundamentals of Human Geography
+                          - paragraph: Geography
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/legy1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: India -People And Economy
+                          - paragraph: Geography
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/legy2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Practical Work in Geography Part II
+                          - paragraph: Geography
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/legy3/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Themes in Indian History-I
+                          - paragraph: History
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lehs1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Themes in Indian History-II
+                          - paragraph: History
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lehs2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Themes in Indian History-III
+                          - paragraph: History
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lehs3/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Human Ecology and Family Sciences Part I
+                          - paragraph: Home Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lehe1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Human Ecology and Family Sciences Part II
+                          - paragraph: Home Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lehe2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Manav Paristhitik avam Parivar Vigyan Bhag 1
+                          - paragraph: Home Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lehh1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Manav Paristhitiki avam Parivar Vigyan Bhag 2
+                          - paragraph: Home Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lehh2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Informatics Practices
+                          - paragraph: Informatics Practices
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/leip1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Mathematics Part-I
+                          - paragraph: Mathematics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lemh1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Mathematics Part-II
+                          - paragraph: Mathematics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lemh2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Physics Part-I
+                          - paragraph: Physics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/leph1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Physics Part-II
+                          - paragraph: Physics
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/leph2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Contemporary World Politics
+                          - paragraph: Political Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/leps1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Politics in India Since Independence
+                          - paragraph: Political Science
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/leps2/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Psychology
+                          - paragraph: Psychology
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lepy1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Indian Society
+                          - paragraph: Sociology
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lesy1/download
+                      - img
+                  - generic:
+                    - button:
+                      - generic:
+                        - generic:
+                          - paragraph: Class XII
+                          - paragraph: Social Change and Development in India
+                          - paragraph: Sociology
+                        - img
+                      - generic:
+                        - img
+                        - text: Open
+                    - link:
+                      - /url: /api/books/lesy2/download
+                      - img
+              - generic:
+                - button [disabled]:
+                  - img
+                - generic: Class XII
+                - button:
+                  - img
+  - alert
+  - dialog "Mridang" [ref=e1657]:
+    - generic [ref=e1658]:
+      - generic [ref=e1659]:
+        - generic [ref=e1660]:
+          - paragraph [ref=e1661]: Class I • English
+          - heading "Mridang" [level=2] [ref=e1662]
+          - paragraph [ref=e1663]: Read Mridang in the browser or download the compiled PDF.
+        - generic [ref=e1664]:
+          - link "Download PDF" [ref=e1665] [cursor=pointer]:
+            - /url: /api/books/aemr1/download
+            - img
+            - generic [ref=e1666]: Download
+            - generic [ref=e1667]: PDF
+          - button "Close Mridang" [active] [ref=e1668]:
+            - img
+      - iframe [ref=e1671]:
+        

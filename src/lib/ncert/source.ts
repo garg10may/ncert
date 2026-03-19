@@ -213,7 +213,10 @@ async function buildFixtureDefinition(book: NcertCatalogBook): Promise<FixtureDe
     case "aemr1":
     case "bemr1":
       return {
-        entries: defaultEntries,
+        entries: [
+          { name: `${book.routeKey}cc.pdf`, bytes: await createFixturePdf(book.title) },
+          ...defaultEntries,
+        ],
       };
     default:
       return {

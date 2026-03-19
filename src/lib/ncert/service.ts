@@ -64,8 +64,12 @@ export function resetNcertServiceCaches() {
   coverCache.clear();
 }
 
+function getSourceCacheKey(bookId: string): string {
+  return `${getNcertSourceClient().mode}:${bookId}`;
+}
+
 function getCompiledBookPath(book: NcertCatalogBook): string {
-  return path.join(CACHE_DIR, "books", `${book.id}.pdf`);
+  return path.join(CACHE_DIR, "books", "live", `${book.id}.pdf`);
 }
 
 function getBookFilename(book: NcertCatalogBook, withClassPrefix = false): string {
@@ -109,7 +113,8 @@ function getSectionLabel(book: NcertCatalogBook, entryName: string): string {
 }
 
 async function getBookArchive(bookId: string): Promise<JSZip> {
-  const cached = archiveCache.get(bookId);
+  const cacheKey = getSourceCacheKey(bookId);
+  const cached = archiveCache.get(cacheKey);
   if (cached) {
     return cached;
   }
@@ -119,16 +124,17 @@ async function getBookArchive(bookId: string): Promise<JSZip> {
     .getArchive(book)
     .then((archivePayload) => JSZip.loadAsync(archivePayload.bytes))
     .catch((error) => {
-      archiveCache.delete(bookId);
+      archiveCache.delete(cacheKey);
       throw toNcertServiceError(error);
     });
 
-  archiveCache.set(bookId, archivePromise);
+  archiveCache.set(cacheKey, archivePromise);
   return archivePromise;
 }
 
 async function getCoverAsset(bookId: string): Promise<NcertAssetPayload | undefined> {
-  const cached = coverCache.get(bookId);
+  const cacheKey = getSourceCacheKey(bookId);
+  const cached = coverCache.get(cacheKey);
   if (cached) {
     return cached;
   }
@@ -137,11 +143,11 @@ async function getCoverAsset(bookId: string): Promise<NcertAssetPayload | undefi
   const coverPromise = getNcertSourceClient()
     .getCoverAsset(book)
     .catch((error) => {
-      coverCache.delete(bookId);
+      coverCache.delete(cacheKey);
       throw toNcertServiceError(error);
     });
 
-  coverCache.set(bookId, coverPromise);
+  coverCache.set(cacheKey, coverPromise);
   return coverPromise;
 }
 
@@ -247,17 +253,18 @@ async function buildBookManifest(bookId: string): Promise<NcertBookManifest> {
 }
 
 export function getBookManifest(bookId: string): Promise<NcertBookManifest> {
-  const cached = manifestCache.get(bookId);
+  const cacheKey = getSourceCacheKey(bookId);
+  const cached = manifestCache.get(cacheKey);
   if (cached) {
     return cached;
   }
 
   const manifestPromise = buildBookManifest(bookId).catch((error) => {
-    manifestCache.delete(bookId);
+    manifestCache.delete(cacheKey);
     throw toNcertServiceError(error);
   });
 
-  manifestCache.set(bookId, manifestPromise);
+  manifestCache.set(cacheKey, manifestPromise);
   return manifestPromise;
 }
 
@@ -290,14 +297,19 @@ async function appendAsset(mergedPdf: PDFDocument, asset: NcertAssetPayload): Pr
 
 async function buildCompiledBook(bookId: string): Promise<Buffer> {
   const manifest = await getBookManifest(bookId);
-  await ensureCacheDir("books");
+  const sourceMode = getNcertSourceClient().mode;
+  const useDiskCache = sourceMode === "live";
   const cachePath = getCompiledBookPath(manifest.book);
 
-  try {
-    await stat(cachePath);
-    return await readFile(cachePath);
-  } catch {
-    // Cache miss.
+  if (useDiskCache) {
+    await ensureCacheDir(path.join("books", sourceMode));
+
+    try {
+      await stat(cachePath);
+      return await readFile(cachePath);
+    } catch {
+      // Cache miss.
+    }
   }
 
   try {
@@ -313,7 +325,11 @@ async function buildCompiledBook(bookId: string): Promise<Buffer> {
     }
 
     const bytes = Buffer.from(await mergedPdf.save());
-    await writeFile(cachePath, bytes);
+
+    if (useDiskCache) {
+      await writeFile(cachePath, bytes);
+    }
+
     return bytes;
   } catch (error) {
     throw new NcertServiceError(`Could not compile ${manifest.book.title}.`, 500, { cause: error });
@@ -321,16 +337,17 @@ async function buildCompiledBook(bookId: string): Promise<Buffer> {
 }
 
 export function getCompiledBook(bookId: string): Promise<Buffer> {
-  const cached = compiledBookCache.get(bookId);
+  const cacheKey = getSourceCacheKey(bookId);
+  const cached = compiledBookCache.get(cacheKey);
   if (cached) {
     return cached;
   }
 
   const compiledPromise = buildCompiledBook(bookId).catch((error) => {
-    compiledBookCache.delete(bookId);
+    compiledBookCache.delete(cacheKey);
     throw toNcertServiceError(error);
   });
-  compiledBookCache.set(bookId, compiledPromise);
+  compiledBookCache.set(cacheKey, compiledPromise);
   return compiledPromise;
 }
 
