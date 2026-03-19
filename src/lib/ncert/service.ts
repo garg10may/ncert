@@ -1,4 +1,5 @@
 import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 
 import JSZip from "jszip";
@@ -15,7 +16,11 @@ import {
 } from "@/lib/ncert/source";
 import type { NcertBookManifest, NcertCatalogBook, NcertManifestSection } from "@/lib/ncert/types";
 
-const CACHE_DIR = path.join(process.cwd(), ".ncert-cache");
+const CACHE_DIR = process.env.NCERT_CACHE_DIR
+  ? path.resolve(process.env.NCERT_CACHE_DIR)
+  : process.env.VERCEL
+    ? path.join(tmpdir(), "ncert-cache")
+    : path.join(process.cwd(), ".ncert-cache");
 
 const archiveCache = new Map<string, Promise<JSZip>>();
 const manifestCache = new Map<string, Promise<NcertBookManifest>>();
@@ -378,12 +383,18 @@ async function appendAsset(mergedPdf: PDFDocument, asset: NcertAssetPayload): Pr
 async function buildCompiledBook(bookId: string): Promise<Buffer> {
   const manifest = await getBookManifest(bookId);
   const sourceMode = getNcertSourceClient().mode;
-  const useDiskCache = sourceMode === "live";
+  let useDiskCache = sourceMode === "live";
   const cachePath = getCompiledBookPath(manifest.book);
 
   if (useDiskCache) {
-    await ensureCacheDir(path.join("books", sourceMode));
+    try {
+      await ensureCacheDir(path.join("books", sourceMode));
+    } catch {
+      useDiskCache = false;
+    }
+  }
 
+  if (useDiskCache) {
     try {
       await stat(cachePath);
       return await readFile(cachePath);
@@ -407,7 +418,11 @@ async function buildCompiledBook(bookId: string): Promise<Buffer> {
     const bytes = Buffer.from(await mergedPdf.save());
 
     if (useDiskCache) {
-      await writeFile(cachePath, bytes);
+      try {
+        await writeFile(cachePath, bytes);
+      } catch {
+        // A cache write failure should not fail the download response.
+      }
     }
 
     return bytes;
