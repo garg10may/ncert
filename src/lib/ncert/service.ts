@@ -108,6 +108,25 @@ function getBookFilename(book: NcertCatalogBook, withClassPrefix = false): strin
   return `${sanitizeFilename(baseName) || book.id}.pdf`;
 }
 
+function getUniqueZipEntryFilename(
+  book: NcertCatalogBook,
+  withClassPrefix: boolean,
+  usedFilenames: Map<string, number>,
+): string {
+  const filename = getBookFilename(book, withClassPrefix);
+  const collisionCount = usedFilenames.get(filename) ?? 0;
+  usedFilenames.set(filename, collisionCount + 1);
+
+  if (collisionCount === 0) {
+    return filename;
+  }
+
+  const parsed = path.parse(filename);
+  const numberedStem = sanitizeFilename(`${parsed.name} (${collisionCount + 1})`);
+
+  return `${numberedStem || `${book.id}-${collisionCount + 1}`}${parsed.ext || ".pdf"}`;
+}
+
 async function ensureCacheDir(subdirectory: string): Promise<void> {
   await mkdir(path.join(CACHE_DIR, subdirectory), { recursive: true });
 }
@@ -485,22 +504,33 @@ export function getDownloadFilename(bookId: string): string {
 export async function buildBulkZip(bookIds: string[]): Promise<Buffer> {
   const books = bookIds
     .map((bookId) => getNcertCatalogBook(bookId))
-    .filter((book): book is NcertCatalogBook => Boolean(book));
+    .filter((book): book is NcertCatalogBook => Boolean(book))
+    .sort(
+      (left, right) =>
+        left.classValue - right.classValue ||
+        left.canonicalSubject.localeCompare(right.canonicalSubject) ||
+        left.title.localeCompare(right.title),
+    );
 
   if (books.length === 0) {
     throw new NcertServiceError("No valid books were selected for export.", 404);
   }
 
+  const hasMultipleClasses = new Set(books.map((book) => book.classValue)).size > 1;
   const duplicateTitleCount = new Map<string, number>();
   for (const book of books) {
     duplicateTitleCount.set(book.title, (duplicateTitleCount.get(book.title) ?? 0) + 1);
   }
 
   const zip = new JSZip();
+  const usedFilenames = new Map<string, number>();
   for (const book of books) {
     const compiledBook = await getCompiledBook(book.id);
+    const shouldPrefixWithClass =
+      hasMultipleClasses || (duplicateTitleCount.get(book.title) ?? 0) > 1;
+
     zip.file(
-      getBookFilename(book, (duplicateTitleCount.get(book.title) ?? 0) > 1),
+      getUniqueZipEntryFilename(book, shouldPrefixWithClass, usedFilenames),
       compiledBook,
     );
   }

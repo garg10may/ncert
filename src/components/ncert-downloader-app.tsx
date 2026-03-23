@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download } from "lucide-react";
 import {
   startTransition,
   type PointerEvent as ReactPointerEvent,
@@ -30,6 +30,7 @@ type Shelf = {
 
 type ShelfScrollerProps = {
   books: NcertCatalogBook[];
+  downloadHref: string;
   hoverBadgeFor: ShelfArrangement;
   shelfLabel: string;
   onOpenBook: (bookId: string) => void;
@@ -44,6 +45,18 @@ const SHELF_ARRANGEMENT_OPTIONS: ReadonlyArray<{ label: string; value: ShelfArra
 
 function slugifyShelfLabel(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function getShelfDownloadHref(books: NcertCatalogBook[], shelfLabel: string) {
+  const params = new URLSearchParams();
+
+  for (const book of books) {
+    params.append("bookId", book.id);
+  }
+
+  params.set("downloadName", shelfLabel);
+
+  return `/api/download/bulk?${params.toString()}`;
 }
 
 function sortBooksWithinClass(left: NcertCatalogBook, right: NcertCatalogBook) {
@@ -102,6 +115,7 @@ function getSubjectShelves(catalog: NcertCatalogBook[]): Shelf[] {
 
 function ShelfScroller({
   books,
+  downloadHref,
   hoverBadgeFor,
   shelfLabel,
   onOpenBook,
@@ -302,36 +316,49 @@ function ShelfScroller({
         )}
       />
 
-      <div className="bookshelf-ledge-label absolute bottom-[0.18rem] left-1/2 z-20 -translate-x-1/2 sm:bottom-[0.2rem]">
-        <button
-          aria-label={`Scroll ${shelfLabel} shelf left`}
-          className={cn(
-            "bookshelf-ledge-control-button",
-            scrollState.hasOverflow ? "opacity-100" : "opacity-0 pointer-events-none",
-          )}
-          disabled={!scrollState.canScrollLeft}
-          onClick={() => scrollShelf("left")}
-          type="button"
-        >
-          <ChevronLeft className="size-3" />
-        </button>
+      <div className="bookshelf-ledge-label-wrap absolute bottom-[0.18rem] left-1/2 z-20 -translate-x-1/2 sm:bottom-[0.2rem]">
+        <div className="bookshelf-ledge-label">
+          <button
+            aria-label={`Scroll ${shelfLabel} shelf left`}
+            className={cn(
+              "bookshelf-ledge-control-button",
+              scrollState.hasOverflow ? "opacity-100" : "opacity-0 pointer-events-none",
+            )}
+            disabled={!scrollState.canScrollLeft}
+            onClick={() => scrollShelf("left")}
+            type="button"
+          >
+            <ChevronLeft className="size-3" />
+          </button>
 
-        <span className="bookshelf-ledge-control-text" title={shelfLabel}>
-          {shelfLabel}
-        </span>
+          <span className="bookshelf-ledge-control-text" title={shelfLabel}>
+            {shelfLabel}
+          </span>
 
-        <button
-          aria-label={`Scroll ${shelfLabel} shelf right`}
-          className={cn(
-            "bookshelf-ledge-control-button",
-            scrollState.hasOverflow ? "opacity-100" : "opacity-0 pointer-events-none",
-          )}
-          disabled={!scrollState.canScrollRight}
-          onClick={() => scrollShelf("right")}
-          type="button"
+          <button
+            aria-label={`Scroll ${shelfLabel} shelf right`}
+            className={cn(
+              "bookshelf-ledge-control-button",
+              scrollState.hasOverflow ? "opacity-100" : "opacity-0 pointer-events-none",
+            )}
+            disabled={!scrollState.canScrollRight}
+            onClick={() => scrollShelf("right")}
+            type="button"
+          >
+            <ChevronRight className="size-3" />
+          </button>
+        </div>
+
+        <a
+          aria-label={`Download all ${books.length} books from the ${shelfLabel} shelf as a ZIP`}
+          className="bookshelf-ledge-bulk-button"
+          download
+          href={downloadHref}
+          title={`Download all ${books.length} PDFs from ${shelfLabel}`}
         >
-          <ChevronRight className="size-3" />
-        </button>
+          <Download className="size-3" />
+          <span className="whitespace-nowrap">All PDFs</span>
+        </a>
       </div>
     </div>
   );
@@ -404,6 +431,7 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
               <div className="bookshelf-nook relative px-2 pb-0 pt-2 sm:px-4 lg:px-6">
                 <ShelfScroller
                   books={shelf.books}
+                  downloadHref={getShelfDownloadHref(shelf.books, shelf.label)}
                   hoverBadgeFor={shelfArrangement}
                   shelfLabel={shelf.label}
                   onOpenBook={setActiveBookId}
