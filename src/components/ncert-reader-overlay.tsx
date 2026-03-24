@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, X } from "lucide-react";
+import { Download, LoaderCircle, X } from "lucide-react";
 
 import { NcertBookReader } from "@/components/ncert-book-reader";
 import { Button } from "@/components/ui/button";
@@ -16,12 +16,16 @@ import type { NcertCatalogBook } from "@/lib/ncert/types";
 type NcertReaderOverlayProps = {
   book: NcertCatalogBook | null;
   open: boolean;
+  isDownloading: boolean;
+  onDownload: (book: NcertCatalogBook) => void;
   onOpenChange: (open: boolean) => void;
 };
 
 export function NcertReaderOverlay({
   book,
   open,
+  isDownloading,
+  onDownload,
   onOpenChange,
 }: NcertReaderOverlayProps) {
   return (
@@ -47,18 +51,22 @@ export function NcertReaderOverlay({
 
               <div className="flex items-center gap-2">
                 <Button
-                  asChild
                   className="rounded-full border-stone-300/80 bg-white/72 text-stone-700 hover:bg-white"
+                  disabled={isDownloading}
+                  onClick={() => {
+                    if (book) {
+                      onDownload(book);
+                    }
+                  }}
                   size="icon-sm"
+                  title={isDownloading ? "Preparing PDF download" : "Download PDF"}
                   variant="outline"
                 >
-                  <a
-                    aria-label={`Download ${book.title} PDF`}
-                    href={`/api/books/${book.id}/download`}
-                    title="Download PDF"
-                  >
+                  {isDownloading ? (
+                    <LoaderCircle className="size-4 animate-spin" />
+                  ) : (
                     <Download className="size-4" />
-                  </a>
+                  )}
                 </Button>
 
                 <DialogClose asChild>

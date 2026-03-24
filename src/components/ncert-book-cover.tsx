@@ -1,6 +1,6 @@
 "use client";
 
-import { Download } from "lucide-react";
+import { Download, LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -10,6 +10,8 @@ import type { NcertCatalogBook } from "@/lib/ncert/types";
 type NcertBookCoverProps = {
   book: NcertCatalogBook;
   onOpen: () => void;
+  onDownload: () => void;
+  isDownloading?: boolean;
   priority?: boolean;
   hoverBadgeLabel?: string;
 };
@@ -54,6 +56,8 @@ function getBookHash(book: NcertCatalogBook) {
 export function NcertBookCover({
   book,
   onOpen,
+  onDownload,
+  isDownloading = false,
   priority = false,
   hoverBadgeLabel,
 }: NcertBookCoverProps) {
@@ -145,16 +149,30 @@ export function NcertBookCover({
             </span>
           </div>
         ) : null}
+
+        {isDownloading ? (
+          <div className="pointer-events-none absolute inset-x-2 top-2 z-30 flex justify-center">
+            <span className="inline-flex items-center gap-1 rounded-full border border-amber-200/40 bg-stone-950/78 px-2.5 py-1 text-[0.56rem] font-semibold uppercase tracking-[0.18em] text-amber-50 shadow-[0_10px_24px_-16px_rgba(17,12,8,0.95)] backdrop-blur-sm">
+              <LoaderCircle className="size-3 animate-spin" />
+              Downloading
+            </span>
+          </div>
+        ) : null}
       </button>
 
-      <a
-        aria-label={`Download ${label} PDF`}
-        className="absolute bottom-2.5 left-2.5 z-20 inline-flex items-center gap-1 rounded-[999px] border border-white/12 bg-black/42 px-2 py-1 text-[0.6rem] uppercase tracking-[0.24em] text-white/90 opacity-0 shadow-[0_8px_18px_-14px_rgba(17,12,8,0.8)] transition duration-300 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 hover:bg-black/56 focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200/80"
-        href={`/api/books/${book.id}/download`}
+      <button
+        aria-label={`${isDownloading ? "Downloading" : "Download"} ${label} PDF`}
+        className="absolute bottom-2.5 left-2.5 z-20 inline-flex items-center gap-1 rounded-[999px] border border-white/12 bg-black/42 px-2 py-1 text-[0.6rem] uppercase tracking-[0.24em] text-white/90 opacity-0 shadow-[0_8px_18px_-14px_rgba(17,12,8,0.8)] transition duration-300 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 hover:bg-black/56 focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-200/80 disabled:cursor-wait disabled:bg-black/72 disabled:opacity-100 disabled:pointer-events-auto"
+        disabled={isDownloading}
+        onClick={(event) => {
+          event.stopPropagation();
+          onDownload();
+        }}
+        type="button"
       >
-        <Download className="size-3" />
-        Download
-      </a>
+        {isDownloading ? <LoaderCircle className="size-3 animate-spin" /> : <Download className="size-3" />}
+        {isDownloading ? "Downloading" : "Download"}
+      </button>
     </div>
   );
 }

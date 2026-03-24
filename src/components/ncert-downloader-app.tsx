@@ -32,6 +32,8 @@ type ShelfScrollerProps = {
   books: NcertCatalogBook[];
   hoverBadgeFor: ShelfArrangement;
   shelfLabel: string;
+  downloadingBookIds: string[];
+  onDownloadBook: (book: NcertCatalogBook) => void;
   onOpenBook: (bookId: string) => void;
   shelfIndex: number;
 };
@@ -41,6 +43,49 @@ const SHELF_ARRANGEMENT_OPTIONS: ReadonlyArray<{ label: string; value: ShelfArra
   { label: "Subjects", value: "subject" },
   { label: "Classes", value: "class" },
 ];
+
+function getDownloadFilename(disposition: string | null, fallbackBook: NcertCatalogBook) {
+  if (disposition) {
+    const utf8FilenameMatch = disposition.match(/filename\*\s*=\s*UTF-8''([^;]+)/i);
+    if (utf8FilenameMatch?.[1]) {
+      try {
+        return decodeURIComponent(utf8FilenameMatch[1]);
+      } catch {
+        return utf8FilenameMatch[1];
+      }
+    }
+
+    const filenameMatch = disposition.match(/filename\s*=\s*"([^"]+)"/i);
+    if (filenameMatch?.[1]) {
+      return filenameMatch[1];
+    }
+  }
+
+  return `${fallbackBook.title}.pdf`;
+}
+
+async function startBookDownload(book: NcertCatalogBook) {
+  const response = await fetch(`/api/books/${book.id}/download`);
+
+  if (!response.ok) {
+    throw new Error(`Download request failed for ${book.id} with status ${response.status}.`);
+  }
+
+  const blob = await response.blob();
+  const objectUrl = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const filename = getDownloadFilename(response.headers.get("content-disposition"), book);
+
+  link.href = objectUrl;
+  link.download = filename;
+  document.body.append(link);
+  link.click();
+  link.remove();
+
+  window.setTimeout(() => {
+    URL.revokeObjectURL(objectUrl);
+  }, 0);
+}
 
 function slugifyShelfLabel(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -102,7 +147,9 @@ function getSubjectShelves(catalog: NcertCatalogBook[]): Shelf[] {
 
 function ShelfScroller({
   books,
+  downloadingBookIds,
   hoverBadgeFor,
+  onDownloadBook,
   shelfLabel,
   onOpenBook,
   shelfIndex,
@@ -279,7 +326,9 @@ function ShelfScroller({
             <NcertBookCover
               book={book}
               hoverBadgeLabel={hoverBadgeFor === "subject" ? book.classLabel : book.subject}
+              isDownloading={downloadingBookIds.includes(book.id)}
               key={book.id}
+              onDownload={() => onDownloadBook(book)}
               onOpen={() => onOpenBook(book.id)}
               priority={shelfIndex < 2 && bookIndex < 2}
             />
@@ -341,6 +390,7 @@ function ShelfScroller({
 
 export function NcertDownloaderApp({ catalog }: DownloaderProps) {
   const [activeBookId, setActiveBookId] = useState<string | null>(null);
+  const [downloadingBookIds, setDownloadingBookIds] = useState<string[]>([]);
   const [shelfArrangement, setShelfArrangement] = useState<ShelfArrangement>("subject");
 
   const shelves = useMemo(
@@ -360,6 +410,31 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
     startTransition(() => {
       setShelfArrangement(nextArrangement);
     });
+  };
+
+  const handleDownloadBook = async (book: NcertCatalogBook) => {
+    let startedDownload = false;
+
+    setDownloadingBookIds((currentBookIds) => {
+      if (currentBookIds.includes(book.id)) {
+        return currentBookIds;
+      }
+
+      startedDownload = true;
+      return [...currentBookIds, book.id];
+    });
+
+    if (!startedDownload) {
+      return;
+    }
+
+    try {
+      await startBookDownload(book);
+    } finally {
+      setDownloadingBookIds((currentBookIds) =>
+        currentBookIds.filter((currentBookId) => currentBookId !== book.id),
+      );
+    }
   };
 
   return (
@@ -406,7 +481,11 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
               <div className="bookshelf-nook relative px-2 pb-0 pt-2 sm:px-4 lg:px-6">
                 <ShelfScroller
                   books={shelf.books}
+                  downloadingBookIds={downloadingBookIds}
                   hoverBadgeFor={shelfArrangement}
+                  onDownloadBook={(book) => {
+                    void handleDownloadBook(book);
+                  }}
                   shelfLabel={shelf.label}
                   onOpenBook={setActiveBookId}
                   shelfIndex={shelfIndex}
@@ -432,6 +511,10 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
 
       <NcertReaderOverlay
         book={activeBook}
+        isDownloading={activeBook ? downloadingBookIds.includes(activeBook.id) : false}
+        onDownload={(book) => {
+          void handleDownloadBook(book);
+        }}
         onOpenChange={(open) => {
           if (!open) {
             setActiveBookId(null);
