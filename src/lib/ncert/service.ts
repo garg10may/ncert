@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -99,8 +100,14 @@ function getSourceCacheKey(bookId: string): string {
   return `${getNcertSourceClient().mode}:${bookId}`;
 }
 
-function getCompiledBookPath(book: NcertCatalogBook): string {
-  return path.join(CACHE_DIR, "books", "live", `${book.id}.pdf`);
+function getCompiledBookPath(manifest: NcertBookManifest): string {
+  // Keep a cached PDF tied to the exact section order used by the reader index.
+  const signature = createHash("sha256")
+    .update(JSON.stringify(manifest.sections.map(({ href, startPage, pageCount, includeInFullBook }) =>
+      ({ href, startPage, pageCount, includeInFullBook }))))
+    .digest("hex")
+    .slice(0, 16);
+  return path.join(CACHE_DIR, "books", "live", `${manifest.book.id}-${signature}.pdf`);
 }
 
 function getBookFilename(book: NcertCatalogBook, withClassPrefix = false): string {
@@ -384,7 +391,7 @@ async function buildCompiledBook(bookId: string): Promise<Buffer> {
   const manifest = await getBookManifest(bookId);
   const sourceMode = getNcertSourceClient().mode;
   let useDiskCache = sourceMode === "live";
-  const cachePath = getCompiledBookPath(manifest.book);
+  const cachePath = getCompiledBookPath(manifest);
 
   if (useDiskCache) {
     try {
