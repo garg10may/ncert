@@ -39,6 +39,7 @@ type ShelfScrollerProps = {
 };
 
 const AUTO_SCROLL_SPEED = 520;
+const READER_HISTORY_KEY = "__ncertReaderBookId";
 const SHELF_ARRANGEMENT_OPTIONS: ReadonlyArray<{ label: string; value: ShelfArrangement }> = [
   { label: "Subjects", value: "subject" },
   { label: "Classes", value: "class" },
@@ -392,6 +393,52 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
   const [activeBookId, setActiveBookId] = useState<string | null>(null);
   const [downloadingBookIds, setDownloadingBookIds] = useState<string[]>([]);
   const [shelfArrangement, setShelfArrangement] = useState<ShelfArrangement>("subject");
+  const hasReaderHistoryEntryRef = useRef(false);
+
+  useEffect(() => {
+    const syncReaderWithHistory = (event: PopStateEvent) => {
+      const state = event.state as Record<string, unknown> | null;
+      const bookId = typeof state?.[READER_HISTORY_KEY] === "string"
+        ? state[READER_HISTORY_KEY] as string
+        : null;
+
+      hasReaderHistoryEntryRef.current = bookId !== null;
+      setActiveBookId(bookId);
+    };
+
+    window.addEventListener("popstate", syncReaderWithHistory);
+    return () => window.removeEventListener("popstate", syncReaderWithHistory);
+  }, []);
+
+  const handleOpenBook = (bookId: string) => {
+    if (activeBookId === bookId) {
+      return;
+    }
+
+    const currentState = window.history.state;
+    const nextState = {
+      ...(currentState && typeof currentState === "object" ? currentState : {}),
+      [READER_HISTORY_KEY]: bookId,
+    };
+
+    if (hasReaderHistoryEntryRef.current) {
+      window.history.replaceState(nextState, "", window.location.href);
+    } else {
+      window.history.pushState(nextState, "", window.location.href);
+      hasReaderHistoryEntryRef.current = true;
+    }
+
+    setActiveBookId(bookId);
+  };
+
+  const handleCloseReader = () => {
+    if (hasReaderHistoryEntryRef.current) {
+      window.history.back();
+      return;
+    }
+
+    setActiveBookId(null);
+  };
 
   const shelves = useMemo(
     () => (shelfArrangement === "subject" ? getSubjectShelves(catalog) : getClassShelves(catalog)),
@@ -487,7 +534,7 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
                     void handleDownloadBook(book);
                   }}
                   shelfLabel={shelf.label}
-                  onOpenBook={setActiveBookId}
+                  onOpenBook={handleOpenBook}
                   shelfIndex={shelfIndex}
                 />
 
@@ -517,7 +564,7 @@ export function NcertDownloaderApp({ catalog }: DownloaderProps) {
         }}
         onOpenChange={(open) => {
           if (!open) {
-            setActiveBookId(null);
+            handleCloseReader();
           }
         }}
         open={Boolean(activeBook)}
