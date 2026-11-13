@@ -51,6 +51,34 @@ const ZOOM_STEP = 0.15;
 type PdfJsModule = typeof import("pdfjs-dist/webpack.mjs");
 
 let pdfJsModulePromise: Promise<PdfJsModule> | null = null;
+const MAX_CACHED_BOOKS = 5;
+const readerCache = new Map<string, { manifest?: NcertBookManifest; pdfData?: Uint8Array }>();
+
+const PDFJS_WASM_URL = "/pdfjs/wasm/";
+
+function getCachedBook(bookId: string) {
+  const cachedBook = readerCache.get(bookId);
+  if (!cachedBook) {
+    return undefined;
+  }
+
+  readerCache.delete(bookId);
+  readerCache.set(bookId, cachedBook);
+  return cachedBook;
+}
+
+function updateCachedBook(bookId: string, update: { manifest?: NcertBookManifest; pdfData?: Uint8Array }) {
+  const cachedBook = getCachedBook(bookId) ?? {};
+  readerCache.set(bookId, { ...cachedBook, ...update });
+
+  while (readerCache.size > MAX_CACHED_BOOKS) {
+    const leastRecentlyUsedBookId = readerCache.keys().next().value;
+    if (leastRecentlyUsedBookId === undefined) {
+      break;
+    }
+    readerCache.delete(leastRecentlyUsedBookId);
+  }
+}
 
 function getErrorMessage(error: unknown, fallback: string) {
   return error instanceof Error && error.message ? error.message : fallback;
@@ -486,6 +514,13 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
       return;
     }
 
+    const cachedBook = getCachedBook(bookId);
+    if (cachedBook?.manifest) {
+      setManifest(cachedBook.manifest);
+      setManifestState("ready");
+      return;
+    }
+
     let cancelled = false;
     const abortController = new AbortController();
 
@@ -506,6 +541,7 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
           return;
         }
 
+        updateCachedBook(bookId, { manifest: nextManifest });
         setManifest(nextManifest);
         setManifestState("ready");
       })
@@ -552,6 +588,7 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
 
     let cancelled = false;
     let loadingTask: PDFDocumentLoadingTask | null = null;
+    const abortController = new AbortController();
 
     if (pdfDocumentRef.current) {
       void pdfDocumentRef.current.destroy();
@@ -561,13 +598,31 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
     pageRefs.current.clear();
 
     void loadPdfJs()
-      .then(({ getDocument }) => {
+      .then(async ({ getDocument }) => {
         if (cancelled) {
           return null;
         }
 
+        let data = getCachedBook(bookId)?.pdfData ?? null;
+        if (!data) {
+          const response = await fetch(readerPdfUrl, { signal: abortController.signal });
+          if (!response.ok) {
+            const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+            throw new Error(payload?.error ?? `Could not load this book (HTTP ${response.status}).`);
+          }
+
+          data = new Uint8Array(await response.arrayBuffer());
+          if (cancelled) {
+            return null;
+          }
+
+          // Keep one PDF in memory so Back/reopen avoids another server request.
+          updateCachedBook(bookId, { pdfData: data });
+        }
+
         loadingTask = getDocument({
-          url: readerPdfUrl,
+          data: data.slice(),
+          wasmUrl: PDFJS_WASM_URL,
           withCredentials: false,
         });
 
@@ -620,6 +675,7 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
 
     return () => {
       cancelled = true;
+      abortController.abort();
       void loadingTask?.destroy();
     };
   }, [bookId, readerPdfUrl]);
