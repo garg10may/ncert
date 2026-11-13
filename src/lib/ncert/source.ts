@@ -152,7 +152,7 @@ function requestBuffer(url: string, redirects = 0, attempts = 0): Promise<Buffer
             reject(
               new NcertServiceError(
                 `NCERT request failed for ${url}: ${statusCode} ${Buffer.concat(chunks).toString("utf8")}`,
-                502,
+                statusCode === 404 ? 404 : 502,
               ),
             );
           });
