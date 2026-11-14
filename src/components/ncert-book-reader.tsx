@@ -815,7 +815,14 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
   const ready = pdfState === "ready" && manifestState === "ready";
   const progress = pageCount > 1 ? ((currentPage - 1) / (pageCount - 1)) * 100 : 0;
   const pageAreaWidth = Math.max(0, viewerWidth - pageSpacing * 2);
-  const canvasWidth = mode === "spread" ? (pageAreaWidth - 2) / 2 : pageAreaWidth;
+  // A sheet's visible edge is proportional to the book's length. Reserve room
+  // for the deepest possible stack so the fitted spread never clips its edges.
+  const bookDepth = mode === "spread"
+    ? Math.min(36, pageCount * 0.072, pageAreaWidth * 0.04)
+    : 0;
+  const leftDepth = pageCount > 1 ? bookDepth * (firstPage - 1) / (pageCount - 1) : 0;
+  const rightDepth = pageCount > 1 ? bookDepth * (pageCount - lastPage) / (pageCount - 1) : 0;
+  const canvasWidth = mode === "spread" ? Math.max(1, (pageAreaWidth - bookDepth * 2 - 2) / 2) : pageAreaWidth;
 
   const visiblePageLabel = lastPage > firstPage ? `${firstPage}–${lastPage}` : `${firstPage}`;
 
@@ -939,8 +946,11 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
               <div className="reader-loading" role="status"><BookOpen size={30} strokeWidth={1.25} /><span>Opening your book</span><LoaderCircle size={16} className="animate-spin" /></div>
             ) : pdfDocument ? (
               <div className={cn("reader-pages", mode === "scroll" ? "reader-pages-scroll" : "reader-pages-paged",
-                mode === "spread" && firstPage > 1 && "reader-pages-spread")}
-                data-direction={direction} key={mode === "scroll" ? "scroll" : `${mode}-${firstPage}`}>
+                mode === "spread" && firstPage > 1 && lastPage > firstPage && "reader-pages-spread",
+                mode === "spread" && firstPage === lastPage && "reader-pages-single-spread")}
+                data-direction={direction} data-single-side={firstPage === 1 ? "cover" : "last"}
+                style={{ "--reader-left-depth": `${leftDepth}px`, "--reader-right-depth": `${rightDepth}px` } as CSSProperties}
+                key={mode === "scroll" ? "scroll" : `${mode}-${firstPage}`}>
                 {pageNumbers.map((pageNumber) => (
                   <div className="reader-paper" key={pageNumber} ref={(node) => {
                     if (node) pageRefs.current.set(pageNumber, node);
