@@ -376,31 +376,32 @@
 .reader-pages-spread .reader-paper::before,
 .reader-pages-single-spread .reader-paper::before {
   content: ""; position: absolute; top: 3px; pointer-events: none;
-  background-color: #e9e5dc;
-  background-image: linear-gradient(90deg, #77715e66, #ffffff20 45%, #fffdf7b8),
-    repeating-linear-gradient(180deg, #faf9f5 0 2px, #dedad0 2px 3px, #f1eee7 3px 6px);
+  background: linear-gradient(180deg, #fffdf8 0%, #eeeae0 46%, #d8d2c5 100%);
   box-shadow: 0 11px 18px #252c2340;
 }
 .reader-pages-spread .reader-paper:first-child::before,
 .reader-pages-single-spread[data-single-side="last"] .reader-paper::before {
   right: 100%; bottom: calc(-1 * var(--reader-left-bottom)); width: var(--reader-left-depth);
-  border-left: 2px solid #a8a596;
+  border-left: 2px solid #9d998b;
+  border-radius: 2px 0 0 2px;
+  box-shadow: inset 12px 0 14px -14px #5a5548, inset -12px 0 14px -14px #fff,
+    0 11px 18px #252c2340;
 }
 .reader-pages-spread .reader-paper:last-child::before,
 .reader-pages-single-spread[data-single-side="cover"] .reader-paper::before {
   left: 100%; bottom: calc(-1 * var(--reader-right-bottom)); width: var(--reader-right-depth);
-  border-right: 2px solid #a8a596;
-  background-image: linear-gradient(90deg, #fffdf7b8, #ffffff20 55%, #77715e66),
-    repeating-linear-gradient(180deg, #faf9f5 0 2px, #dedad0 2px 3px, #f1eee7 3px 6px);
+  border-right: 2px solid #9d998b;
+  border-radius: 0 2px 2px 0;
+  box-shadow: inset -12px 0 14px -14px #5a5548, inset 12px 0 14px -14px #fff,
+    0 11px 18px #252c2340;
 }
 .reader-pages-single-spread .reader-paper { position: relative; }
 .reader-pages-spread .reader-paper-bottom,
 .reader-pages-single-spread .reader-paper-bottom {
   position: absolute; top: 100%; pointer-events: none;
-  border-top: 1px solid #fffdf5; border-bottom: 2px solid #aaa697;
-  background: linear-gradient(180deg, #ffffff9c, #918b7770),
-    repeating-linear-gradient(180deg, #f9f7f1 0 2px, #d9d5cb 2px 3px, #efede5 3px 6px);
-  box-shadow: 0 13px 20px #252c2338;
+  border-top: 1px solid #fffdf5; border-bottom: 2px solid #a7a292;
+  background: linear-gradient(180deg, #f5f2e9, #c9c2b3);
+  box-shadow: inset 0 -6px 9px -8px #625d50, 0 13px 20px #252c2338;
 }
 .reader-pages-spread .reader-paper:first-child .reader-paper-bottom,
 .reader-pages-single-spread[data-single-side="last"] .reader-paper-bottom {
@@ -605,9 +606,7 @@
 .book-reader[data-theme="dark"] .reader-viewport { scrollbar-color: #5d705a transparent; }
 .book-reader[data-theme="dark"] .reader-paper { box-shadow: 0 2px 12px #0005; }
 .book-reader[data-dark-paper="true"] :is(.reader-pages-spread, .reader-pages-single-spread) .reader-paper::before {
-  background-color: #383936;
-  background-image: linear-gradient(90deg, #1119, transparent 45%, #aaa2),
-    repeating-linear-gradient(180deg, #494a44 0 2px, #343631 2px 3px, #41433d 3px 6px);
+  background: linear-gradient(180deg, #545550, #3b3d39 55%, #292b28);
   border-color: #33342f;
 }
 .book-reader[data-dark-paper="true"] :is(.reader-pages-spread, .reader-pages-single-spread) .reader-paper-bottom {
