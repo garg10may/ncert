@@ -216,8 +216,10 @@ function ReaderMessageState({
 
 type PdfPageCanvasProps = {
   crop: number;
+  eager: boolean;
   fitWidth: boolean;
   displayZoom: number;
+  outputScaleLimit: number;
   pageNumber: number;
   pdfDocument: PDFDocumentProxy;
   renderZoom: number;
@@ -228,8 +230,10 @@ type PdfPageCanvasProps = {
 
 const PdfPageCanvas = memo(function PdfPageCanvas({
   crop,
+  eager,
   fitWidth,
   displayZoom,
+  outputScaleLimit,
   pageNumber,
   pdfDocument,
   renderZoom,
@@ -240,14 +244,14 @@ const PdfPageCanvas = memo(function PdfPageCanvas({
   const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [completedRenderToken, setCompletedRenderToken] = useState<string | null>(null);
-  const [isNearViewport, setIsNearViewport] = useState(pageNumber <= 2);
+  const [isNearViewport, setIsNearViewport] = useState(eager || pageNumber <= 2);
   const [pageHeight, setPageHeight] = useState(DEFAULT_PAGE_HEIGHT);
   const [pageWidth, setPageWidth] = useState(DEFAULT_PAGE_WIDTH);
   const [renderFailure, setRenderFailure] = useState<{
     message: string;
     token: string;
   } | null>(null);
-  const [shouldRender, setShouldRender] = useState(pageNumber <= 2);
+  const [shouldRender, setShouldRender] = useState(eager || pageNumber <= 2);
   const renderTaskRef = useRef<RenderTask | null>(null);
   const renderToken =
     shouldRender && isNearViewport && viewerWidth > 0 && viewerHeight > 0
@@ -269,6 +273,9 @@ const PdfPageCanvas = memo(function PdfPageCanvas({
   );
 
   useEffect(() => {
+    if (eager) {
+      return;
+    }
     if (!container) {
       return;
     }
@@ -310,7 +317,7 @@ const PdfPageCanvas = memo(function PdfPageCanvas({
     return () => {
       observer.disconnect();
     };
-  }, [container, scrollRoot]);
+  }, [container, eager, scrollRoot]);
 
   useEffect(() => {
     if (!canvas || !renderToken) {
@@ -318,73 +325,83 @@ const PdfPageCanvas = memo(function PdfPageCanvas({
     }
 
     let cancelled = false;
+    let detailTimer: number | null = null;
 
-    void pdfDocument
-      .getPage(pageNumber)
-      .then(async (page) => {
-        if (cancelled) {
-          return;
-        }
+    const renderPage = async () => {
+      const page = await pdfDocument.getPage(pageNumber);
+      if (cancelled) return;
 
-        const context = canvas.getContext("2d", { alpha: false });
+      const baseViewport = page.getViewport({ scale: 1 });
+      setPageWidth((currentWidth) => (currentWidth === baseViewport.width ? currentWidth : baseViewport.width));
+      setPageHeight((currentHeight) =>
+        currentHeight === baseViewport.height ? currentHeight : baseViewport.height,
+      );
 
-        if (!context) {
-          throw new Error(`Could not create the drawing surface for page ${pageNumber}.`);
-        }
+      const viewport = page.getViewport({
+        scale:
+          getFitScale(baseViewport.width, baseViewport.height, viewerWidth, viewerHeight, crop, fitWidth) *
+          renderZoom,
+      });
+      const detailScale = Math.min(window.devicePixelRatio || 1, outputScaleLimit);
+      const previewScale = outputScaleLimit === Infinity ? detailScale : Math.min(detailScale, 1);
+      canvas.style.width = `${viewport.width}px`;
+      canvas.style.height = `${viewport.height}px`;
 
-        const baseViewport = page.getViewport({ scale: 1 });
-        setPageWidth((currentWidth) => (currentWidth === baseViewport.width ? currentWidth : baseViewport.width));
-        setPageHeight((currentHeight) =>
-          currentHeight === baseViewport.height ? currentHeight : baseViewport.height,
-        );
-
-        const viewport = page.getViewport({
-          scale:
-            getFitScale(baseViewport.width, baseViewport.height, viewerWidth, viewerHeight, crop, fitWidth) *
-            renderZoom,
-        });
-        const outputScale = window.devicePixelRatio || 1;
-
-        canvas.width = Math.floor(viewport.width * outputScale);
-        canvas.height = Math.floor(viewport.height * outputScale);
-        canvas.style.width = `${viewport.width}px`;
-        canvas.style.height = `${viewport.height}px`;
-
-        const renderTask = page.render({
-          canvas,
+      const draw = async (target: HTMLCanvasElement, scale: number) => {
+        target.width = Math.floor(viewport.width * scale);
+        target.height = Math.floor(viewport.height * scale);
+        const context = target.getContext("2d", { alpha: false });
+        if (!context) throw new Error(`Could not create the drawing surface for page ${pageNumber}.`);
+        const task = page.render({
+          canvas: target,
           canvasContext: context,
-          transform: outputScale === 1 ? undefined : [outputScale, 0, 0, outputScale, 0, 0],
+          transform: scale === 1 ? undefined : [scale, 0, 0, scale, 0, 0],
           viewport,
         });
-
-        renderTaskRef.current = renderTask;
-        await renderTask.promise;
-      })
-      .then(() => {
-        if (cancelled || !renderToken) {
-          return;
+        renderTaskRef.current = task;
+        try {
+          await task.promise;
+        } finally {
+          if (renderTaskRef.current === task) renderTaskRef.current = null;
         }
+      };
 
-        setRenderFailure(null);
-        setCompletedRenderToken(renderToken);
-      })
-      .catch((error) => {
-        if (cancelled || isRenderCancelledError(error) || !renderToken) {
-          return;
-        }
+      await draw(canvas, previewScale);
+      if (cancelled) return;
+      setRenderFailure(null);
+      setCompletedRenderToken(renderToken);
 
-        setRenderFailure({
-          message: getErrorMessage(error, `Could not render page ${pageNumber}.`),
-          token: renderToken,
-        });
+      if (detailScale > previewScale) {
+        // Keep the quick preview visible while a sharper copy renders offscreen.
+        // Rapid navigation clears this timer or cancels the in-flight render.
+        detailTimer = window.setTimeout(() => {
+          if (cancelled) return;
+          const detail = document.createElement("canvas");
+          void draw(detail, detailScale).then(() => {
+            if (cancelled) return;
+            canvas.width = detail.width;
+            canvas.height = detail.height;
+            canvas.getContext("2d", { alpha: false })?.drawImage(detail, 0, 0);
+          }).catch(() => { /* The visible preview remains usable. */ });
+        }, 400);
+      }
+    };
+
+    void renderPage().catch((error) => {
+      if (cancelled || isRenderCancelledError(error)) return;
+      setRenderFailure({
+        message: getErrorMessage(error, `Could not render page ${pageNumber}.`),
+        token: renderToken,
       });
+    });
 
     return () => {
       cancelled = true;
+      if (detailTimer !== null) window.clearTimeout(detailTimer);
       renderTaskRef.current?.cancel();
       renderTaskRef.current = null;
     };
-  }, [canvas, crop, fitWidth, pageNumber, pdfDocument, renderToken, renderZoom, viewerHeight, viewerWidth]);
+  }, [canvas, crop, fitWidth, outputScaleLimit, pageNumber, pdfDocument, renderToken, renderZoom, viewerHeight, viewerWidth]);
 
   const showInitialLoader = rendering && completedRenderToken === null;
 
@@ -421,7 +438,12 @@ const PdfPageCanvas = memo(function PdfPageCanvas({
           />
         )}
 
-        {showInitialLoader ? (
+        {showInitialLoader && outputScaleLimit !== Infinity ? (
+          <div className="reader-page-loading pointer-events-none absolute left-3 top-3 rounded-full bg-white/80 p-1.5 text-stone-600 shadow-sm" role="status">
+            <LoaderCircle className="size-3.5 animate-spin" />
+            <span className="sr-only">Rendering page {pageNumber}...</span>
+          </div>
+        ) : showInitialLoader ? (
           <div className="reader-page-loading absolute inset-0 flex items-center justify-center bg-white/68 backdrop-blur-[1px]">
             <div className="flex items-center gap-3 rounded-full bg-white/94 px-4 py-2 text-sm text-stone-700 shadow-[0_12px_24px_-20px_rgba(58,38,18,0.45)]">
               <LoaderCircle className="size-4 animate-spin" />
@@ -983,7 +1005,8 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
                     else pageRefs.current.delete(pageNumber);
                   }}>
                     {mode === "spread" && <span className="reader-paper-bottom" aria-hidden="true" />}
-                    <PdfPageCanvas fitWidth={fitWidth} crop={pageCrop} displayZoom={zoom} pageNumber={pageNumber} pdfDocument={pdfDocument}
+                    <PdfPageCanvas fitWidth={fitWidth} crop={pageCrop} eager={mode !== "scroll"} displayZoom={zoom}
+                      outputScaleLimit={mode === "spread" ? 1.5 : Infinity} pageNumber={pageNumber} pdfDocument={pdfDocument}
                       renderZoom={renderZoom} scrollRoot={viewerElement} viewerHeight={Math.max(1, viewerHeight - pageSpacing * 2)} viewerWidth={canvasWidth} />
                   </div>
                 ))}
