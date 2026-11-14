@@ -375,25 +375,41 @@
 /* The exposed edges represent pages already read on the left and pages left on the right. */
 .reader-pages-spread .reader-paper::before,
 .reader-pages-single-spread .reader-paper::before {
-  content: ""; position: absolute; top: 2px; bottom: -3px; pointer-events: none;
-  background-color: #e7e3d8;
-  background-image: linear-gradient(90deg, #96948342, transparent 45%, #ffffff80),
-    repeating-linear-gradient(180deg, #fffefa 0 1px, #d6d2c7 1px 2px, #f2efe7 2px 4px);
-  box-shadow: 0 8px 15px #252c2333;
+  content: ""; position: absolute; top: 3px; pointer-events: none;
+  background-color: #e9e5dc;
+  background-image: linear-gradient(90deg, #77715e66, #ffffff20 45%, #fffdf7b8),
+    repeating-linear-gradient(180deg, #faf9f5 0 2px, #dedad0 2px 3px, #f1eee7 3px 6px);
+  box-shadow: 0 11px 18px #252c2340;
 }
 .reader-pages-spread .reader-paper:first-child::before,
 .reader-pages-single-spread[data-single-side="last"] .reader-paper::before {
-  right: 100%; width: var(--reader-left-depth);
-  border-left: 1px solid #b4b2a6;
+  right: 100%; bottom: calc(-1 * var(--reader-left-bottom)); width: var(--reader-left-depth);
+  border-left: 2px solid #a8a596;
 }
 .reader-pages-spread .reader-paper:last-child::before,
 .reader-pages-single-spread[data-single-side="cover"] .reader-paper::before {
-  left: 100%; width: var(--reader-right-depth);
-  border-right: 1px solid #b4b2a6;
-  background-image: linear-gradient(90deg, #ffffff80, transparent 55%, #96948342),
-    repeating-linear-gradient(180deg, #fffefa 0 1px, #d6d2c7 1px 2px, #f2efe7 2px 4px);
+  left: 100%; bottom: calc(-1 * var(--reader-right-bottom)); width: var(--reader-right-depth);
+  border-right: 2px solid #a8a596;
+  background-image: linear-gradient(90deg, #fffdf7b8, #ffffff20 55%, #77715e66),
+    repeating-linear-gradient(180deg, #faf9f5 0 2px, #dedad0 2px 3px, #f1eee7 3px 6px);
 }
 .reader-pages-single-spread .reader-paper { position: relative; }
+.reader-pages-spread .reader-paper-bottom,
+.reader-pages-single-spread .reader-paper-bottom {
+  position: absolute; top: 100%; pointer-events: none;
+  border-top: 1px solid #fffdf5; border-bottom: 2px solid #aaa697;
+  background: linear-gradient(180deg, #ffffff9c, #918b7770),
+    repeating-linear-gradient(180deg, #f9f7f1 0 2px, #d9d5cb 2px 3px, #efede5 3px 6px);
+  box-shadow: 0 13px 20px #252c2338;
+}
+.reader-pages-spread .reader-paper:first-child .reader-paper-bottom,
+.reader-pages-single-spread[data-single-side="last"] .reader-paper-bottom {
+  left: calc(-1 * var(--reader-left-depth)); right: 0; height: var(--reader-left-bottom);
+}
+.reader-pages-spread .reader-paper:last-child .reader-paper-bottom,
+.reader-pages-single-spread[data-single-side="cover"] .reader-paper-bottom {
+  left: 0; right: calc(-1 * var(--reader-right-depth)); height: var(--reader-right-bottom);
+}
 .reader-page-turn { position: absolute; top: 50%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; width: 40px; height: 52px; border: 1px solid #cacfc5; border-radius: 24px; color: #52634f; background: #f8f9f278; transition: background 160ms, border-color 160ms; }
 .reader-page-turn:hover:not(:disabled) { background: #fafbf6; border-color: #99a68e; }
 .reader-page-turn-prev { left: 18px; }
@@ -590,9 +606,13 @@
 .book-reader[data-theme="dark"] .reader-paper { box-shadow: 0 2px 12px #0005; }
 .book-reader[data-dark-paper="true"] :is(.reader-pages-spread, .reader-pages-single-spread) .reader-paper::before {
   background-color: #383936;
-  background-image: linear-gradient(90deg, #1118, transparent 45%, #aaa2),
-    repeating-linear-gradient(180deg, #66645d 0 1px, #33342f 1px 2px, #51524c 2px 4px);
+  background-image: linear-gradient(90deg, #1119, transparent 45%, #aaa2),
+    repeating-linear-gradient(180deg, #494a44 0 2px, #343631 2px 3px, #41433d 3px 6px);
   border-color: #33342f;
+}
+.book-reader[data-dark-paper="true"] :is(.reader-pages-spread, .reader-pages-single-spread) .reader-paper-bottom {
+  background: linear-gradient(180deg, #5a5952, #30312e);
+  border-color: #353631;
 }
 .book-reader[data-dark-paper="true"] :is(.reader-paper canvas, .reader-turn canvas) { filter: invert(.9) hue-rotate(180deg); }
 .book-reader[data-dark-paper="true"] :is(.reader-turn-base, .reader-paper) { background: #262626; }

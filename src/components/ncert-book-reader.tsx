@@ -818,10 +818,12 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
   // A sheet's visible edge is proportional to the book's length. Reserve room
   // for the deepest possible stack so the fitted spread never clips its edges.
   const bookDepth = mode === "spread"
-    ? Math.min(36, pageCount * 0.072, pageAreaWidth * 0.04)
+    ? Math.min(74, pageCount * 0.15, pageAreaWidth * 0.1)
     : 0;
   const leftDepth = pageCount > 1 ? bookDepth * (firstPage - 1) / (pageCount - 1) : 0;
   const rightDepth = pageCount > 1 ? bookDepth * (pageCount - lastPage) / (pageCount - 1) : 0;
+  const leftBottomDepth = Math.min(18, leftDepth * 0.3);
+  const rightBottomDepth = Math.min(18, rightDepth * 0.3);
   const canvasWidth = mode === "spread" ? Math.max(1, (pageAreaWidth - bookDepth * 2 - 2) / 2) : pageAreaWidth;
 
   const visiblePageLabel = lastPage > firstPage ? `${firstPage}–${lastPage}` : `${firstPage}`;
@@ -949,13 +951,17 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
                 mode === "spread" && firstPage > 1 && lastPage > firstPage && "reader-pages-spread",
                 mode === "spread" && firstPage === lastPage && "reader-pages-single-spread")}
                 data-direction={direction} data-single-side={firstPage === 1 ? "cover" : "last"}
-                style={{ "--reader-left-depth": `${leftDepth}px`, "--reader-right-depth": `${rightDepth}px` } as CSSProperties}
+                style={{
+                  "--reader-left-depth": `${leftDepth}px`, "--reader-right-depth": `${rightDepth}px`,
+                  "--reader-left-bottom": `${leftBottomDepth}px`, "--reader-right-bottom": `${rightBottomDepth}px`,
+                } as CSSProperties}
                 key={mode === "scroll" ? "scroll" : `${mode}-${firstPage}`}>
                 {pageNumbers.map((pageNumber) => (
                   <div className="reader-paper" key={pageNumber} ref={(node) => {
                     if (node) pageRefs.current.set(pageNumber, node);
                     else pageRefs.current.delete(pageNumber);
                   }}>
+                    {mode === "spread" && <span className="reader-paper-bottom" aria-hidden="true" />}
                     <PdfPageCanvas fitWidth={fitWidth} crop={pageCrop} displayZoom={zoom} pageNumber={pageNumber} pdfDocument={pdfDocument}
                       renderZoom={renderZoom} scrollRoot={viewerElement} viewerHeight={Math.max(1, viewerHeight - pageSpacing * 2)} viewerWidth={canvasWidth} />
                   </div>
