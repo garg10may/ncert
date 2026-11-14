@@ -467,6 +467,7 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
   const [pageTurn, setPageTurn] = useState<PageTurn | null>(null);
   const turnBusy = useRef(false);
   const turnAbort = useRef<AbortController | null>(null);
+  const turnTarget = useRef(1);
   const [bookmarks, setBookmarks] = useState<number[]>([]);
   const [mode, setMode] = useState<ReadingMode>("page");
   const [currentPage, setCurrentPage] = useState(1);
@@ -503,6 +504,10 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
     turnAbort.current?.abort();
     turnBusy.current = false;
   }, [turnLayoutKey]);
+
+  useEffect(() => {
+    if (!turnBusy.current) turnTarget.current = currentPage;
+  }, [currentPage, turnLayoutKey]);
 
   const finishTurn = useCallback(() => {
     setPageTurn(null);
@@ -639,9 +644,12 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
         }
 
         try {
+          turnTarget.current = 1;
+          setCurrentPage(1);
           const saved = JSON.parse(localStorage.getItem(`ncert-reader:${bookId}`) ?? "null");
           if (saved && typeof saved === "object") {
             const page = Number.isInteger(saved.page) ? Math.max(1, Math.min(nextDocument.numPages, saved.page)) : 1;
+            turnTarget.current = page;
             setCurrentPage(page);
             if (["page", "spread", "scroll"].includes(saved.mode)) {
               setMode(saved.mode);
@@ -695,7 +703,8 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
     turnBusy.current = false;
     setPageTurn(null);
     const next = Math.min(pageCount, Math.max(1, Math.round(page)));
-    setDirection(next < currentPage ? "backward" : "forward");
+    setDirection(next < turnTarget.current ? "backward" : "forward");
+    turnTarget.current = next;
     setCurrentPage(next);
     if (mode === "scroll") {
       const element = pageRefs.current.get(next);
@@ -703,27 +712,38 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
     } else {
       viewerElement?.scrollTo({ top: 0, left: 0 });
     }
-  }, [currentPage, mode, pageCount, pageSpacing, viewerElement]);
+  }, [mode, pageCount, pageSpacing, viewerElement]);
 
   const turnPage = useCallback(async (delta: number) => {
-    if (turnBusy.current || !pageCount) return;
-    const next = delta > 0 ? lastPage + 1 : firstPage - 1;
+    if (!pageCount) return;
+    const targetFirst = mode === "spread" && turnTarget.current > 1
+      ? turnTarget.current - (turnTarget.current % 2)
+      : turnTarget.current;
+    const targetLast = mode === "spread" && targetFirst > 1
+      ? Math.min(pageCount, targetFirst + 1)
+      : targetFirst;
+    const next = delta > 0 ? targetLast + 1 : targetFirst - 1;
     if (next < 1 || next > pageCount) return;
-    const targetFirst = next === 1 ? 1 : next - (next % 2);
+    // A second input skips the pending curl and lands immediately. The ref also
+    // keeps rapid clicks additive before React has committed the first spread.
+    if (turnBusy.current) { goToPage(next); return; }
+    const destinationFirst = next === 1 ? 1 : next - (next % 2);
     const left = pageRefs.current.get(firstPage);
     const right = pageRefs.current.get(lastPage);
-    if (mode !== "spread" || firstPage === lastPage || targetFirst === 1 || targetFirst + 1 > pageCount ||
+    if (mode !== "spread" || targetFirst !== firstPage || targetLast !== lastPage ||
+        firstPage === lastPage || destinationFirst === 1 || destinationFirst + 1 > pageCount ||
         !pdfDocument || !viewerElement || !left || !right || zoom > 1 || fitWidth ||
         window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       goToPage(next);
       return;
     }
     turnBusy.current = true;
+    turnTarget.current = next;
     turnAbort.current?.abort();
     const controller = new AbortController();
     turnAbort.current = controller;
     try {
-      const turn = await preparePageTurn({ elements: [left, right], destination: [targetFirst, targetFirst + 1],
+      const turn = await preparePageTurn({ elements: [left, right], destination: [destinationFirst, destinationFirst + 1],
         pdf: pdfDocument, crop: pageCrop, signal: controller.signal, viewport: viewerElement,
         direction: delta > 0 ? "forward" : "backward", layoutKey: turnLayoutKey });
       if (controller.signal.aborted) return;
@@ -808,6 +828,7 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
         if (node.offsetTop <= anchor) visiblePage = number;
         else break;
       }
+      turnTarget.current = visiblePage;
       setCurrentPage(visiblePage);
     });
   };
@@ -984,7 +1005,7 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
           <Bookmark size={17} fill={bookmarks.includes(firstPage) ? "currentColor" : "none"} />
         </button>
         <div className="reader-pagination">
-          <button type="button" className="reader-icon-button" aria-label="Go to previous page" disabled={!ready || !!activeTurn || firstPage <= 1} onClick={() => turnPage(-1)}><ChevronLeft size={16} /></button>
+          <button type="button" className="reader-icon-button" aria-label="Go to previous page" disabled={!ready || firstPage <= 1} onClick={() => turnPage(-1)}><ChevronLeft size={16} /></button>
           <div className="reader-page-position" aria-label={`Pages ${visiblePageLabel} of ${pageCount || "unknown"}`}>
             <strong>{visiblePageLabel}</strong><span>of {pageCount || "—"}</span>
           </div>
@@ -997,7 +1018,7 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
             <input id="reader-page-number" name="page" aria-label="Page number" type="number" min={1} max={pageCount || 1}
               key={firstPage} defaultValue={firstPage} disabled={!ready} />
           </form>
-          <button type="button" className="reader-icon-button" aria-label="Go to next page" disabled={!ready || !!activeTurn || lastPage >= pageCount} onClick={() => turnPage(1)}><ChevronRight size={16} /></button>
+          <button type="button" className="reader-icon-button" aria-label="Go to next page" disabled={!ready || lastPage >= pageCount} onClick={() => turnPage(1)}><ChevronRight size={16} /></button>
         </div>
         <div className="reader-progress"><input type="range" aria-label="Reading progress" min={1} max={pageCount || 1}
           value={currentPage} disabled={!ready} onChange={(event) => goToPage(Number(event.target.value))} />
@@ -1006,9 +1027,9 @@ export function NcertBookReader({ book, className, actions }: NcertBookReaderPro
       </footer>
       {focusMode && <div className="reader-focus-controls">
         <button type="button" className="reader-icon-button" aria-label="Exit focus mode" title="Exit focus mode (Esc)" onClick={() => setFocusMode(false)}><Minimize2 size={16} /></button>
-        <button type="button" className="reader-icon-button" aria-label="Previous page in focus mode" disabled={!!activeTurn || firstPage <= 1} onClick={() => turnPage(-1)}><ChevronLeft size={16} /></button>
+        <button type="button" className="reader-icon-button" aria-label="Previous page in focus mode" disabled={firstPage <= 1} onClick={() => turnPage(-1)}><ChevronLeft size={16} /></button>
         <span>{visiblePageLabel} of {pageCount}</span>
-        <button type="button" className="reader-icon-button" aria-label="Next page in focus mode" disabled={!!activeTurn || lastPage >= pageCount} onClick={() => turnPage(1)}><ChevronRight size={16} /></button>
+        <button type="button" className="reader-icon-button" aria-label="Next page in focus mode" disabled={lastPage >= pageCount} onClick={() => turnPage(1)}><ChevronRight size={16} /></button>
       </div>}
     </div>
   );

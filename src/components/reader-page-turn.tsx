@@ -48,7 +48,9 @@ export async function preparePageTurn({ elements, destination, pdf, crop, signal
     const page = await pdf.getPage(number);
     signal.throwIfAborted();
     const size = page.getViewport({ scale: 1 });
-    const pixelRatio = window.devicePixelRatio || 1;
+    // Curl snapshots are temporary; a modest resolution avoids duplicating
+    // the full cost of the live PDF renders on high-density displays.
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.25);
     const scale = bounds[index].width * pixelRatio / (size.width * (1 - crop * 2));
     const renderViewport = page.getViewport({ scale });
     const canvas = document.createElement("canvas");
@@ -109,7 +111,7 @@ export function ReaderPageTurn({ turn, onFinish, viewport, darkPaper }: {
       if (disposed) return;
       if (!start) start = time;
       const elapsed = time - start;
-      const progress = Math.min(1, elapsed / 960);
+      const progress = Math.min(1, elapsed / 520);
       renderer.draw(progress * progress * (3 - 2 * progress));
       // Keep the landed sheet until both live PDF canvases are ready underneath.
       const ready = viewport?.querySelectorAll('.reader-paper canvas[data-rendered="true"]').length === 2;
